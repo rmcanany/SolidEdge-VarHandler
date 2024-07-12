@@ -170,6 +170,7 @@
     <None Include="Resources\icons8_replay_16.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="MainForm.png" />
     <Content Include="slider.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
