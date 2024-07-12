@@ -2,7 +2,7 @@
 
 Inspired by a post on Siemens Community I decided to create this control center to easily evaluate variables range values
 
-Actual version is limited and will perhaps be expanded per user requests
+The actual version is limited and will perhaps be expanded per user requests
 
 Feature list:
 - Add any user variables
@@ -14,5 +14,10 @@ Feature list:
 - Remove button
 - Reload button
 - Taskbar to easily change values
+- ReadOnly variables supported
 
-- 
+Known limits:
+- Only user variables supported
+- mm, degree, and scalar units supported, other units will result in unpredicted values
+
+![MainForm](./MainForm.png)
