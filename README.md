@@ -15,9 +15,13 @@ Feature list:
 - Reload button
 - Taskbar to easily change values
 - ReadOnly variables supported
+- Works on any Solid Edge environment (par, psm, asm, dft)
 
 Known limits:
 - Only user variables supported
 - mm, degree, and scalar units supported, other units will result in unpredicted values
 
 ![MainForm](./MainForm.png)
+
+An example assembly is provided [here](./Crane.zip)
+![Crane](./Crane.png)
