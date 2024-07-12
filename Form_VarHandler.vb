@@ -8,19 +8,26 @@ Public Class Form_VarHandler
 
     Private Sub BT_Aggiungi_Click(sender As Object, e As EventArgs) Handles BT_Aggiungi.Click
 
-        Dim tmpVarName As String = InputBox("Variable name")
+        Dim tmpForm As New Form_SelectVariable
+        tmpForm.objDoc = objDoc
+        tmpForm.ShowDialog(Me)
 
-        Dim tmpSlider As New UC_Slider(tmpVarName, objDoc)
+        If tmpForm.objVarName <> "" Then
 
-        If tmpSlider.Valid Then
+            Dim tmpSlider As New UC_Slider(tmpForm.objVarName, objDoc)
 
-            AddHandler tmpSlider.LB_value.TextChanged, AddressOf Slider_Click
+            If tmpSlider.Valid Then
 
-            FLP_Vars.Controls.Add(tmpSlider)
+                AddHandler tmpSlider.LB_value.TextChanged, AddressOf Slider_Click
 
-            SetupAnchors()
+                FLP_Vars.Controls.Add(tmpSlider)
+
+                SetupAnchors()
+
+            End If
 
         End If
+
 
     End Sub
 

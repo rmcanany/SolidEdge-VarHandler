@@ -91,6 +91,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Form_SelectVariable.Designer.vb">
+      <DependentUpon>Form_SelectVariable.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form_SelectVariable.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form_VarHandler.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -122,6 +128,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Form_SelectVariable.resx">
+      <DependentUpon>Form_SelectVariable.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form_VarHandler.resx">
       <DependentUpon>Form_VarHandler.vb</DependentUpon>
     </EmbeddedResource>
@@ -187,6 +196,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="MainForm.png" />
+    <None Include="Resources\icons8_cancel_16.png" />
+    <None Include="Resources\icons8_ok_16.png" />
     <Content Include="slider.ico" />
   </ItemGroup>
   <ItemGroup>
