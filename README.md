@@ -10,12 +10,15 @@ Feature list:
 - Ability to vary Minimum and Maximum range from the user interface (click on values to prompt)
 - Exposed name retrieved from the variable table (if available)
 - Ability to vary Exposed name from the variable table (double click on the title to prompt)
-- Checkbox to auto retrieve the variable on reload
+- Checkbox to auto-retrieve the variable on reload (**Autotune** on comments field)
 - Remove button
 - Reload button
 - Taskbar to easily change values
 - ReadOnly variables supported
 - Works on any Solid Edge environment (par, psm, asm, dft)
+
+Release versions:
+- 0.1 Very initial and rude one
 
 Known limits:
 - Only user variables supported
@@ -25,3 +28,4 @@ Known limits:
 
 An example assembly is provided [here](./Crane.zip)
 ![Crane](./Crane.png)
+![Variable table](./VarTable.png)
