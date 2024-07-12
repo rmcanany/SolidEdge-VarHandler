@@ -17,7 +17,7 @@ Feature list:
 - ReadOnly variables supported
 - Works on any Solid Edge environment (par, psm, asm, dft)
 
-Release versions:
+Release versions [here](https://github.com/farfilli/SolidEdge-VarHandler/releases):
 - 0.1 Very initial and rude one
 
 Known limits:
