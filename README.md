@@ -4,7 +4,8 @@ Inspired by a post on Siemens Community I decided to create this control center 
 
 The actual version is limited and will perhaps be expanded per user requests
 
-Feature list:
+
+**Feature list:**
 - Add any user variables
 - Minimum and Maximum range retrieved from the variable table (if available)
 - Ability to vary Minimum and Maximum range from the user interface (click on values to prompt)
@@ -17,12 +18,19 @@ Feature list:
 - ReadOnly variables supported
 - Works on any Solid Edge environment (par, psm, asm, dft)
 
+
 Release versions [here](https://github.com/farfilli/SolidEdge-VarHandler/releases):
 - 0.1 Very initial and rude one
 
-Known limits:
+
+**Known limits:**
 - Only user variables supported
 - mm, degree, and scalar units supported, other units will result in unpredicted values
+
+Video in action [here](https://www.youtube.com/watch?v=izA-oFQAoVA&ab_channel=FrancescoArfilli)
+
+
+**User UI:**
 
 ![MainForm](./MainForm.png)
 
