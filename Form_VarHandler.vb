@@ -77,8 +77,19 @@ Public Class Form_VarHandler
 
     Private Sub Form_VarHandler_Load(sender As Object, e As EventArgs) Handles Me.Load
 
-        objApp = GetObject(, "SolidEdge.Application")
-        objDoc = objApp.ActiveDocument
+        Try
+            objApp = GetObject(, "SolidEdge.Application")
+        Catch ex As Exception
+            MsgBox("Solid Edge must be open", MsgBoxStyle.Critical)
+            End
+        End Try
+
+        Try
+            objDoc = objApp.ActiveDocument
+        Catch ex As Exception
+            MsgBox("A Solid Edge Document must be open", MsgBoxStyle.Critical)
+            End
+        End Try
 
         Autotune()
 

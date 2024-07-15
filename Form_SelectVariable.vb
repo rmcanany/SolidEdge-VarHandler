@@ -13,9 +13,13 @@ Public Class Form_SelectVariable
         If FindVars.count > 0 Then
 
             ListBox_Variables.Items.Clear()
+            ListBox_Variables.DisplayMember = "Name"
 
             For Each item In FindVars
-                ListBox_Variables.Items.Add(item.name)
+
+                Dim tmpVar As New VarListItem(item)
+                ListBox_Variables.Items.Add(tmpVar)
+
             Next
 
         End If
@@ -26,7 +30,7 @@ Public Class Form_SelectVariable
 
         If Not IsNothing(ListBox_Variables.SelectedItem) Then
 
-            objVarName = ListBox_Variables.SelectedItem
+            objVarName = ListBox_Variables.SelectedItem.VarName
 
         End If
 
@@ -41,5 +45,45 @@ Public Class Form_SelectVariable
         Me.Close()
 
     End Sub
+
+End Class
+
+Public Class VarListItem
+
+    Public Property Name As String
+    Public Property VarName As String
+    Public Property Value As String
+    Public Property Formula As String
+
+    Public Sub New(objVar As SolidEdgeFramework.variable)
+
+        VarName = objVar.Name
+        Formula = objVar.Formula
+
+        Dim UnitType = objVar.UnitsType
+
+        If UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitDistance Then
+
+            Value = CInt(objVar.Value * 1000).ToString
+
+        ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitAngle Then
+
+            Value = CInt(objVar.Value * 180 / Math.PI).ToString
+
+        Else
+
+            Value = CInt(objVar.Value).ToString
+
+        End If
+
+
+        If Formula = "" Then
+            Name = objVar.Name & " = " & Value
+        Else
+            Name = objVar.Name & " = " & objVar.Formula
+        End If
+
+    End Sub
+
 
 End Class
