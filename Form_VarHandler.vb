@@ -1,4 +1,5 @@
-﻿Imports System.Net.WebRequestMethods
+﻿Imports System.ComponentModel
+Imports System.Net.WebRequestMethods
 Imports SolidEdgeFramework
 
 Public Class Form_VarHandler
@@ -14,7 +15,7 @@ Public Class Form_VarHandler
 
         If tmpForm.objVarName <> "" Then
 
-            Dim tmpSlider As New UC_Slider(tmpForm.objVarName, objDoc)
+            Dim tmpSlider As New UC_Slider(tmpForm.objVar)
 
             If tmpSlider.Valid Then
 
@@ -112,7 +113,7 @@ Public Class Form_VarHandler
 
         If variableList.Count > 0 Then
 
-            Dim tmpList As New List(Of String)
+            Dim tmpList As New List(Of variable)
 
             For Each item As SolidEdgeFramework.variable In variableList
 
@@ -120,7 +121,7 @@ Public Class Form_VarHandler
 
                 If item.GetComment = "Autotune" Then
 
-                    tmpList.Add(item.Name)
+                    tmpList.Add(item)
 
                 End If
 
@@ -128,8 +129,9 @@ Public Class Form_VarHandler
 
             For Each item In tmpList
 
-                Dim tmpSlider As New UC_Slider(item, objDoc)
+                Dim tmpSlider As New UC_Slider(item)
                 AddHandler tmpSlider.LB_value.TextChanged, AddressOf Slider_Click
+
                 FLP_Vars.Controls.Add(tmpSlider)
 
             Next

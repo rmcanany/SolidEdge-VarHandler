@@ -3,6 +3,7 @@
 Public Class Form_SelectVariable
 
     Public objDoc As SolidEdgeFramework.SolidEdgeDocument
+    Public objVar As SolidEdgeFramework.variable
     Public objVarName As String
 
     Private Sub Form_SelectVariable_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -31,6 +32,7 @@ Public Class Form_SelectVariable
         If Not IsNothing(ListBox_Variables.SelectedItem) Then
 
             objVarName = ListBox_Variables.SelectedItem.VarName
+            objVar = ListBox_Variables.SelectedItem.objVariable
 
         End If
 
@@ -54,28 +56,22 @@ Public Class VarListItem
     Public Property VarName As String
     Public Property Value As String
     Public Property Formula As String
-
+    Public Property objVariable As SolidEdgeFramework.variable
     Public Sub New(objVar As SolidEdgeFramework.variable)
 
         VarName = objVar.Name
         Formula = objVar.Formula
+        objVariable = objVar
 
         Dim UnitType = objVar.UnitsType
 
+        Value = UC_Slider.CadToValue(objVar.Value, UnitType).ToString
+
         If UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitDistance Then
-
-            Value = CInt(objVar.Value * 1000).ToString
-
+            Value = Value & " mm"
         ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitAngle Then
-
-            Value = CInt(objVar.Value * 180 / Math.PI).ToString
-
-        Else
-
-            Value = CInt(objVar.Value).ToString
-
+            Value = Value & " °"
         End If
-
 
         If Formula = "" Then
             Name = objVar.Name & " = " & Value
@@ -84,6 +80,5 @@ Public Class VarListItem
         End If
 
     End Sub
-
 
 End Class

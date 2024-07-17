@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class UC_Slider
     Inherits System.Windows.Forms.UserControl
 
     'UserControl overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,16 +20,18 @@ Partial Class UC_Slider
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.GroupBox_Slider = New System.Windows.Forms.GroupBox()
         Me.LB_max = New System.Windows.Forms.Label()
         Me.LB_value = New System.Windows.Forms.Label()
         Me.LB_name = New System.Windows.Forms.Label()
         Me.LB_min = New System.Windows.Forms.Label()
-        Me.TrackBar = New System.Windows.Forms.TrackBar()
         Me.BT_Delete = New System.Windows.Forms.Button()
+        Me.BT_Play = New System.Windows.Forms.Button()
         Me.BT_Pinned = New System.Windows.Forms.Button()
+        Me.TrackBar = New System.Windows.Forms.TrackBar()
+        Me.BG_Play = New System.ComponentModel.BackgroundWorker()
         Me.GroupBox_Slider.SuspendLayout()
         CType(Me.TrackBar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -39,15 +41,15 @@ Partial Class UC_Slider
         Me.GroupBox_Slider.AutoSize = True
         Me.GroupBox_Slider.BackColor = System.Drawing.Color.Transparent
         Me.GroupBox_Slider.Controls.Add(Me.LB_max)
-        Me.GroupBox_Slider.Controls.Add(Me.LB_value)
         Me.GroupBox_Slider.Controls.Add(Me.LB_name)
         Me.GroupBox_Slider.Controls.Add(Me.LB_min)
         Me.GroupBox_Slider.Controls.Add(Me.BT_Delete)
+        Me.GroupBox_Slider.Controls.Add(Me.BT_Play)
         Me.GroupBox_Slider.Controls.Add(Me.BT_Pinned)
         Me.GroupBox_Slider.Controls.Add(Me.TrackBar)
+        Me.GroupBox_Slider.Controls.Add(Me.LB_value)
         Me.GroupBox_Slider.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox_Slider.Location = New System.Drawing.Point(0, 0)
-        Me.GroupBox_Slider.Margin = New System.Windows.Forms.Padding(0)
         Me.GroupBox_Slider.Name = "GroupBox_Slider"
         Me.GroupBox_Slider.Size = New System.Drawing.Size(283, 90)
         Me.GroupBox_Slider.TabIndex = 0
@@ -68,6 +70,7 @@ Partial Class UC_Slider
         'LB_value
         '
         Me.LB_value.AutoSize = True
+        Me.LB_value.ForeColor = System.Drawing.Color.Red
         Me.LB_value.Location = New System.Drawing.Point(51, 16)
         Me.LB_value.Name = "LB_value"
         Me.LB_value.Size = New System.Drawing.Size(34, 13)
@@ -95,18 +98,6 @@ Partial Class UC_Slider
         Me.LB_min.Text = "min"
         Me.LB_min.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
-        'TrackBar
-        '
-        Me.TrackBar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TrackBar.AutoSize = False
-        Me.TrackBar.BackColor = System.Drawing.Color.White
-        Me.TrackBar.Location = New System.Drawing.Point(3, 52)
-        Me.TrackBar.Name = "TrackBar"
-        Me.TrackBar.Size = New System.Drawing.Size(277, 35)
-        Me.TrackBar.TabIndex = 0
-        Me.TrackBar.TickStyle = System.Windows.Forms.TickStyle.TopLeft
-        '
         'BT_Delete
         '
         Me.BT_Delete.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -119,6 +110,20 @@ Partial Class UC_Slider
         Me.BT_Delete.Size = New System.Drawing.Size(20, 20)
         Me.BT_Delete.TabIndex = 1
         Me.BT_Delete.UseVisualStyleBackColor = True
+        '
+        'BT_Play
+        '
+        Me.BT_Play.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BT_Play.FlatAppearance.BorderSize = 0
+        Me.BT_Play.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BT_Play.Image = Global.SolidEdge_VarHandler.My.Resources.Resources.Play
+        Me.BT_Play.Location = New System.Drawing.Point(220, 7)
+        Me.BT_Play.Margin = New System.Windows.Forms.Padding(0)
+        Me.BT_Play.Name = "BT_Play"
+        Me.BT_Play.Size = New System.Drawing.Size(20, 20)
+        Me.BT_Play.TabIndex = 1
+        Me.BT_Play.Tag = "Play"
+        Me.BT_Play.UseVisualStyleBackColor = True
         '
         'BT_Pinned
         '
@@ -133,6 +138,21 @@ Partial Class UC_Slider
         Me.BT_Pinned.TabIndex = 1
         Me.BT_Pinned.Tag = "Unchecked"
         Me.BT_Pinned.UseVisualStyleBackColor = True
+        '
+        'TrackBar
+        '
+        Me.TrackBar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TrackBar.AutoSize = False
+        Me.TrackBar.BackColor = System.Drawing.Color.White
+        Me.TrackBar.Location = New System.Drawing.Point(3, 52)
+        Me.TrackBar.Name = "TrackBar"
+        Me.TrackBar.Size = New System.Drawing.Size(277, 35)
+        Me.TrackBar.TabIndex = 0
+        Me.TrackBar.TickStyle = System.Windows.Forms.TickStyle.TopLeft
+        '
+        'BG_Play
+        '
         '
         'UC_Slider
         '
@@ -159,4 +179,6 @@ Partial Class UC_Slider
     Friend WithEvents LB_min As Label
     Friend WithEvents LB_name As Label
     Friend WithEvents BT_Pinned As Button
+    Friend WithEvents BT_Play As Button
+    Friend WithEvents BG_Play As System.ComponentModel.BackgroundWorker
 End Class

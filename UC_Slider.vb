@@ -1,14 +1,21 @@
-﻿Public Class UC_Slider
+﻿
+Imports System.ComponentModel
+Imports SolidEdgeFramework
+
+Public Class UC_Slider
 
     Dim VarName As String = ""
 
-    Dim min As Double = 0
-    Dim max As Double = 0
+    Dim min As Integer = 0
+    Dim max As Integer = 0
+
     Dim steps As Integer = 20
+    Dim TrackbarStep As Integer
 
     Dim UnitType As SolidEdgeFramework.UnitTypeConstants
-    Dim objDoc As SolidEdgeFramework.SolidEdgeDocument
     Dim objVar As SolidEdgeFramework.variable
+
+    Dim Multiplier As Integer = 10
 
     Public Function Valid() As Boolean
 
@@ -20,23 +27,18 @@
 
     End Function
 
-    Public Sub New(Name As String, objDocV As SolidEdgeFramework.SolidEdgeDocument)
+    Public Sub New(objVarV As SolidEdgeFramework.variable)
 
         ' This call is required by the designer.
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
 
-        objDoc = objDocV
-        objVar = FindVar(objDoc, Name)
+        objVar = objVarV
 
-        If IsNothing(objVar) Then
-            Exit Sub
-        End If
+        UnitType = CType(objVar.UnitsType, UnitTypeConstants)
 
-        UnitType = objVar.UnitsType
-
-        If objVar.ExposeName <> "" Then VarName = objVar.ExposeName Else VarName = Name
+        If objVar.ExposeName <> "" Then VarName = objVar.ExposeName Else VarName = objVar.Name
 
         Dim minV As Double
         Dim maxV As Double
@@ -44,39 +46,25 @@
         objVar.GetValueRangeHighValue(maxV)
         objVar.GetValueRangeLowValue(minV)
 
-        If UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitDistance Then
-            maxV = maxV * 1000
-            minV = minV * 1000
-        ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitAngle Then
-            maxV = maxV * 180 / Math.PI
-            minV = minV * 180 / Math.PI
-        Else
-            'Scalar value do not need conversions
-        End If
+        maxV = CadToValue(maxV, UnitType)
+        minV = CadToValue(minV, UnitType)
 
-        If CInt(maxV) <> 0 Then max = CInt(maxV)
-        If CInt(minV) <> 0 Then min = CInt(minV)
+        If CInt(maxV) <> 0 Or CInt(minV) <> 0 Then
+            max = CInt(maxV)
+            min = CInt(minV)
+        End If
 
         If min = 0 And max = 0 Then
-            min = CInt(objVar.Value * 0.9)
-            max = CInt(objVar.Value * 1.1)
+            min = CInt(CadToValue(objVar.Value, UnitType)) - 10
+            max = CInt(CadToValue(objVar.Value, UnitType)) + 10
         End If
-        'If UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitDistance Then
-        '    min = CInt(objVar.Value * 1000 * 0.9)
-        '    max = CInt(objVar.Value * 1000 * 1.1)
-        'ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitAngle Then
-        '    min = (objVar.Value * 180 / Math.PI) * 0.9
-        '    max = (objVar.Value * 180 / Math.PI) * 1.1
-        'Else
-        '    min = CInt(objVar.Value * 0.9)
-        '    max = CInt(objVar.Value * 1.1)
-        'End If
 
         If objVar.IsReadOnly Or objVar.Formula <> "" Then
             TrackBar.Visible = False
             LB_max.Visible = False
             LB_min.Visible = False
-            Me.Height = Me.Height / 2
+            Me.Height = CInt(Me.Height / 2)
+            BT_Play.Visible = False
         End If
 
         SetTrackBar()
@@ -85,55 +73,39 @@
 
     Private Sub SetTrackBar()
 
-        TrackBar.Minimum = CInt(min)
-        TrackBar.Maximum = CInt(max)
-        TrackBar.TickFrequency = CInt((max - min) / steps)
+        TrackBar.Minimum = min
+        TrackBar.Maximum = max
+
+        TrackbarStep = CInt((max - min) / steps)
+        TrackBar.TickFrequency = TrackbarStep 'CInt((max - min) / steps)
+
+        TrackBar.SmallChange = TrackBar.TickFrequency / 5
+        TrackBar.LargeChange = TrackBar.TickFrequency
 
         GroupBox_Slider.Text = VarName
-        LB_min.Text = CInt(min).ToString
-        LB_max.Text = CInt(max).ToString
+        LB_min.Text = min.ToString
+        LB_max.Text = max.ToString
 
-        If UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitDistance Then
-            If CInt(objVar.Value * 1000) < TrackBar.Minimum Then
-                TrackBar.Value = TrackBar.Minimum
-                objVar.Value = TrackBar.Value / 1000
-            ElseIf CInt(objVar.Value * 1000) > TrackBar.Maximum Then
-                TrackBar.Value = TrackBar.Maximum
-                objVar.Value = TrackBar.Value / 1000
-            Else
-                TrackBar.Value = CInt(objVar.Value * 1000)
-            End If
-        ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitAngle Then
-            If CInt(objVar.Value * 180 / Math.PI) < TrackBar.Minimum Then
-                TrackBar.Value = TrackBar.Minimum
-                objVar.Value = TrackBar.Value * Math.PI / 180
-            ElseIf CInt(objVar.Value * 180 / Math.PI) > TrackBar.Maximum Then
-                TrackBar.Value = TrackBar.Maximum
-                objVar.Value = TrackBar.Value * Math.PI / 180
-            Else
-                TrackBar.Value = CInt(objVar.Value * 180 / Math.PI)
-            End If
+        If CadToValue(objVar.Value, UnitType) < TrackBar.Minimum Then
+            TrackBar.Value = TrackBar.Minimum
+            objVar.Value = ValueToCad(TrackBar.Value, UnitType)
+        ElseIf CadToValue(objVar.Value, UnitType) > TrackBar.Maximum Then
+            TrackBar.Value = TrackBar.Maximum
+            objVar.Value = ValueToCad(TrackBar.Value, UnitType)
         Else
-            If CInt(objVar.Value) < TrackBar.Minimum Then
-                TrackBar.Value = TrackBar.Minimum
-                objVar.Value = TrackBar.Value
-            ElseIf CInt(objVar.Value) > TrackBar.Maximum Then
-                TrackBar.Value = TrackBar.Maximum
-                objVar.Value = TrackBar.Value
-            Else
-                TrackBar.Value = CInt(objVar.Value)
-            End If
+            TrackBar.Value = CInt(CadToValue(objVar.Value, UnitType))
         End If
 
-        LB_value.Text = TrackBar.Value.ToString
-        LB_name.Text = objVar.Name  '<-- Eliminare
+        LB_value.Text = CadToValue(objVar.Value, UnitType).ToString  'TrackBar.Value.ToString
+
+        LB_name.Text = objVar.Name
 
         If objVar.GetComment = "Autotune" Then
             BT_Pinned.Tag = "Checked"
             BT_Pinned.Image = My.Resources.Checked
         End If
 
-        LB_value.Visible = False
+        LB_value.ForeColor = Color.Transparent
 
         UpdateLabel()
 
@@ -141,22 +113,16 @@
 
     Private Sub BT_Delete_Click(sender As Object, e As EventArgs) Handles BT_Delete.Click
 
-        Dim tmpFLP As FlowLayoutPanel = Me.Parent
+        Dim tmpFLP As FlowLayoutPanel = CType(Me.Parent, FlowLayoutPanel)
         If tmpFLP.Controls.Contains(Me) Then tmpFLP.Controls.Remove(Me)
 
     End Sub
 
     Private Sub TrackBar_Scroll(sender As Object, e As EventArgs) Handles TrackBar.Scroll
 
-        If UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitDistance Then
-            objVar.Value = TrackBar.Value / 1000
-        ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitAngle Then
-            objVar.Value = TrackBar.Value * Math.PI / 180
-        Else
-            objVar.Value = TrackBar.Value
-        End If
+        objVar.Value = ValueToCad(TrackBar.Value, UnitType)
 
-        LB_value.Text = TrackBar.Value.ToString '<---- da eliminare
+        LB_value.Text = TrackBar.Value.ToString
 
         UpdateLabel()
 
@@ -164,29 +130,9 @@
 
     Public Sub UpdateLabel()
 
-        If objVar.IsReadOnly Or objVar.Formula <> "" Then
+        LB_value.Text = CadToValue(objVar.Value, UnitType).ToString
 
-            If UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitDistance Then
-
-                LB_value.Text = CInt(objVar.Value * 1000)
-
-            ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitAngle Then
-
-                LB_value.Text = CInt(objVar.Value * 180 / Math.PI)
-
-            Else
-
-                LB_value.Text = CInt(objVar.Value)
-
-            End If
-
-            LB_name.Text = objVar.Name & " = " & LB_value.Text
-
-        Else
-
-            LB_name.Text = objVar.Name & " = " & TrackBar.Value.ToString
-
-        End If
+        LB_name.Text = objVar.Name & " = " & LB_value.Text
 
         If UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitDistance Then
             LB_name.Text = LB_name.Text & " mm"
@@ -195,16 +141,6 @@
         End If
 
     End Sub
-
-    Private Function FindVar(objDoc As SolidEdgeFramework.SolidEdgeDocument, VarNameV As String) As Object
-
-        Dim tmpVars As SolidEdgeFramework.Variables = objDoc.Variables
-
-        Dim tmpVar = tmpVars.Query(VarNameV)
-
-        If tmpVar.count > 0 Then Return tmpVar.item(1)
-
-    End Function
 
     Private Sub LB_min_Click(sender As Object, e As EventArgs) Handles LB_min.Click
 
@@ -236,7 +172,6 @@
 
     End Sub
 
-
     Private Sub GroupBox_Slider_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles GroupBox_Slider.MouseDoubleClick
 
         Try
@@ -256,7 +191,7 @@
 
     Private Sub BT_Pinned_Click(sender As Object, e As EventArgs) Handles BT_Pinned.Click
 
-        If BT_Pinned.Tag = "Unchecked" Then
+        If BT_Pinned.Tag.ToString = "Unchecked" Then
 
             BT_Pinned.Tag = "Checked"
             BT_Pinned.Image = My.Resources.Checked
@@ -271,5 +206,156 @@
         End If
 
     End Sub
+
+    Public Shared Function CadToValue(Value As Double, UnitType As SolidEdgeFramework.UnitTypeConstants) As Double
+
+        If UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitDistance Then
+
+            CadToValue = Value * 1000
+
+        ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitAngle Then
+
+            CadToValue = Value * 180 / Math.PI
+
+        Else
+
+            CadToValue = Value
+
+        End If
+
+    End Function
+
+    Public Shared Function ValueToCad(Value As Double, UnitType As SolidEdgeFramework.UnitTypeConstants) As Double
+
+        If UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitDistance Then
+
+            ValueToCad = Value / 1000
+
+        ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitAngle Then
+
+            ValueToCad = Value * Math.PI / 180
+
+        Else
+
+            ValueToCad = Value
+
+        End If
+
+    End Function
+
+    Private Sub BT_Play_Click(sender As Object, e As EventArgs) Handles BT_Play.Click
+
+        If BT_Play.Tag = "Play" Then
+
+            BT_Play.Image = My.Resources._Stop
+            BT_Play.Tag = "Stop"
+
+            BG_Play.WorkerSupportsCancellation = True
+            BG_Play.WorkerReportsProgress = True
+
+            BG_Play.RunWorkerAsync(TrackBar.Value)
+
+        Else
+
+            BT_Play.Image = My.Resources.Play
+            BT_Play.Tag = "Play"
+
+            If BG_Play.IsBusy Then BG_Play.CancelAsync()
+
+        End If
+
+    End Sub
+
+    Private Sub BG_Play_DoWork(sender As Object, e As DoWorkEventArgs) Handles BG_Play.DoWork
+
+        Dim ProgressValue As Integer = CInt(e.Argument)
+
+        Do Until ProgressValue = max
+            If ProgressValue + TrackBarStep > max Then
+                ProgressValue = max
+            Else
+                ProgressValue += TrackBarStep
+            End If
+
+            objVar.Value = ValueToCad(ProgressValue, UnitType)
+
+            'Example for future point tracking
+            'For Each item As UC_Slider In Me.Parent.Controls
+            '    If item.objVar.Name = "F" Or item.objVar.Name = "C" Then
+            '        Console.WriteLine(item.objVar.Name & " - " & item.objVar.Value.ToString)
+            '    End If
+            'Next
+
+            BG_Play.ReportProgress((ProgressValue - min / max - min) * 100, ProgressValue.ToString)
+
+            If BG_Play.CancellationPending Then
+
+                e.Cancel = True
+                Return
+
+            End If
+
+        Loop
+
+    End Sub
+
+    Private Sub BG_Play_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles BG_Play.RunWorkerCompleted
+
+        BT_Play.Image = My.Resources.Play
+        BT_Play.Tag = "Play"
+
+        UpdateLabel() '<-- A lavoro completato scateniamo l'aggiornamento di tutta l'interfaccia. I valori restituiti da Solid Edge dovrebbero essere tutti corretti
+
+    End Sub
+
+
+    Private Sub BG_Play_ProgressChanged(sender As Object, e As ProgressChangedEventArgs) Handles BG_Play.ProgressChanged
+
+        TrackBar.Value = CInt(e.UserState)
+
+        'LB_value.Text = "" <--- questo causa l'evento nel form principale che scatena l'aggiornamento di tutti gli Slider e rende l'interfaccia non responsiva.
+
+        LB_name.Text = objVar.Name & " = " & e.UserState
+
+        If UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitDistance Then
+            LB_name.Text = LB_name.Text & " mm"
+        ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitAngle Then
+            LB_name.Text = LB_name.Text & " °"
+        End If
+
+        'For Each item As UC_Slider In Me.Parent.Controls
+
+        '    item.LB_name.Text = item.objVar.Name & " = " & CadToValue(item.objVar.Value, UnitType).ToString
+
+        '    If UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitDistance Then
+        '        LB_name.Text = LB_name.Text & " mm"
+        '    ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitAngle Then
+        '        LB_name.Text = LB_name.Text & " °"
+        '    End If
+
+        'Next
+
+    End Sub
+
+
+
+    Public Function GetMin() As Integer
+
+        Return min
+
+    End Function
+
+    Public Function GetMax() As Integer
+
+        Return max
+
+    End Function
+
+    Public Function GetSteps() As Integer
+
+        Return steps
+
+    End Function
+
 
 End Class

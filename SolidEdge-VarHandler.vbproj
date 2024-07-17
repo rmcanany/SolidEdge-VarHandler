@@ -198,6 +198,9 @@
     <Content Include="MainForm.png" />
     <None Include="Resources\icons8_cancel_16.png" />
     <None Include="Resources\icons8_ok_16.png" />
+    <None Include="Resources\icons8_circled_play_16.png" />
+    <None Include="Resources\icons8_youtube_16.png" />
+    <None Include="Resources\icons8_stop_squared_16.png" />
     <Content Include="slider.ico" />
   </ItemGroup>
   <ItemGroup>
