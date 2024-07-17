@@ -27,11 +27,12 @@ Partial Class UC_Slider
         Me.LB_value = New System.Windows.Forms.Label()
         Me.LB_name = New System.Windows.Forms.Label()
         Me.LB_min = New System.Windows.Forms.Label()
+        Me.TrackBar = New System.Windows.Forms.TrackBar()
+        Me.BG_Play = New System.ComponentModel.BackgroundWorker()
         Me.BT_Delete = New System.Windows.Forms.Button()
         Me.BT_Play = New System.Windows.Forms.Button()
         Me.BT_Pinned = New System.Windows.Forms.Button()
-        Me.TrackBar = New System.Windows.Forms.TrackBar()
-        Me.BG_Play = New System.ComponentModel.BackgroundWorker()
+        Me.BT_Loop = New System.Windows.Forms.Button()
         Me.GroupBox_Slider.SuspendLayout()
         CType(Me.TrackBar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -40,6 +41,7 @@ Partial Class UC_Slider
         '
         Me.GroupBox_Slider.AutoSize = True
         Me.GroupBox_Slider.BackColor = System.Drawing.Color.Transparent
+        Me.GroupBox_Slider.Controls.Add(Me.BT_Loop)
         Me.GroupBox_Slider.Controls.Add(Me.LB_max)
         Me.GroupBox_Slider.Controls.Add(Me.LB_name)
         Me.GroupBox_Slider.Controls.Add(Me.LB_min)
@@ -98,6 +100,21 @@ Partial Class UC_Slider
         Me.LB_min.Text = "min"
         Me.LB_min.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
+        'TrackBar
+        '
+        Me.TrackBar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TrackBar.AutoSize = False
+        Me.TrackBar.BackColor = System.Drawing.Color.White
+        Me.TrackBar.Location = New System.Drawing.Point(3, 52)
+        Me.TrackBar.Name = "TrackBar"
+        Me.TrackBar.Size = New System.Drawing.Size(277, 35)
+        Me.TrackBar.TabIndex = 0
+        Me.TrackBar.TickStyle = System.Windows.Forms.TickStyle.TopLeft
+        '
+        'BG_Play
+        '
+        '
         'BT_Delete
         '
         Me.BT_Delete.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -139,20 +156,20 @@ Partial Class UC_Slider
         Me.BT_Pinned.Tag = "Unchecked"
         Me.BT_Pinned.UseVisualStyleBackColor = True
         '
-        'TrackBar
+        'BT_Loop
         '
-        Me.TrackBar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TrackBar.AutoSize = False
-        Me.TrackBar.BackColor = System.Drawing.Color.White
-        Me.TrackBar.Location = New System.Drawing.Point(3, 52)
-        Me.TrackBar.Name = "TrackBar"
-        Me.TrackBar.Size = New System.Drawing.Size(277, 35)
-        Me.TrackBar.TabIndex = 0
-        Me.TrackBar.TickStyle = System.Windows.Forms.TickStyle.TopLeft
-        '
-        'BG_Play
-        '
+        Me.BT_Loop.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BT_Loop.BackColor = System.Drawing.Color.Transparent
+        Me.BT_Loop.FlatAppearance.BorderSize = 0
+        Me.BT_Loop.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BT_Loop.Image = Global.SolidEdge_VarHandler.My.Resources.Resources._Loop
+        Me.BT_Loop.Location = New System.Drawing.Point(199, 7)
+        Me.BT_Loop.Margin = New System.Windows.Forms.Padding(0)
+        Me.BT_Loop.Name = "BT_Loop"
+        Me.BT_Loop.Size = New System.Drawing.Size(20, 20)
+        Me.BT_Loop.TabIndex = 3
+        Me.BT_Loop.Tag = "Unchecked"
+        Me.BT_Loop.UseVisualStyleBackColor = False
         '
         'UC_Slider
         '
@@ -181,4 +198,5 @@ Partial Class UC_Slider
     Friend WithEvents BT_Pinned As Button
     Friend WithEvents BT_Play As Button
     Friend WithEvents BG_Play As System.ComponentModel.BackgroundWorker
+    Friend WithEvents BT_Loop As Button
 End Class

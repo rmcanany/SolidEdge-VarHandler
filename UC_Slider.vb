@@ -16,6 +16,8 @@ Public Class UC_Slider
     Dim objVar As SolidEdgeFramework.variable
 
     Dim Multiplier As Integer = 10
+    Dim PlayLoop As Boolean = False
+    Dim Forward As Boolean = True
 
     Public Function Valid() As Boolean
 
@@ -65,6 +67,7 @@ Public Class UC_Slider
             LB_min.Visible = False
             Me.Height = CInt(Me.Height / 2)
             BT_Play.Visible = False
+            BT_Loop.Visible = False
         End If
 
         SetTrackBar()
@@ -270,11 +273,24 @@ Public Class UC_Slider
 
         Dim ProgressValue As Integer = CInt(e.Argument)
 
-        Do Until ProgressValue = max
-            If ProgressValue + TrackBarStep > max Then
-                ProgressValue = max
+        Do 'Until ProgressValue = max
+
+            If Forward Then
+
+                If ProgressValue + TrackbarStep >= max Then
+                    ProgressValue = max
+                Else
+                    ProgressValue += TrackbarStep
+                End If
+
             Else
-                ProgressValue += TrackBarStep
+
+                If ProgressValue - TrackbarStep <= min Then
+                    ProgressValue = min
+                Else
+                    ProgressValue -= TrackbarStep
+                End If
+
             End If
 
             objVar.Value = ValueToCad(ProgressValue, UnitType)
@@ -292,6 +308,22 @@ Public Class UC_Slider
 
                 e.Cancel = True
                 Return
+
+            End If
+
+            If Forward Then
+
+                If ProgressValue = max Then
+                    Forward = False
+                    If Not PlayLoop Then Return
+                End If
+
+            Else
+
+                If ProgressValue = min Then
+                    Forward = True
+                    If Not PlayLoop Then Return
+                End If
 
             End If
 
@@ -357,5 +389,22 @@ Public Class UC_Slider
 
     End Function
 
+    Private Sub BT_Loop_Click(sender As Object, e As EventArgs) Handles BT_Loop.Click
+
+        If BT_Loop.Tag = "Checked" Then
+
+            BT_Loop.Tag = "Unchecked"
+            BT_Loop.BackColor = Color.Transparent
+            PlayLoop = False
+
+        Else
+
+            BT_Loop.Tag = "Checked"
+            BT_Loop.BackColor = Color.Gainsboro
+            PlayLoop = True
+
+        End If
+
+    End Sub
 
 End Class
