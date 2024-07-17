@@ -21,7 +21,7 @@ The actual version is limited and will perhaps be expanded per user requests
 
 Release versions [here](https://github.com/farfilli/SolidEdge-VarHandler/releases):
 - 0.1 Very initial and rude one
-
+- 0.2 Better error handling, variable selector and stay on top
 
 **Known limits:**
 - Only user variables supported
@@ -33,6 +33,7 @@ Video in action [here](https://www.youtube.com/watch?v=izA-oFQAoVA&ab_channel=Fr
 **User UI:**
 
 ![MainForm](./MainForm.png)
+![Variable selector](./VarSelector.png)
 
 An example assembly is provided [here](./Crane.zip)
 ![Crane](./Crane.png)
