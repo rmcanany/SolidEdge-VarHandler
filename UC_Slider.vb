@@ -407,4 +407,39 @@ Public Class UC_Slider
 
     End Sub
 
+    Private Sub LB_name_Click(sender As Object, e As EventArgs) Handles LB_name.Click
+
+        If objVar.IsReadOnly Or objVar.Formula <> "" Then Return
+
+        Try
+            TrackBar.Value = InputBox("Set current value",, LB_value.Text)
+        Catch ex As Exception
+            Exit Sub
+        End Try
+
+        objVar.Value = ValueToCad(TrackBar.Value, UnitType)
+
+        LB_value.Text = TrackBar.Value.ToString
+
+        UpdateLabel()
+
+    End Sub
+
+    Private Sub LB_min_MouseHover(sender As Object, e As EventArgs) Handles LB_min.MouseHover, LB_max.MouseHover, LB_name.MouseHover
+
+        If objVar.IsReadOnly Or objVar.Formula <> "" Then Return
+        sender.ForeColor = Color.Blue
+        sender.font = New Font(LB_min.Font, FontStyle.Bold)
+
+    End Sub
+
+    Private Sub LB_min_MouseLeave(sender As Object, e As EventArgs) Handles LB_min.MouseLeave, LB_max.MouseLeave, LB_name.MouseLeave
+
+        If objVar.IsReadOnly Or objVar.Formula <> "" Then Return
+        sender.ForeColor = Color.Black
+        sender.font = New Font(LB_min.Font, FontStyle.Regular)
+
+    End Sub
+
+
 End Class

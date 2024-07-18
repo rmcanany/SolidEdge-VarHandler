@@ -24,21 +24,35 @@ Partial Class Form_VarHandler
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form_VarHandler))
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
+        Me.FLP_Vars = New System.Windows.Forms.FlowLayoutPanel()
         Me.BT_Reload = New System.Windows.Forms.ToolStripButton()
         Me.BT_Aggiungi = New System.Windows.Forms.ToolStripButton()
-        Me.FLP_Vars = New System.Windows.Forms.FlowLayoutPanel()
+        Me.BT_Tracker = New System.Windows.Forms.ToolStripButton()
         Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'ToolStrip1
         '
         Me.ToolStrip1.BackColor = System.Drawing.Color.White
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BT_Reload, Me.BT_Aggiungi})
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BT_Reload, Me.BT_Aggiungi, Me.BT_Tracker})
         Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
         Me.ToolStrip1.Name = "ToolStrip1"
         Me.ToolStrip1.Size = New System.Drawing.Size(269, 25)
         Me.ToolStrip1.TabIndex = 0
         Me.ToolStrip1.Text = "ToolStrip1"
+        '
+        'FLP_Vars
+        '
+        Me.FLP_Vars.AutoScroll = True
+        Me.FLP_Vars.BackColor = System.Drawing.Color.White
+        Me.FLP_Vars.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.FLP_Vars.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.FLP_Vars.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
+        Me.FLP_Vars.Location = New System.Drawing.Point(0, 25)
+        Me.FLP_Vars.Name = "FLP_Vars"
+        Me.FLP_Vars.Size = New System.Drawing.Size(269, 456)
+        Me.FLP_Vars.TabIndex = 1
+        Me.FLP_Vars.WrapContents = False
         '
         'BT_Reload
         '
@@ -57,18 +71,15 @@ Partial Class Form_VarHandler
         Me.BT_Aggiungi.Size = New System.Drawing.Size(93, 22)
         Me.BT_Aggiungi.Text = "Add Variable"
         '
-        'FLP_Vars
+        'BT_Tracker
         '
-        Me.FLP_Vars.AutoScroll = True
-        Me.FLP_Vars.BackColor = System.Drawing.Color.White
-        Me.FLP_Vars.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.FLP_Vars.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.FLP_Vars.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
-        Me.FLP_Vars.Location = New System.Drawing.Point(0, 25)
-        Me.FLP_Vars.Name = "FLP_Vars"
-        Me.FLP_Vars.Size = New System.Drawing.Size(269, 456)
-        Me.FLP_Vars.TabIndex = 1
-        Me.FLP_Vars.WrapContents = False
+        Me.BT_Tracker.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BT_Tracker.Image = Global.SolidEdge_VarHandler.My.Resources.Resources.cog
+        Me.BT_Tracker.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BT_Tracker.Name = "BT_Tracker"
+        Me.BT_Tracker.Size = New System.Drawing.Size(23, 22)
+        Me.BT_Tracker.Text = "Add Tracker"
+        Me.BT_Tracker.ToolTipText = "Adds a tracker that trace a polyline on its movement"
         '
         'Form_VarHandler
         '
@@ -93,4 +104,5 @@ Partial Class Form_VarHandler
     Friend WithEvents BT_Aggiungi As ToolStripButton
     Friend WithEvents FLP_Vars As FlowLayoutPanel
     Friend WithEvents BT_Reload As ToolStripButton
+    Friend WithEvents BT_Tracker As ToolStripButton
 End Class

@@ -202,6 +202,7 @@
     <None Include="Resources\icons8_youtube_16.png" />
     <None Include="Resources\icons8_stop_squared_16.png" />
     <None Include="Resources\icons8_repeat_16.png" />
+    <None Include="Resources\icons8_center_of_gravity_16_edited.png" />
     <Content Include="slider.ico" />
   </ItemGroup>
   <ItemGroup>

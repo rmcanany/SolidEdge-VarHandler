@@ -23,16 +23,16 @@ Partial Class UC_Slider
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.GroupBox_Slider = New System.Windows.Forms.GroupBox()
+        Me.BT_Loop = New System.Windows.Forms.Button()
         Me.LB_max = New System.Windows.Forms.Label()
-        Me.LB_value = New System.Windows.Forms.Label()
         Me.LB_name = New System.Windows.Forms.Label()
         Me.LB_min = New System.Windows.Forms.Label()
-        Me.TrackBar = New System.Windows.Forms.TrackBar()
-        Me.BG_Play = New System.ComponentModel.BackgroundWorker()
         Me.BT_Delete = New System.Windows.Forms.Button()
         Me.BT_Play = New System.Windows.Forms.Button()
         Me.BT_Pinned = New System.Windows.Forms.Button()
-        Me.BT_Loop = New System.Windows.Forms.Button()
+        Me.TrackBar = New System.Windows.Forms.TrackBar()
+        Me.LB_value = New System.Windows.Forms.Label()
+        Me.BG_Play = New System.ComponentModel.BackgroundWorker()
         Me.GroupBox_Slider.SuspendLayout()
         CType(Me.TrackBar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -58,6 +58,21 @@ Partial Class UC_Slider
         Me.GroupBox_Slider.TabStop = False
         Me.GroupBox_Slider.Text = "Name"
         '
+        'BT_Loop
+        '
+        Me.BT_Loop.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BT_Loop.BackColor = System.Drawing.Color.Transparent
+        Me.BT_Loop.FlatAppearance.BorderSize = 0
+        Me.BT_Loop.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BT_Loop.Image = Global.SolidEdge_VarHandler.My.Resources.Resources._Loop
+        Me.BT_Loop.Location = New System.Drawing.Point(199, 7)
+        Me.BT_Loop.Margin = New System.Windows.Forms.Padding(0)
+        Me.BT_Loop.Name = "BT_Loop"
+        Me.BT_Loop.Size = New System.Drawing.Size(20, 20)
+        Me.BT_Loop.TabIndex = 3
+        Me.BT_Loop.Tag = "Unchecked"
+        Me.BT_Loop.UseVisualStyleBackColor = False
+        '
         'LB_max
         '
         Me.LB_max.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -68,17 +83,6 @@ Partial Class UC_Slider
         Me.LB_max.TabIndex = 2
         Me.LB_max.Text = "max"
         Me.LB_max.TextAlign = System.Drawing.ContentAlignment.TopCenter
-        '
-        'LB_value
-        '
-        Me.LB_value.AutoSize = True
-        Me.LB_value.ForeColor = System.Drawing.Color.Red
-        Me.LB_value.Location = New System.Drawing.Point(51, 16)
-        Me.LB_value.Name = "LB_value"
-        Me.LB_value.Size = New System.Drawing.Size(34, 13)
-        Me.LB_value.TabIndex = 2
-        Me.LB_value.Text = "value"
-        Me.LB_value.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'LB_name
         '
@@ -99,21 +103,6 @@ Partial Class UC_Slider
         Me.LB_min.TabIndex = 2
         Me.LB_min.Text = "min"
         Me.LB_min.TextAlign = System.Drawing.ContentAlignment.TopCenter
-        '
-        'TrackBar
-        '
-        Me.TrackBar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TrackBar.AutoSize = False
-        Me.TrackBar.BackColor = System.Drawing.Color.White
-        Me.TrackBar.Location = New System.Drawing.Point(3, 52)
-        Me.TrackBar.Name = "TrackBar"
-        Me.TrackBar.Size = New System.Drawing.Size(277, 35)
-        Me.TrackBar.TabIndex = 0
-        Me.TrackBar.TickStyle = System.Windows.Forms.TickStyle.TopLeft
-        '
-        'BG_Play
-        '
         '
         'BT_Delete
         '
@@ -156,20 +145,31 @@ Partial Class UC_Slider
         Me.BT_Pinned.Tag = "Unchecked"
         Me.BT_Pinned.UseVisualStyleBackColor = True
         '
-        'BT_Loop
+        'TrackBar
         '
-        Me.BT_Loop.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.BT_Loop.BackColor = System.Drawing.Color.Transparent
-        Me.BT_Loop.FlatAppearance.BorderSize = 0
-        Me.BT_Loop.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BT_Loop.Image = Global.SolidEdge_VarHandler.My.Resources.Resources._Loop
-        Me.BT_Loop.Location = New System.Drawing.Point(199, 7)
-        Me.BT_Loop.Margin = New System.Windows.Forms.Padding(0)
-        Me.BT_Loop.Name = "BT_Loop"
-        Me.BT_Loop.Size = New System.Drawing.Size(20, 20)
-        Me.BT_Loop.TabIndex = 3
-        Me.BT_Loop.Tag = "Unchecked"
-        Me.BT_Loop.UseVisualStyleBackColor = False
+        Me.TrackBar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TrackBar.AutoSize = False
+        Me.TrackBar.BackColor = System.Drawing.Color.White
+        Me.TrackBar.Location = New System.Drawing.Point(3, 52)
+        Me.TrackBar.Name = "TrackBar"
+        Me.TrackBar.Size = New System.Drawing.Size(277, 35)
+        Me.TrackBar.TabIndex = 0
+        Me.TrackBar.TickStyle = System.Windows.Forms.TickStyle.TopLeft
+        '
+        'LB_value
+        '
+        Me.LB_value.AutoSize = True
+        Me.LB_value.ForeColor = System.Drawing.Color.Red
+        Me.LB_value.Location = New System.Drawing.Point(51, 16)
+        Me.LB_value.Name = "LB_value"
+        Me.LB_value.Size = New System.Drawing.Size(34, 13)
+        Me.LB_value.TabIndex = 2
+        Me.LB_value.Text = "value"
+        Me.LB_value.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        '
+        'BG_Play
+        '
         '
         'UC_Slider
         '

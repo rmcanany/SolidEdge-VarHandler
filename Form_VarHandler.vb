@@ -153,4 +153,9 @@ Public Class Form_VarHandler
 
     End Sub
 
+    Private Sub BT_Tracker_Click(sender As Object, e As EventArgs) Handles BT_Tracker.Click
+
+        MsgBox("Not implemented yet! :)", MsgBoxStyle.Information)
+
+    End Sub
 End Class
