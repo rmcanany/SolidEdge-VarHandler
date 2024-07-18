@@ -6,15 +6,18 @@ The actual version is limited and will perhaps be expanded per user requests
 
 
 **Feature list:**
-- Add any user variables
+- Add any user variables ![Add](./Resources/icons8_add_16.png)
 - Minimum and Maximum range retrieved from the variable table (if available)
 - Ability to vary Minimum and Maximum range from the user interface (click on values to prompt)
 - Exposed name retrieved from the variable table (if available)
 - Ability to vary Exposed name from the variable table (double click on the title to prompt)
-- Checkbox to auto-retrieve the variable on reload (**Autotune** on comments field)
-- Remove button
-- Reload button
+- Checkbox to auto-retrieve the variable on reload (**Autotune** on comments field) ![Autotune](./Resources/icons8_checked_checkbox_16.png)
+- Remove button ![Autotune](./Resources/icons8_close_16.png)
+- Play button, the trackbar will more to the end ![Autotune](./Resources/icons8_circled_play_16.png)
+- Loop button, the trackbar will more from an end to another and reverse continuosly ![Autotune](./Resources/icons8_repeat_16.png)
+- Reload button ![Autotune](./Resources/icons8_replay_16.png)
 - Taskbar to easily change values
+- Manuale vary the value (click on value to prompt)
 - ReadOnly variables supported
 - Works on any Solid Edge environment (par, psm, asm, dft)
 
@@ -22,6 +25,7 @@ The actual version is limited and will perhaps be expanded per user requests
 Release versions [here](https://github.com/farfilli/SolidEdge-VarHandler/releases):
 - 0.1 Very initial and rude one
 - 0.2 Better error handling, variable selector and stay on top
+- 0.3 Decimal support for initial value, Play button, Loop button, Stay on top, Manual value edit
 
 **Known limits:**
 - Only user variables supported
