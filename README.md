@@ -13,8 +13,8 @@ The actual version is limited and will perhaps be expanded per user requests
 - Ability to vary Exposed name from the variable table (double click on the title to prompt)
 - Checkbox to auto-retrieve the variable on reload (**Autotune** on comments field) ![Autotune](./Resources/icons8_checked_checkbox_16.png)
 - Remove button ![Autotune](./Resources/icons8_close_16.png)
-- Play button, the trackbar will more to the end ![Autotune](./Resources/icons8_circled_play_16.png)
-- Loop button, the trackbar will more from an end to another and reverse continuosly ![Autotune](./Resources/icons8_repeat_16.png)
+- Play button, the trackbar will move to the end ![Autotune](./Resources/icons8_circled_play_16.png)
+- Loop button, the trackbar will move from one end to the other and reverse continuously ![Autotune](./Resources/icons8_repeat_16.png)
 - Reload button ![Autotune](./Resources/icons8_replay_16.png)
 - Taskbar to easily change values
 - Manuale vary the value (click on value to prompt)
