@@ -573,5 +573,18 @@ Public Class UC_Slider
 
     End Sub
 
+    Private Sub BT_Settings_Click(sender As Object, e As EventArgs) Handles BT_Settings.Click
+
+        If objVar.IsReadOnly Or objVar.Formula <> "" Then Return
+
+        Try
+            steps = InputBox("Set number of steps",, steps)
+        Catch ex As Exception
+            Exit Sub
+        End Try
+
+        SetTrackBar()
+
+    End Sub
 
 End Class

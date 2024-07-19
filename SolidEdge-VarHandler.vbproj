@@ -231,6 +231,7 @@
     <None Include="Resources\icons8_replay_16.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\icons8_settings_16.png" />
     <Content Include="slider.ico" />
     <Content Include="VarHandler.ico" />
     <Content Include="MainForm.png" />

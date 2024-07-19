@@ -28,6 +28,7 @@ Partial Class UC_Slider
         Me.LB_name = New System.Windows.Forms.Label()
         Me.LB_min = New System.Windows.Forms.Label()
         Me.BT_Delete = New System.Windows.Forms.Button()
+        Me.BT_Settings = New System.Windows.Forms.Button()
         Me.BT_Play = New System.Windows.Forms.Button()
         Me.BT_Pinned = New System.Windows.Forms.Button()
         Me.TrackBar = New System.Windows.Forms.TrackBar()
@@ -46,6 +47,7 @@ Partial Class UC_Slider
         Me.GroupBox_Slider.Controls.Add(Me.LB_name)
         Me.GroupBox_Slider.Controls.Add(Me.LB_min)
         Me.GroupBox_Slider.Controls.Add(Me.BT_Delete)
+        Me.GroupBox_Slider.Controls.Add(Me.BT_Settings)
         Me.GroupBox_Slider.Controls.Add(Me.BT_Play)
         Me.GroupBox_Slider.Controls.Add(Me.BT_Pinned)
         Me.GroupBox_Slider.Controls.Add(Me.TrackBar)
@@ -65,7 +67,7 @@ Partial Class UC_Slider
         Me.BT_Loop.FlatAppearance.BorderSize = 0
         Me.BT_Loop.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BT_Loop.Image = Global.SolidEdge_VarHandler.My.Resources.Resources._Loop
-        Me.BT_Loop.Location = New System.Drawing.Point(199, 7)
+        Me.BT_Loop.Location = New System.Drawing.Point(178, 7)
         Me.BT_Loop.Margin = New System.Windows.Forms.Padding(0)
         Me.BT_Loop.Name = "BT_Loop"
         Me.BT_Loop.Size = New System.Drawing.Size(20, 20)
@@ -117,13 +119,27 @@ Partial Class UC_Slider
         Me.BT_Delete.TabIndex = 1
         Me.BT_Delete.UseVisualStyleBackColor = True
         '
+        'BT_Settings
+        '
+        Me.BT_Settings.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BT_Settings.FlatAppearance.BorderSize = 0
+        Me.BT_Settings.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BT_Settings.Image = Global.SolidEdge_VarHandler.My.Resources.Resources.Settings
+        Me.BT_Settings.Location = New System.Drawing.Point(220, 7)
+        Me.BT_Settings.Margin = New System.Windows.Forms.Padding(0)
+        Me.BT_Settings.Name = "BT_Settings"
+        Me.BT_Settings.Size = New System.Drawing.Size(20, 20)
+        Me.BT_Settings.TabIndex = 1
+        Me.BT_Settings.Tag = ""
+        Me.BT_Settings.UseVisualStyleBackColor = True
+        '
         'BT_Play
         '
         Me.BT_Play.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BT_Play.FlatAppearance.BorderSize = 0
         Me.BT_Play.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BT_Play.Image = Global.SolidEdge_VarHandler.My.Resources.Resources.Play
-        Me.BT_Play.Location = New System.Drawing.Point(220, 7)
+        Me.BT_Play.Location = New System.Drawing.Point(199, 7)
         Me.BT_Play.Margin = New System.Windows.Forms.Padding(0)
         Me.BT_Play.Name = "BT_Play"
         Me.BT_Play.Size = New System.Drawing.Size(20, 20)
@@ -199,4 +215,5 @@ Partial Class UC_Slider
     Friend WithEvents BT_Play As Button
     Friend WithEvents BG_Play As System.ComponentModel.BackgroundWorker
     Friend WithEvents BT_Loop As Button
+    Friend WithEvents BT_Settings As Button
 End Class
