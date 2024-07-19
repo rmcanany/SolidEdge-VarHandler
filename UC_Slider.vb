@@ -258,6 +258,12 @@ Public Class UC_Slider
 
             BG_Play.RunWorkerAsync(TrackBar.Value)
 
+            For Each item As UC_Slider In Me.Parent.Controls
+
+                If item IsNot Me Then item.BT_Play.Enabled = False
+
+            Next
+
         Else
 
             BT_Play.Image = My.Resources.Play
@@ -338,6 +344,12 @@ Public Class UC_Slider
 
         UpdateLabel() '<-- A lavoro completato scateniamo l'aggiornamento di tutta l'interfaccia. I valori restituiti da Solid Edge dovrebbero essere tutti corretti
 
+        For Each item As UC_Slider In Me.Parent.Controls
+
+            If item IsNot Me Then item.BT_Play.Enabled = True
+
+        Next
+
     End Sub
 
 
@@ -354,18 +366,6 @@ Public Class UC_Slider
         ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitAngle Then
             LB_name.Text = LB_name.Text & " °"
         End If
-
-        'For Each item As UC_Slider In Me.Parent.Controls
-
-        '    item.LB_name.Text = item.objVar.Name & " = " & CadToValue(item.objVar.Value, UnitType).ToString
-
-        '    If UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitDistance Then
-        '        LB_name.Text = LB_name.Text & " mm"
-        '    ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitAngle Then
-        '        LB_name.Text = LB_name.Text & " °"
-        '    End If
-
-        'Next
 
     End Sub
 
