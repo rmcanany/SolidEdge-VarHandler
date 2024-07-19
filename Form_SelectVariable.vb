@@ -3,20 +3,26 @@
 Public Class Form_SelectVariable
 
     Public objDoc As SolidEdgeFramework.SolidEdgeDocument
-    Public objVar As SolidEdgeFramework.variable
+    Public objVar As Object 'SolidEdgeFramework.variable
     Public objVarName As String
 
     Private Sub Form_SelectVariable_Load(sender As Object, e As EventArgs) Handles Me.Load
 
-        Dim objVars As SolidEdgeFramework.Variables = objDoc.Variables
-        Dim FindVars = objVars.Query("*", 0, 2)
+        refreshList()
 
-        If FindVars.count > 0 Then
+    End Sub
 
-            ListBox_Variables.Items.Clear()
+    Private Sub refreshList()
+
+        ListBox_Variables.Items.Clear()
+
+        Dim _FindVars = FindVars()
+
+        If Not IsNothing(_FindVars) Then
+
             ListBox_Variables.DisplayMember = "Name"
 
-            For Each item In FindVars
+            For Each item In _FindVars
 
                 Dim tmpVar As New VarListItem(item)
                 ListBox_Variables.Items.Add(tmpVar)
@@ -26,6 +32,33 @@ Public Class Form_SelectVariable
         End If
 
     End Sub
+
+    Private Function FindVars() As Object
+
+        Dim NameBy As Object
+        If CB_Users.Checked And Not CB_System.Checked Then NameBy = 2
+        If Not CB_Users.Checked And CB_System.Checked Then NameBy = 1
+        If CB_Users.Checked And Not CB_System.Checked Then NameBy = 0
+        If Not CB_Users.Checked And Not CB_System.Checked Then Return Nothing
+
+        Dim _VarType As Object
+        If CB_Variables.Checked And CB_Dimensions.Checked Then _VarType = 3
+        If CB_Variables.Checked And Not CB_Dimensions.Checked Then _VarType = 2
+        If Not CB_Variables.Checked And CB_Dimensions.Checked Then _VarType = 1
+        If Not CB_Variables.Checked And Not CB_Dimensions.Checked Then Return Nothing
+
+        If Not IsNothing(objDoc) Then
+
+            Dim objVars As SolidEdgeFramework.Variables = objDoc.Variables
+            Dim _FindVars = objVars.Query("*", NameBy, _VarType)
+
+            Return _FindVars
+
+        End If
+
+        Return Nothing
+
+    End Function
 
     Private Sub BT_OK_Click(sender As Object, e As EventArgs) Handles BT_OK.Click
 
@@ -48,6 +81,12 @@ Public Class Form_SelectVariable
 
     End Sub
 
+    Private Sub CB_CheckedChanged(sender As Object, e As EventArgs) Handles CB_Users.CheckedChanged, CB_System.CheckedChanged, CB_Variables.CheckedChanged, CB_Dimensions.CheckedChanged
+
+        refreshList()
+
+    End Sub
+
 End Class
 
 Public Class VarListItem
@@ -56,12 +95,19 @@ Public Class VarListItem
     Public Property VarName As String
     Public Property Value As String
     Public Property Formula As String
-    Public Property objVariable As SolidEdgeFramework.variable
-    Public Sub New(objVar As SolidEdgeFramework.variable)
+    Public Property objVariable As Object 'SolidEdgeFramework.variable
+    'Public Property objDimension As SolidEdgeFrameworkSupport.Dimension
+
+    Public Sub New(objVar As Object) 'SolidEdgeFramework.variable)
+
+        'If TypeOf (objVar) Is SolidEdgeFramework.variable Then
+        objVariable = objVar
+        'Else
+        '    objDimension = objVar
+        'End If
 
         VarName = objVar.Name
         Formula = objVar.Formula
-        objVariable = objVar
 
         Dim UnitType = objVar.UnitsType
 

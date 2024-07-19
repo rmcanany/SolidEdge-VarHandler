@@ -13,7 +13,7 @@ Public Class UC_Slider
     Dim TrackbarStep As Integer
 
     Dim UnitType As SolidEdgeFramework.UnitTypeConstants
-    Dim objVar As SolidEdgeFramework.variable
+    Dim objVar As Object 'SolidEdgeFramework.variable
 
     Dim Multiplier As Integer = 10
     Dim PlayLoop As Boolean = False
@@ -29,7 +29,7 @@ Public Class UC_Slider
 
     End Function
 
-    Public Sub New(objVarV As SolidEdgeFramework.variable)
+    Public Sub New(objVarV As Object) 'SolidEdgeFramework.variable)
 
         ' This call is required by the designer.
         InitializeComponent()

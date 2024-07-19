@@ -27,10 +27,10 @@ Partial Class Form_SelectVariable
         Me.BT_Cancel = New System.Windows.Forms.Button()
         Me.BT_OK = New System.Windows.Forms.Button()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
-        Me.CheckBox2 = New System.Windows.Forms.CheckBox()
-        Me.CheckBox3 = New System.Windows.Forms.CheckBox()
-        Me.CheckBox4 = New System.Windows.Forms.CheckBox()
+        Me.CB_Variables = New System.Windows.Forms.CheckBox()
+        Me.CB_Dimensions = New System.Windows.Forms.CheckBox()
+        Me.CB_Users = New System.Windows.Forms.CheckBox()
+        Me.CB_System = New System.Windows.Forms.CheckBox()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -81,10 +81,10 @@ Partial Class Form_SelectVariable
         Me.TableLayoutPanel1.Controls.Add(Me.BT_OK, 0, 3)
         Me.TableLayoutPanel1.Controls.Add(Me.ListBox_Variables, 0, 2)
         Me.TableLayoutPanel1.Controls.Add(Me.BT_Cancel, 1, 3)
-        Me.TableLayoutPanel1.Controls.Add(Me.CheckBox1, 0, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.CheckBox2, 0, 1)
-        Me.TableLayoutPanel1.Controls.Add(Me.CheckBox3, 1, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.CheckBox4, 1, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.CB_Variables, 0, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.CB_Dimensions, 0, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.CB_Users, 1, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.CB_System, 1, 1)
         Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel1.Margin = New System.Windows.Forms.Padding(0)
@@ -97,57 +97,53 @@ Partial Class Form_SelectVariable
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(184, 241)
         Me.TableLayoutPanel1.TabIndex = 2
         '
-        'CheckBox1
+        'CB_Variables
         '
-        Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Checked = True
-        Me.CheckBox1.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CheckBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CheckBox1.Enabled = False
-        Me.CheckBox1.Location = New System.Drawing.Point(3, 3)
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(86, 19)
-        Me.CheckBox1.TabIndex = 2
-        Me.CheckBox1.Text = "Variables"
-        Me.CheckBox1.UseVisualStyleBackColor = True
+        Me.CB_Variables.AutoSize = True
+        Me.CB_Variables.Checked = True
+        Me.CB_Variables.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CB_Variables.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CB_Variables.Location = New System.Drawing.Point(3, 3)
+        Me.CB_Variables.Name = "CB_Variables"
+        Me.CB_Variables.Size = New System.Drawing.Size(86, 19)
+        Me.CB_Variables.TabIndex = 2
+        Me.CB_Variables.Text = "Variables"
+        Me.CB_Variables.UseVisualStyleBackColor = True
         '
-        'CheckBox2
+        'CB_Dimensions
         '
-        Me.CheckBox2.AutoSize = True
-        Me.CheckBox2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CheckBox2.Enabled = False
-        Me.CheckBox2.Location = New System.Drawing.Point(3, 28)
-        Me.CheckBox2.Name = "CheckBox2"
-        Me.CheckBox2.Size = New System.Drawing.Size(86, 19)
-        Me.CheckBox2.TabIndex = 2
-        Me.CheckBox2.Text = "Dimensions"
-        Me.CheckBox2.UseVisualStyleBackColor = True
+        Me.CB_Dimensions.AutoSize = True
+        Me.CB_Dimensions.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CB_Dimensions.Location = New System.Drawing.Point(3, 28)
+        Me.CB_Dimensions.Name = "CB_Dimensions"
+        Me.CB_Dimensions.Size = New System.Drawing.Size(86, 19)
+        Me.CB_Dimensions.TabIndex = 2
+        Me.CB_Dimensions.Text = "Dimensions"
+        Me.CB_Dimensions.UseVisualStyleBackColor = True
         '
-        'CheckBox3
+        'CB_Users
         '
-        Me.CheckBox3.AutoSize = True
-        Me.CheckBox3.Checked = True
-        Me.CheckBox3.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CheckBox3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CheckBox3.Enabled = False
-        Me.CheckBox3.Location = New System.Drawing.Point(95, 3)
-        Me.CheckBox3.Name = "CheckBox3"
-        Me.CheckBox3.Size = New System.Drawing.Size(86, 19)
-        Me.CheckBox3.TabIndex = 2
-        Me.CheckBox3.Text = "User"
-        Me.CheckBox3.UseVisualStyleBackColor = True
+        Me.CB_Users.AutoSize = True
+        Me.CB_Users.Checked = True
+        Me.CB_Users.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CB_Users.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CB_Users.Location = New System.Drawing.Point(95, 3)
+        Me.CB_Users.Name = "CB_Users"
+        Me.CB_Users.Size = New System.Drawing.Size(86, 19)
+        Me.CB_Users.TabIndex = 2
+        Me.CB_Users.Text = "User"
+        Me.CB_Users.UseVisualStyleBackColor = True
         '
-        'CheckBox4
+        'CB_System
         '
-        Me.CheckBox4.AutoSize = True
-        Me.CheckBox4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CheckBox4.Enabled = False
-        Me.CheckBox4.Location = New System.Drawing.Point(95, 28)
-        Me.CheckBox4.Name = "CheckBox4"
-        Me.CheckBox4.Size = New System.Drawing.Size(86, 19)
-        Me.CheckBox4.TabIndex = 2
-        Me.CheckBox4.Text = "System"
-        Me.CheckBox4.UseVisualStyleBackColor = True
+        Me.CB_System.AutoSize = True
+        Me.CB_System.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CB_System.Location = New System.Drawing.Point(95, 28)
+        Me.CB_System.Name = "CB_System"
+        Me.CB_System.Size = New System.Drawing.Size(86, 19)
+        Me.CB_System.TabIndex = 2
+        Me.CB_System.Text = "System"
+        Me.CB_System.UseVisualStyleBackColor = True
         '
         'Form_SelectVariable
         '
@@ -172,8 +168,8 @@ Partial Class Form_SelectVariable
     Friend WithEvents BT_OK As Button
     Friend WithEvents BT_Cancel As Button
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
-    Friend WithEvents CheckBox1 As CheckBox
-    Friend WithEvents CheckBox2 As CheckBox
-    Friend WithEvents CheckBox3 As CheckBox
-    Friend WithEvents CheckBox4 As CheckBox
+    Friend WithEvents CB_Variables As CheckBox
+    Friend WithEvents CB_Dimensions As CheckBox
+    Friend WithEvents CB_Users As CheckBox
+    Friend WithEvents CB_System As CheckBox
 End Class

@@ -108,14 +108,14 @@ Public Class Form_VarHandler
         Dim pFindCriterium As String = "*"
         Dim NamedBy As Object = SolidEdgeConstants.VariableNameBy.seVariableNameByBoth
         Dim CaseInsensitive As Object = False
-        Dim VarType As Object = SolidEdgeConstants.VariableVarType.SeVariableVarTypeVariable
+        Dim VarType As Object = SolidEdgeConstants.VariableVarType.SeVariableVarTypeBoth
         Dim variableList As SolidEdgeFramework.VariableList = CType(variables.Query(pFindCriterium, NamedBy, VarType, CaseInsensitive), SolidEdgeFramework.VariableList)
 
         If variableList.Count > 0 Then
 
-            Dim tmpList As New List(Of variable)
+            Dim tmpList As New List(Of Object) 'variable)
 
-            For Each item As SolidEdgeFramework.variable In variableList
+            For Each item In variableList
 
                 Console.WriteLine(item.Name & " - " & item.GetComment)
 
