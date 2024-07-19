@@ -157,6 +157,24 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>9</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
     <COMReference Include="SolidEdgeConstants">
       <Guid>{C467A6F5-27ED-11D2-BE30-080036B4D502}</Guid>
       <VersionMajor>1</VersionMajor>
@@ -184,6 +202,15 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\icons8_checked_checkbox_16.png" />
@@ -204,6 +231,8 @@
     <None Include="Resources\icons8_replay_16.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="slider.ico" />
+    <Content Include="VarHandler.ico" />
     <Content Include="MainForm.png" />
     <None Include="Resources\icons8_cancel_16.png" />
     <None Include="Resources\icons8_ok_16.png" />
@@ -212,7 +241,6 @@
     <None Include="Resources\icons8_stop_squared_16.png" />
     <None Include="Resources\icons8_repeat_16.png" />
     <None Include="Resources\icons8_center_of_gravity_16_edited.png" />
-    <Content Include="slider.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">

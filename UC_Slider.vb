@@ -1,5 +1,7 @@
 ﻿
 Imports System.ComponentModel
+Imports Microsoft.Office.Interop
+Imports SolidEdgeConstants
 Imports SolidEdgeFramework
 
 Public Class UC_Slider
@@ -18,6 +20,8 @@ Public Class UC_Slider
     Dim Multiplier As Integer = 10
     Dim PlayLoop As Boolean = False
     Dim Forward As Boolean = True
+    Dim Export As Boolean = False
+    Dim ExportSteps As List(Of Object)
 
     Public Function Valid() As Boolean
 
@@ -38,7 +42,7 @@ Public Class UC_Slider
 
         objVar = objVarV
 
-        UnitType = CType(objVar.UnitsType, UnitTypeConstants)
+        UnitType = CType(objVar.UnitsType, SolidEdgeFramework.UnitTypeConstants)
 
         If objVar.ExposeName <> "" Then VarName = objVar.ExposeName Else VarName = objVar.Name
 
@@ -250,6 +254,8 @@ Public Class UC_Slider
 
         If BT_Play.Tag = "Play" Then
 
+            Export = CheckExport()
+
             BT_Play.Image = My.Resources._Stop
             BT_Play.Tag = "Stop"
 
@@ -275,9 +281,39 @@ Public Class UC_Slider
 
     End Sub
 
+    Private Function CheckExport() As Boolean
+
+        Dim tmpMe As Form_VarHandler = Me.Parent.Parent
+
+        If tmpMe.BT_Export.Checked Then
+
+            For Each item As UC_Slider In Me.Parent.Controls
+
+                If item.BT_Loop.Tag = "Checked" Then
+
+                    item.BT_Loop_Click(Me, Nothing)
+
+                End If
+
+            Next
+
+            Return True
+
+        Else
+
+            Return False
+
+        End If
+
+    End Function
+
     Private Sub BG_Play_DoWork(sender As Object, e As DoWorkEventArgs) Handles BG_Play.DoWork
 
         Dim ProgressValue As Integer = CInt(e.Argument)
+
+        ExportSteps = New List(Of Object) From {
+            GenerateStep()
+        }
 
         Do 'Until ProgressValue = max
 
@@ -301,12 +337,17 @@ Public Class UC_Slider
 
             objVar.Value = ValueToCad(ProgressValue, UnitType)
 
-            'Example for future point tracking
-            'For Each item As UC_Slider In Me.Parent.Controls
-            '    If item.objVar.Name = "F" Or item.objVar.Name = "C" Then
-            '        Console.WriteLine(item.objVar.Name & " - " & item.objVar.Value.ToString)
-            '    End If
-            'Next
+
+
+            'Example for future point tracking ################################################
+            If Export Then
+
+                ExportSteps.Add(GenerateStep)
+
+            End If
+
+
+
 
             BG_Play.ReportProgress((ProgressValue - min / max - min) * 100, ProgressValue.ToString)
 
@@ -337,6 +378,24 @@ Public Class UC_Slider
 
     End Sub
 
+    Private Function GenerateStep() As List(Of (Nome As String, Valore As Double))
+
+        Dim tmpStep As New List(Of (Nome As String, Valore As Double))
+
+        For Each item As UC_Slider In Me.Parent.Controls
+
+            Dim tmpValue As (Nome As String, Valore As Double)
+            tmpValue.Nome = item.objVar.name.ToString
+            tmpValue.Valore = CadToValue(item.objVar.value, item.UnitType)
+
+            tmpStep.Add(tmpValue)
+
+        Next
+
+        Return tmpStep
+
+    End Function
+
     Private Sub BG_Play_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles BG_Play.RunWorkerCompleted
 
         BT_Play.Image = My.Resources.Play
@@ -350,8 +409,81 @@ Public Class UC_Slider
 
         Next
 
+        If Export Then
+
+            ExportResult()
+
+            Dim i = 1
+
+            For Each item In ExportSteps
+
+                Console.Write(i)
+
+                For Each stepItem As (Nome As String, Valore As Double) In item
+
+                    Console.Write(" - " & stepItem.Nome & " = " & stepItem.Valore.ToString)
+
+                Next
+                Console.WriteLine()
+
+                i += 1
+
+            Next
+
+        End If
+
     End Sub
 
+    Private Sub ExportResult()
+
+        Me.Cursor = Cursors.WaitCursor
+
+        Dim objApp As Excel.Application
+        Dim objBook As Excel._Workbook
+        Dim objBooks As Excel.Workbooks
+        Dim objSheets As Excel.Sheets
+        Dim objSheet As Excel._Worksheet
+
+        objApp = New Excel.Application()
+        objBooks = objApp.Workbooks
+        objBook = objBooks.Add
+        objSheets = objBook.Worksheets
+        objSheet = objSheets(1)
+
+        Dim Riga = 2
+        For Each item In ExportSteps
+
+            Dim Colonna = 2
+            For Each stepItem As (Nome As String, Valore As Double) In item
+
+                objSheet.Cells(1, Colonna).value = stepItem.Nome
+                objSheet.Cells(Riga, 1).value = Riga - 1
+                objSheet.Cells(Riga, Colonna).value = stepItem.Valore
+
+                Colonna += 1
+
+            Next
+
+            Riga += 1
+
+        Next
+
+        'objSheet.Range("A1:X1").EntireColumn.AutoFit()
+        objSheet.Cells.Select()
+
+        'With objApp.Selection.Font
+        '    .Name = "Calibri"
+        '    .Size = 10
+        'End With
+
+        objSheet.Range("A1").Select()
+
+        objApp.Visible = True
+        objBook.Activate()
+
+        Me.Cursor = Cursors.Default
+
+    End Sub
 
     Private Sub BG_Play_ProgressChanged(sender As Object, e As ProgressChangedEventArgs) Handles BG_Play.ProgressChanged
 
@@ -425,15 +557,15 @@ Public Class UC_Slider
 
     End Sub
 
-    Private Sub LB_min_MouseHover(sender As Object, e As EventArgs) Handles LB_min.MouseHover, LB_max.MouseHover, LB_name.MouseHover
+    Private Sub LB_MouseHover(sender As Object, e As EventArgs) Handles LB_min.MouseHover, LB_max.MouseHover, LB_name.MouseHover
 
         If objVar.IsReadOnly Or objVar.Formula <> "" Then Return
-        sender.ForeColor = Color.Blue
+        sender.ForeColor = Color.DarkBlue
         sender.font = New Font(LB_min.Font, FontStyle.Bold)
 
     End Sub
 
-    Private Sub LB_min_MouseLeave(sender As Object, e As EventArgs) Handles LB_min.MouseLeave, LB_max.MouseLeave, LB_name.MouseLeave
+    Private Sub LB_MouseLeave(sender As Object, e As EventArgs) Handles LB_min.MouseLeave, LB_max.MouseLeave, LB_name.MouseLeave
 
         If objVar.IsReadOnly Or objVar.Formula <> "" Then Return
         sender.ForeColor = Color.Black
