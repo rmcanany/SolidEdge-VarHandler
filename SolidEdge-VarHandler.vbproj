@@ -232,6 +232,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\icons8_settings_16.png" />
+    <None Include="Resources\icons8_data_sheet_16_extended.png" />
+    <None Include="Resources\icons8_workflow_16.png" />
     <Content Include="slider.ico" />
     <Content Include="VarHandler.ico" />
     <Content Include="MainForm.png" />
