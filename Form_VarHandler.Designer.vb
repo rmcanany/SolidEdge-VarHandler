@@ -26,11 +26,11 @@ Partial Class Form_VarHandler
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.BT_Reload = New System.Windows.Forms.ToolStripButton()
         Me.BT_Aggiungi = New System.Windows.Forms.ToolStripButton()
-        Me.BT_Tracker = New System.Windows.Forms.ToolStripButton()
-        Me.FLP_Vars = New System.Windows.Forms.FlowLayoutPanel()
-        Me.BT_Workflow = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.BT_Export = New System.Windows.Forms.ToolStripButton()
+        Me.BT_Tracker = New System.Windows.Forms.ToolStripButton()
+        Me.BT_Workflow = New System.Windows.Forms.ToolStripButton()
+        Me.FLP_Vars = New System.Windows.Forms.FlowLayoutPanel()
         Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -61,39 +61,6 @@ Partial Class Form_VarHandler
         Me.BT_Aggiungi.Size = New System.Drawing.Size(93, 22)
         Me.BT_Aggiungi.Text = "Add Variable"
         '
-        'BT_Tracker
-        '
-        Me.BT_Tracker.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BT_Tracker.Image = Global.SolidEdge_VarHandler.My.Resources.Resources.cog
-        Me.BT_Tracker.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BT_Tracker.Name = "BT_Tracker"
-        Me.BT_Tracker.Size = New System.Drawing.Size(23, 22)
-        Me.BT_Tracker.Text = "Add Tracker"
-        Me.BT_Tracker.ToolTipText = "Adds a tracker that trace a polyline on its movement"
-        '
-        'FLP_Vars
-        '
-        Me.FLP_Vars.AutoScroll = True
-        Me.FLP_Vars.BackColor = System.Drawing.Color.White
-        Me.FLP_Vars.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.FLP_Vars.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.FLP_Vars.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
-        Me.FLP_Vars.Location = New System.Drawing.Point(0, 25)
-        Me.FLP_Vars.Name = "FLP_Vars"
-        Me.FLP_Vars.Size = New System.Drawing.Size(269, 456)
-        Me.FLP_Vars.TabIndex = 1
-        Me.FLP_Vars.WrapContents = False
-        '
-        'BT_Workflow
-        '
-        Me.BT_Workflow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BT_Workflow.Image = CType(resources.GetObject("BT_Workflow.Image"), System.Drawing.Image)
-        Me.BT_Workflow.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BT_Workflow.Name = "BT_Workflow"
-        Me.BT_Workflow.Size = New System.Drawing.Size(23, 22)
-        Me.BT_Workflow.Text = "Workflow"
-        Me.BT_Workflow.ToolTipText = "Execute a sequence of variable changes"
-        '
         'ToolStripSeparator1
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
@@ -109,6 +76,40 @@ Partial Class Form_VarHandler
         Me.BT_Export.Size = New System.Drawing.Size(23, 22)
         Me.BT_Export.Text = "Export"
         Me.BT_Export.ToolTipText = "Export variables during the play"
+        '
+        'BT_Tracker
+        '
+        Me.BT_Tracker.CheckOnClick = True
+        Me.BT_Tracker.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BT_Tracker.Image = Global.SolidEdge_VarHandler.My.Resources.Resources.cog
+        Me.BT_Tracker.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BT_Tracker.Name = "BT_Tracker"
+        Me.BT_Tracker.Size = New System.Drawing.Size(23, 22)
+        Me.BT_Tracker.Text = "Add Tracker"
+        Me.BT_Tracker.ToolTipText = "Adds a tracker that trace a polyline on its movement"
+        '
+        'BT_Workflow
+        '
+        Me.BT_Workflow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BT_Workflow.Image = CType(resources.GetObject("BT_Workflow.Image"), System.Drawing.Image)
+        Me.BT_Workflow.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BT_Workflow.Name = "BT_Workflow"
+        Me.BT_Workflow.Size = New System.Drawing.Size(23, 22)
+        Me.BT_Workflow.Text = "Workflow"
+        Me.BT_Workflow.ToolTipText = "Execute a sequence of variable changes"
+        '
+        'FLP_Vars
+        '
+        Me.FLP_Vars.AutoScroll = True
+        Me.FLP_Vars.BackColor = System.Drawing.Color.White
+        Me.FLP_Vars.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.FLP_Vars.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.FLP_Vars.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
+        Me.FLP_Vars.Location = New System.Drawing.Point(0, 25)
+        Me.FLP_Vars.Name = "FLP_Vars"
+        Me.FLP_Vars.Size = New System.Drawing.Size(269, 456)
+        Me.FLP_Vars.TabIndex = 1
+        Me.FLP_Vars.WrapContents = False
         '
         'Form_VarHandler
         '
