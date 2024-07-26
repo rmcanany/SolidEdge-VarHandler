@@ -34,7 +34,7 @@ Release versions [here](https://github.com/farfilli/SolidEdge-VarHandler/release
 - ~~Only user variables supported~~
 - mm, degree, and scalar units supported, other units will result in unpredicted values
 
-Video in action [here](https://www.youtube.com/watch?v=izA-oFQAoVA&ab_channel=FrancescoArfilli)
+Video in action [here](https://www.youtube.com/watch?v=krcpQPdgGos&t=3s&ab_channel=FrancescoArfilli)
 
 
 **User UI:**
