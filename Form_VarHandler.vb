@@ -7,6 +7,10 @@ Public Class Form_VarHandler
     Dim objApp As SolidEdgeFramework.Application
     Dim objDoc As SolidEdgeFramework.SolidEdgeDocument
 
+    Public Tracker_3D As SolidEdgePart.CoordinateSystem
+    Public Tracker_2D As SolidEdgeDraft.BlockOccurrence
+    Public Tracking As Boolean = False
+
     Private Sub BT_Aggiungi_Click(sender As Object, e As EventArgs) Handles BT_Aggiungi.Click
 
         Dim tmpForm As New Form_SelectVariable
@@ -117,13 +121,16 @@ Public Class Form_VarHandler
 
             For Each item In variableList
 
-                Console.WriteLine(item.Name & " - " & item.GetComment)
+                Try
+                    Console.WriteLine(item.Name & " - " & item.GetComment)
+                    If item.GetComment = "Autotune" Then
 
-                If item.GetComment = "Autotune" Then
+                        tmpList.Add(item)
 
-                    tmpList.Add(item)
-
-                End If
+                    End If
+                Catch ex As Exception
+                    Console.WriteLine(item.Name)
+                End Try
 
             Next
 
@@ -155,7 +162,36 @@ Public Class Form_VarHandler
 
     Private Sub BT_Tracker_Click(sender As Object, e As EventArgs) Handles BT_Tracker.Click
 
-        MsgBox("Not implemented yet! :)", MsgBoxStyle.Information)
+        'MsgBox("Not implemented yet! :)", MsgBoxStyle.Information)
+
+        If BT_Tracker.Checked Then
+
+            Select Case objDoc.Type
+                Case = DocumentTypeConstants.igDraftDocument
+                    For Each item In objDoc.ActiveSheet.BlockOccurrences
+                        If item.Block.Name = "Tracker" Then
+                            Tracker_2D = item
+                        End If
+                    Next
+                    If IsNothing(Tracker_2D) Then
+                        MsgBox("2D Tracker not found!", MsgBoxStyle.Information)
+                        BT_Tracker.Checked = False
+                    End If
+                Case Else
+                    For Each item In objDoc.CoordinateSystems
+                        If item.name = "Tracker" Then
+                            Tracker_3D = item
+                        End If
+                    Next
+                    If IsNothing(Tracker_3D) Then
+                        MsgBox("3D Tracker not found!", MsgBoxStyle.Information)
+                        BT_Tracker.Checked = False
+                    End If
+            End Select
+
+        End If
+
+        Tracking = BT_Tracker.Checked
 
     End Sub
 

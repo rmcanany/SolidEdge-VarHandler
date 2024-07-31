@@ -86,7 +86,7 @@ Public Class UC_Slider
         TrackbarStep = CInt((max - min) / steps)
         TrackBar.TickFrequency = TrackbarStep 'CInt((max - min) / steps)
 
-        TrackBar.SmallChange = TrackBar.TickFrequency / 5
+        TrackBar.SmallChange = TrackBar.TickFrequency ' / 5
         TrackBar.LargeChange = TrackBar.TickFrequency
 
         GroupBox_Slider.Text = VarName
@@ -158,7 +158,7 @@ Public Class UC_Slider
         End Try
 
         '15 for conditions is (=> ; <=)
-        objVar.SetValueRangeValues(min, 15, max)
+        objVar.SetValueRangeValues(ValueToCad(min, objVar.UnitsType), 15, ValueToCad(max, objVar.UnitsType))
 
         SetTrackBar()
 
@@ -173,7 +173,7 @@ Public Class UC_Slider
         End Try
 
         '15 for conditions is (=> ; <=)
-        objVar.SetValueRangeValues(min, 15, max)
+        objVar.SetValueRangeValues(ValueToCad(min, objVar.UnitsType), 15, ValueToCad(max, objVar.UnitsType))
 
         SetTrackBar()
 
@@ -381,6 +381,7 @@ Public Class UC_Slider
     Private Function GenerateStep() As List(Of (Nome As String, Valore As Double))
 
         Dim tmpStep As New List(Of (Nome As String, Valore As Double))
+        Dim tmpForm = CType(Me.Parent.Parent, Form_VarHandler)
 
         For Each item As UC_Slider In Me.Parent.Controls
 
@@ -391,6 +392,55 @@ Public Class UC_Slider
             tmpStep.Add(tmpValue)
 
         Next
+
+        If tmpForm.Tracking Then
+
+            If Not IsNothing(tmpForm.Tracker_3D) Then
+
+                Dim objXOffset As Double = Nothing
+                Dim objYOffset As Double = Nothing
+                Dim objZOffset As Double = Nothing
+                Dim objXRotation As Double = Nothing
+                Dim objYRotation As Double = Nothing
+                Dim objZRotation As Double = Nothing
+                Dim objRtP As Boolean = Nothing
+                Dim objZFirstRot As Double = Nothing
+                tmpForm.Tracker_3D.GetOrientation(objXOffset, objYOffset, objZOffset, objXRotation, objYRotation, objZRotation, objRtP, objZFirstRot)
+
+                Dim tmpValueX As (Nome As String, Valore As Double)
+                tmpValueX.Nome = "Tracker X"
+                tmpValueX.Valore = CadToValue(objXOffset, SolidEdgeFramework.UnitTypeConstants.igUnitDistance)
+                tmpStep.Add(tmpValueX)
+
+                Dim tmpValueY As (Nome As String, Valore As Double)
+                tmpValueY.Nome = "Tracker Y"
+                tmpValueY.Valore = CadToValue(objYOffset, SolidEdgeFramework.UnitTypeConstants.igUnitDistance)
+                tmpStep.Add(tmpValueY)
+
+                Dim tmpValueZ As (Nome As String, Valore As Double)
+                tmpValueZ.Nome = "Tracker Z"
+                tmpValueZ.Valore = CadToValue(objZOffset, SolidEdgeFramework.UnitTypeConstants.igUnitDistance)
+                tmpStep.Add(tmpValueZ)
+
+            ElseIf Not IsNothing(tmpForm.Tracker_2D) Then
+
+                Dim objX As Double = Nothing
+                Dim objY As Double = Nothing
+                tmpForm.Tracker_2D.GetOrigin(objX, objY)
+
+                Dim tmpValueX As (Nome As String, Valore As Double)
+                tmpValueX.Nome = "Tracker X"
+                tmpValueX.Valore = CadToValue(objX, SolidEdgeFramework.UnitTypeConstants.igUnitDistance)
+                tmpStep.Add(tmpValueX)
+
+                Dim tmpValueY As (Nome As String, Valore As Double)
+                tmpValueY.Nome = "Tracker Y"
+                tmpValueY.Valore = CadToValue(objY, SolidEdgeFramework.UnitTypeConstants.igUnitDistance)
+                tmpStep.Add(tmpValueY)
+
+            End If
+
+        End If
 
         Return tmpStep
 
