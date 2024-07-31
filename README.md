@@ -6,7 +6,7 @@ The actual version is limited and will perhaps be expanded per user requests
 
 
 **Feature list:**
-- Add any user variables ![Add](./Resources/icons8_add_16.png)
+- Add any system or user variables and dimensions ![Add](./Resources/icons8_add_16.png)
 - Minimum and Maximum range retrieved from the variable table (if available)
 - Ability to vary Minimum and Maximum range from the user interface (click on values to prompt)
 - Exposed name retrieved from the variable table (if available)
@@ -15,7 +15,9 @@ The actual version is limited and will perhaps be expanded per user requests
 - Remove button ![Autotune](./Resources/icons8_close_16.png)
 - Play button, the trackbar will move to the end ![Autotune](./Resources/icons8_circled_play_16.png)
 - Loop button, the trackbar will move from one end to the other and reverse continuously ![Autotune](./Resources/icons8_repeat_16.png)
+- Settings button to select the number of steps to perform on play ![settings](./Resources/icons8_settings_16.png)
 - Reload button ![Autotune](./Resources/icons8_replay_16.png)
+- Export results to excel when play a variable ![Excel](./Resources/icons8_data_sheet_16_extended.png)
 - Taskbar to easily change values
 - Manuale vary the value (click on value to prompt)
 - ReadOnly variables supported
@@ -26,12 +28,13 @@ Release versions [here](https://github.com/farfilli/SolidEdge-VarHandler/release
 - 0.1 Very initial and rude one
 - 0.2 Better error handling, variable selector and stay on top
 - 0.3 Decimal support for initial value, Play button, Loop button, Stay on top, Manual value edit
-
+- 0.4 Support for System and User Variable and Dimensions, export results to excel, settings button
+  
 **Known limits:**
-- Only user variables supported
+- ~~Only user variables supported~~
 - mm, degree, and scalar units supported, other units will result in unpredicted values
 
-Video in action [here](https://www.youtube.com/watch?v=izA-oFQAoVA&ab_channel=FrancescoArfilli)
+Video in action [here](https://www.youtube.com/watch?v=krcpQPdgGos&t=3s&ab_channel=FrancescoArfilli)
 
 
 **User UI:**
@@ -42,3 +45,6 @@ Video in action [here](https://www.youtube.com/watch?v=izA-oFQAoVA&ab_channel=Fr
 An example assembly is provided [here](./Crane.zip)
 ![Crane](./Crane.png)
 ![Variable table](./VarTable.png)
+
+Exported results in excel after play
+![export](./export.png)
