@@ -18,6 +18,7 @@ The actual version is limited and will perhaps be expanded per user requests
 - Settings button to select the number of steps to perform on play ![settings](./Resources/icons8_settings_16.png)
 - Reload button ![Autotune](./Resources/icons8_replay_16.png)
 - Export results to excel when play a variable ![Excel](./Resources/icons8_data_sheet_16_extended.png)
+- Point tracker, return the coordinate of a 3D coordinate system or a 2D block ![Tracker](./Resources/icons8_center_of_gravity_16_edited.png)
 - Taskbar to easily change values
 - Manuale vary the value (click on value to prompt)
 - ReadOnly variables supported
@@ -29,6 +30,7 @@ Release versions [here](https://github.com/farfilli/SolidEdge-VarHandler/release
 - 0.2 Better error handling, variable selector and stay on top
 - 0.3 Decimal support for initial value, Play button, Loop button, Stay on top, Manual value edit
 - 0.4 Support for System and User Variable and Dimensions, export results to excel, settings button
+- 0.5 Correctly handled the range values, enabled 2D\3D tracker
   
 **Known limits:**
 - ~~Only user variables supported~~
