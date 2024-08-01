@@ -17,19 +17,24 @@ Public Class Form_VarHandler
         tmpForm.objDoc = objDoc
         tmpForm.ShowDialog(Me)
 
-        If tmpForm.objVarName <> "" Then
+        If tmpForm.Valid Then
 
-            Dim tmpSlider As New UC_Slider(tmpForm.objVar)
+            For Each item In tmpForm.ListBox_Variables.SelectedItems
 
-            If tmpSlider.Valid Then
+                Dim tmpSlider2 As New UC_Slider(item.objVariable)
 
-                AddHandler tmpSlider.LB_value.TextChanged, AddressOf Slider_Click
+                If tmpSlider2.Valid Then
 
-                FLP_Vars.Controls.Add(tmpSlider)
+                    AddHandler tmpSlider2.LB_value.TextChanged, AddressOf Slider_Click
 
-                SetupAnchors()
+                    FLP_Vars.Controls.Add(tmpSlider2)
 
-            End If
+                    SetupAnchors()
+
+                End If
+
+
+            Next
 
         End If
 

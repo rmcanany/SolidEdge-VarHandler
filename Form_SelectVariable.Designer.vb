@@ -43,6 +43,7 @@ Partial Class Form_SelectVariable
         Me.ListBox_Variables.Location = New System.Drawing.Point(0, 50)
         Me.ListBox_Variables.Margin = New System.Windows.Forms.Padding(0)
         Me.ListBox_Variables.Name = "ListBox_Variables"
+        Me.ListBox_Variables.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple
         Me.ListBox_Variables.Size = New System.Drawing.Size(184, 161)
         Me.ListBox_Variables.Sorted = True
         Me.ListBox_Variables.TabIndex = 0

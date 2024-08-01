@@ -3,8 +3,7 @@
 Public Class Form_SelectVariable
 
     Public objDoc As SolidEdgeFramework.SolidEdgeDocument
-    Public objVar As Object 'SolidEdgeFramework.variable
-    Public objVarName As String
+    Public Valid As Boolean = False
 
     Private Sub Form_SelectVariable_Load(sender As Object, e As EventArgs) Handles Me.Load
 
@@ -62,11 +61,10 @@ Public Class Form_SelectVariable
 
     Private Sub BT_OK_Click(sender As Object, e As EventArgs) Handles BT_OK.Click
 
-        If Not IsNothing(ListBox_Variables.SelectedItem) Then
-
-            objVarName = ListBox_Variables.SelectedItem.VarName
-            objVar = ListBox_Variables.SelectedItem.objVariable
-
+        If ListBox_Variables.SelectedItems.Count > 0 Then
+            Valid = True
+        Else
+            Valid = False
         End If
 
         Me.Close()
@@ -75,7 +73,7 @@ Public Class Form_SelectVariable
 
     Private Sub BT_Cancel_Click(sender As Object, e As EventArgs) Handles BT_Cancel.Click
 
-        objVarName = ""
+        Valid = False
 
         Me.Close()
 
@@ -97,6 +95,7 @@ Public Class VarListItem
     Public Property Formula As String
     Public Property objVariable As Object 'SolidEdgeFramework.variable
     'Public Property objDimension As SolidEdgeFrameworkSupport.Dimension
+    Public Property ExName As String
 
     Public Sub New(objVar As Object) 'SolidEdgeFramework.variable)
 
@@ -108,6 +107,9 @@ Public Class VarListItem
 
         VarName = objVar.Name
         Formula = objVar.Formula
+        ExName = objVar.ExposeName
+
+        If ExName <> "" Then ExName = " -->(" & ExName & ")"
 
         Dim UnitType = objVar.UnitsType
 
@@ -120,9 +122,9 @@ Public Class VarListItem
         End If
 
         If Formula = "" Then
-            Name = objVar.Name & " = " & Value
+            Name = objVar.Name & ExName & " = " & Value
         Else
-            Name = objVar.Name & " = " & objVar.Formula
+            Name = objVar.Name & ExName & " = " & objVar.Formula
         End If
 
     End Sub
