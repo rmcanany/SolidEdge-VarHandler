@@ -33,7 +33,6 @@ Public Class Form_VarHandler
 
                 End If
 
-
             Next
 
         End If
