@@ -1,8 +1,11 @@
 ﻿
 Imports System.ComponentModel
 Imports Microsoft.Office.Interop
+Imports Microsoft.Office.Interop.Excel
 Imports SolidEdgeConstants
 Imports SolidEdgeFramework
+Imports SolidEdgeFrameworkSupport
+Imports SolidEdgePart
 
 Public Class UC_Slider
 
@@ -264,9 +267,12 @@ Public Class UC_Slider
 
             BG_Play.RunWorkerAsync(TrackBar.Value)
 
-            For Each item As UC_Slider In Me.Parent.Controls
+            For Each item As Object In Me.Parent.Controls
 
-                If item IsNot Me Then item.BT_Play.Enabled = False
+                If TypeOf (item) Is UC_Slider Then
+                    Dim tmpSlider As UC_Slider = item
+                    If item IsNot Me Then tmpSlider.BT_Play.Enabled = False
+                End If
 
             Next
 
@@ -287,11 +293,17 @@ Public Class UC_Slider
 
         If tmpMe.BT_Export.Checked Then
 
-            For Each item As UC_Slider In Me.Parent.Controls
+            For Each item As Object In Me.Parent.Controls
 
-                If item.BT_Loop.Tag = "Checked" Then
+                If TypeOf item Is UC_Slider Then
 
-                    item.BT_Loop_Click(Me, Nothing)
+                    Dim tmpItem As UC_Slider = CType(item, UC_Slider)
+
+                    If tmpItem.BT_Loop.Tag = "Checked" Then
+
+                        tmpItem.BT_Loop_Click(Me, Nothing)
+
+                    End If
 
                 End If
 
@@ -340,11 +352,11 @@ Public Class UC_Slider
 
 
             'Example for future point tracking ################################################
-            If Export Then
+            'If Export Then
 
-                ExportSteps.Add(GenerateStep)
+            ExportSteps.Add(GenerateStep)
 
-            End If
+            'End If
 
 
 
@@ -383,13 +395,19 @@ Public Class UC_Slider
         Dim tmpStep As New List(Of (Nome As String, Valore As Double))
         Dim tmpForm = CType(Me.Parent.Parent, Form_VarHandler)
 
-        For Each item As UC_Slider In Me.Parent.Controls
+        For Each item As Object In Me.Parent.Controls
 
-            Dim tmpValue As (Nome As String, Valore As Double)
-            tmpValue.Nome = item.objVar.name.ToString
-            tmpValue.Valore = CadToValue(item.objVar.value, item.UnitType)
+            If TypeOf (item) Is UC_Slider Then
 
-            tmpStep.Add(tmpValue)
+                Dim tmpItem = CType(item, UC_Slider)
+
+                Dim tmpValue As (Nome As String, Valore As Double)
+                tmpValue.Nome = tmpItem.objVar.name.ToString
+                tmpValue.Valore = CadToValue(tmpItem.objVar.value, tmpItem.UnitType)
+
+                tmpStep.Add(tmpValue)
+
+            End If
 
         Next
 
@@ -453,36 +471,89 @@ Public Class UC_Slider
 
         UpdateLabel() '<-- A lavoro completato scateniamo l'aggiornamento di tutta l'interfaccia. I valori restituiti da Solid Edge dovrebbero essere tutti corretti
 
-        For Each item As UC_Slider In Me.Parent.Controls
+        Dim ClosedCurve As Boolean = False
 
-            If item IsNot Me Then item.BT_Play.Enabled = True
+        For Each item As Object In Me.Parent.Controls
+
+            If TypeOf (item) Is UC_Slider Then
+
+                Dim tmpItem As UC_Slider = CType(item, UC_Slider)
+                If tmpItem IsNot Me Then tmpItem.BT_Play.Enabled = True
+            ElseIf TypeOf (item) Is UC_Tracker Then
+
+                Dim tmpItem As UC_Tracker = CType(item, UC_Tracker)
+                ClosedCurve = tmpItem.ClosedCurve
+
+            End If
 
         Next
 
-        If Export Then
+        If Export Then ExportResult()
 
-            ExportResult()
+        Dim tmpForm = CType(Me.Parent.Parent, Form_VarHandler)
+        If tmpForm.Trace Then Trace(Not IsNothing(tmpForm.Tracker_2D), ClosedCurve)
 
-            Dim i = 1
+    End Sub
 
-            For Each item In ExportSteps
+    Private Sub Trace(Trace2D As Boolean, ClosedCurve As Boolean)
 
-                Console.Write(i)
+        Dim tmpList As New List(Of Double)
 
-                For Each stepItem As (Nome As String, Valore As Double) In item
+        For Each item In ExportSteps
 
-                    Console.Write(" - " & stepItem.Nome & " = " & stepItem.Valore.ToString)
+            For Each stepItem As (Nome As String, Valore As Double) In item
 
-                Next
-                Console.WriteLine()
+                Select Case stepItem.Nome
 
-                i += 1
+                    Case = "Tracker X", "Tracker Y", "Tracker Z"
+                        tmpList.Add(ValueToCad(stepItem.Valore, SolidEdgeFramework.UnitTypeConstants.igUnitDistance))
+
+                End Select
 
             Next
 
+        Next
+
+        If Trace2D Then
+
+            Dim tmpForm = CType(Me.Parent.Parent, Form_VarHandler)
+            Dim objDoc As SolidEdgeDraft.DraftDocument = tmpForm.objDoc
+            Dim tmpBsplineCurves2d = objDoc.ActiveSheet.BsplineCurves2d
+            Dim bSplineCurve2d As SolidEdgeFrameworkSupport.BSplineCurve2d = Nothing
+
+            Dim Points = tmpList.ToArray
+
+            Try
+                bSplineCurve2d = tmpBsplineCurves2d.AddByPointsWithCloseOption(4, Points.Length \ 2, Points, ClosedCurve)
+            Catch ex As Exception
+                MessageBox.Show("Error while drawing path. Possibly too many steps or trace points too close together.", "VarHandler")
+            End Try
+
+        Else
+
+            Dim tmpForm = CType(Me.Parent.Parent, Form_VarHandler)
+            Dim objDoc As SolidEdgeDocument = tmpForm.objDoc
+            Dim bSplineCurve3d As SolidEdgePart.BSplineCurve3D = Nothing
+            Dim Points = tmpList.ToArray
+
+
+            Dim objSketches3D = objDoc.Sketches3D
+            Dim objSketch3D = objSketches3D.Add()
+            Dim objBspLines3D = objSketch3D.BSplineCurves3D
+
+
+            Try
+                bSplineCurve3d = objBspLines3D.AddByPoints(Points.Length \ 3, Points, ClosedCurve)
+            Catch ex As Exception
+                MessageBox.Show("Error while drawing path. Possibly too many steps or trace points too close together.", "VarHandler")
+                objSketch3D.Delete
+            End Try
+
         End If
 
+
     End Sub
+
 
     Private Sub ExportResult()
 
@@ -611,7 +682,7 @@ Public Class UC_Slider
 
         If objVar.IsReadOnly Or objVar.Formula <> "" Then Return
         sender.ForeColor = Color.DarkBlue
-        sender.font = New Font(LB_min.Font, FontStyle.Bold)
+        sender.font = New System.Drawing.Font(LB_min.Font, FontStyle.Bold)
 
     End Sub
 
@@ -619,7 +690,7 @@ Public Class UC_Slider
 
         If objVar.IsReadOnly Or objVar.Formula <> "" Then Return
         sender.ForeColor = Color.Black
-        sender.font = New Font(LB_min.Font, FontStyle.Regular)
+        sender.font = New System.Drawing.Font(LB_min.Font, FontStyle.Regular)
 
     End Sub
 
@@ -634,6 +705,18 @@ Public Class UC_Slider
         End Try
 
         SetTrackBar()
+
+    End Sub
+
+    Public Sub DisablePlay()
+
+        BT_Play.Enabled = False
+
+    End Sub
+
+    Public Sub EnablePlay()
+
+        BT_Play.Enabled = True
 
     End Sub
 

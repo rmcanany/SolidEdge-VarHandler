@@ -5,12 +5,12 @@ Imports SolidEdgeFramework
 Public Class Form_VarHandler
 
     Dim objApp As SolidEdgeFramework.Application
-    Dim objDoc As SolidEdgeFramework.SolidEdgeDocument
+    Public objDoc As SolidEdgeFramework.SolidEdgeDocument
 
     Public Tracker_3D As SolidEdgePart.CoordinateSystem
     Public Tracker_2D As SolidEdgeDraft.BlockOccurrence
     Public Tracking As Boolean = False
-
+    Public Trace As Boolean = False
     Private Sub BT_Aggiungi_Click(sender As Object, e As EventArgs) Handles BT_Aggiungi.Click
 
         Dim tmpForm As New Form_SelectVariable
@@ -42,7 +42,7 @@ Public Class Form_VarHandler
 
     Private Sub Slider_Click(sender As Object, e As EventArgs)
 
-        For Each tmpSlider As UC_Slider In FLP_Vars.Controls
+        For Each tmpSlider As Object In FLP_Vars.Controls
 
             tmpSlider.UpdateLabel()
 
@@ -151,6 +151,8 @@ Public Class Form_VarHandler
 
         End If
 
+        BT_Tracker_Click(Me, Nothing)
+
     End Sub
 
     Private Sub FLP_Vars_ControlRemoved(sender As Object, e As ControlEventArgs) Handles FLP_Vars.ControlRemoved
@@ -193,9 +195,31 @@ Public Class Form_VarHandler
                     End If
             End Select
 
+            SetupTracker()
+
+        Else
+
+            For Each item In FLP_Vars.Controls
+
+                If TypeOf item Is UC_Tracker Then FLP_Vars.Controls.Remove(item)
+
+            Next
+
         End If
 
         Tracking = BT_Tracker.Checked
+
+    End Sub
+
+    Private Sub SetupTracker()
+
+        Dim tmpTracker As New UC_Tracker("Tracker")
+        If objDoc.Type = DocumentTypeConstants.igDraftDocument Then tmpTracker.Tracker_3D = False
+
+        FLP_Vars.Controls.Add(tmpTracker)
+        tmpTracker.UpdateLabel()
+
+        SetupAnchors()
 
     End Sub
 

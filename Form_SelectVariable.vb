@@ -34,13 +34,13 @@ Public Class Form_SelectVariable
 
     Private Function FindVars() As Object
 
-        Dim NameBy As Object
+        Dim NameBy As Object = Nothing
         If CB_Users.Checked And Not CB_System.Checked Then NameBy = 2
         If Not CB_Users.Checked And CB_System.Checked Then NameBy = 1
         If CB_Users.Checked And Not CB_System.Checked Then NameBy = 0
         If Not CB_Users.Checked And Not CB_System.Checked Then Return Nothing
 
-        Dim _VarType As Object
+        Dim _VarType As Object = Nothing
         If CB_Variables.Checked And CB_Dimensions.Checked Then _VarType = 3
         If CB_Variables.Checked And Not CB_Dimensions.Checked Then _VarType = 2
         If Not CB_Variables.Checked And CB_Dimensions.Checked Then _VarType = 1

@@ -126,6 +126,12 @@
     <Compile Include="UC_Slider.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="UC_Tracker.Designer.vb">
+      <DependentUpon>UC_Tracker.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UC_Tracker.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Form_SelectVariable.resx">
@@ -142,6 +148,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UC_Slider.resx">
       <DependentUpon>UC_Slider.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UC_Tracker.resx">
+      <DependentUpon>UC_Tracker.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -261,6 +270,9 @@
     <None Include="Resources\icons8_settings_16.png" />
     <None Include="Resources\icons8_data_sheet_16_extended.png" />
     <None Include="Resources\icons8_workflow_16.png" />
+    <None Include="Resources\icons8_plot_16.png" />
+    <None Include="Resources\Trace_16.png" />
+    <None Include="Resources\TraceSelected_16.png" />
     <Content Include="slider.ico" />
     <Content Include="VarHandler.ico" />
     <Content Include="MainForm.png" />
