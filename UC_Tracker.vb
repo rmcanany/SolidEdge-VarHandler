@@ -64,6 +64,7 @@
 
             LB_X.Text = "X: " & Math.Round(CadToValue(objX, SolidEdgeFramework.UnitTypeConstants.igUnitDistance), NumberOfDecimals).ToString
             LB_Y.Text = "Y: " & Math.Round(CadToValue(objY, SolidEdgeFramework.UnitTypeConstants.igUnitDistance), NumberOfDecimals).ToString
+            LB_Z.Text = "Z: -----"
 
         End If
 
@@ -80,6 +81,9 @@
 
         Try
             NumberOfDecimals = InputBox("Set number of decimals",, NumberOfDecimals)
+            If NumberOfDecimals > 15 Then NumberOfDecimals = 15
+            If NumberOfDecimals < 0 Then NumberOfDecimals = 0
+
         Catch ex As Exception
             Exit Sub
         End Try
@@ -112,5 +116,12 @@
 
         ClosedCurve = CB_Closed.Checked
 
+        If CB_Closed.Checked Then
+            CB_Closed.Image = My.Resources.Checked
+        Else
+            CB_Closed.Image = My.Resources.Unchecked
+        End If
+
     End Sub
+
 End Class

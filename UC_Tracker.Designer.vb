@@ -24,6 +24,7 @@ Partial Class UC_Tracker
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(UC_Tracker))
         Me.GroupBox_Tracker = New System.Windows.Forms.GroupBox()
+        Me.CB_Closed = New System.Windows.Forms.CheckBox()
         Me.BT_Loop = New System.Windows.Forms.Button()
         Me.LB_Z = New System.Windows.Forms.Label()
         Me.LB_X = New System.Windows.Forms.Label()
@@ -32,7 +33,6 @@ Partial Class UC_Tracker
         Me.BT_Settings = New System.Windows.Forms.Button()
         Me.BT_Play = New System.Windows.Forms.Button()
         Me.BT_Trace = New System.Windows.Forms.Button()
-        Me.CB_Closed = New System.Windows.Forms.CheckBox()
         Me.GroupBox_Tracker.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -56,6 +56,24 @@ Partial Class UC_Tracker
         Me.GroupBox_Tracker.TabIndex = 1
         Me.GroupBox_Tracker.TabStop = False
         Me.GroupBox_Tracker.Text = "Tracker"
+        '
+        'CB_Closed
+        '
+        Me.CB_Closed.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.CB_Closed.Appearance = System.Windows.Forms.Appearance.Button
+        Me.CB_Closed.AutoSize = True
+        Me.CB_Closed.FlatAppearance.BorderSize = 0
+        Me.CB_Closed.FlatAppearance.CheckedBackColor = System.Drawing.Color.Transparent
+        Me.CB_Closed.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.CB_Closed.Image = Global.SolidEdge_VarHandler.My.Resources.Resources.Unchecked
+        Me.CB_Closed.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.CB_Closed.Location = New System.Drawing.Point(139, 7)
+        Me.CB_Closed.Name = "CB_Closed"
+        Me.CB_Closed.Size = New System.Drawing.Size(97, 23)
+        Me.CB_Closed.TabIndex = 4
+        Me.CB_Closed.Text = "     Closed curve"
+        Me.CB_Closed.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.CB_Closed.UseVisualStyleBackColor = True
         '
         'BT_Loop
         '
@@ -122,7 +140,7 @@ Partial Class UC_Tracker
         Me.BT_Settings.FlatAppearance.BorderSize = 0
         Me.BT_Settings.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BT_Settings.Image = Global.SolidEdge_VarHandler.My.Resources.Resources.Settings
-        Me.BT_Settings.Location = New System.Drawing.Point(220, 7)
+        Me.BT_Settings.Location = New System.Drawing.Point(241, 7)
         Me.BT_Settings.Margin = New System.Windows.Forms.Padding(0)
         Me.BT_Settings.Name = "BT_Settings"
         Me.BT_Settings.Size = New System.Drawing.Size(20, 20)
@@ -151,23 +169,15 @@ Partial Class UC_Tracker
         Me.BT_Trace.FlatAppearance.BorderSize = 0
         Me.BT_Trace.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BT_Trace.Image = CType(resources.GetObject("BT_Trace.Image"), System.Drawing.Image)
-        Me.BT_Trace.Location = New System.Drawing.Point(241, 7)
+        Me.BT_Trace.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.BT_Trace.Location = New System.Drawing.Point(139, 27)
         Me.BT_Trace.Margin = New System.Windows.Forms.Padding(0)
         Me.BT_Trace.Name = "BT_Trace"
-        Me.BT_Trace.Size = New System.Drawing.Size(20, 20)
+        Me.BT_Trace.Size = New System.Drawing.Size(80, 20)
         Me.BT_Trace.TabIndex = 1
         Me.BT_Trace.Tag = "Unchecked"
+        Me.BT_Trace.Text = "Trace"
         Me.BT_Trace.UseVisualStyleBackColor = True
-        '
-        'CB_Closed
-        '
-        Me.CB_Closed.AutoSize = True
-        Me.CB_Closed.Location = New System.Drawing.Point(128, 10)
-        Me.CB_Closed.Name = "CB_Closed"
-        Me.CB_Closed.Size = New System.Drawing.Size(91, 17)
-        Me.CB_Closed.TabIndex = 4
-        Me.CB_Closed.Text = "Closed curve"
-        Me.CB_Closed.UseVisualStyleBackColor = True
         '
         'UC_Tracker
         '

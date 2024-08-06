@@ -75,6 +75,7 @@ Public Class UC_Slider
             Me.Height = CInt(Me.Height / 2)
             BT_Play.Visible = False
             BT_Loop.Visible = False
+            BT_Settings.Visible = False
         End If
 
         SetTrackBar()

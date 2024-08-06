@@ -40,7 +40,7 @@ Partial Class Form_VarHandler
         Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BT_Reload, Me.BT_Aggiungi, Me.ToolStripSeparator1, Me.BT_Export, Me.BT_Tracker, Me.BT_Workflow})
         Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
         Me.ToolStrip1.Name = "ToolStrip1"
-        Me.ToolStrip1.Size = New System.Drawing.Size(269, 25)
+        Me.ToolStrip1.Size = New System.Drawing.Size(284, 25)
         Me.ToolStrip1.TabIndex = 0
         Me.ToolStrip1.Text = "ToolStrip1"
         '
@@ -107,7 +107,7 @@ Partial Class Form_VarHandler
         Me.FLP_Vars.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
         Me.FLP_Vars.Location = New System.Drawing.Point(0, 25)
         Me.FLP_Vars.Name = "FLP_Vars"
-        Me.FLP_Vars.Size = New System.Drawing.Size(269, 456)
+        Me.FLP_Vars.Size = New System.Drawing.Size(284, 436)
         Me.FLP_Vars.TabIndex = 1
         Me.FLP_Vars.WrapContents = False
         '
@@ -115,11 +115,12 @@ Partial Class Form_VarHandler
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(269, 481)
+        Me.ClientSize = New System.Drawing.Size(284, 461)
         Me.Controls.Add(Me.FLP_Vars)
         Me.Controls.Add(Me.ToolStrip1)
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MinimumSize = New System.Drawing.Size(280, 400)
         Me.Name = "Form_VarHandler"
         Me.Text = "Solid Edge VarHandler v0.5"
         Me.TopMost = True
