@@ -26,6 +26,8 @@ Public Class UC_Slider
     Dim Export As Boolean = False
     Dim ExportSteps As List(Of Object)
 
+    Dim ViewOnly As Boolean = False
+
     Public Function Valid() As Boolean
 
         If IsNothing(objVar) Then
@@ -69,13 +71,26 @@ Public Class UC_Slider
         End If
 
         If objVar.IsReadOnly Or objVar.Formula <> "" Then
+
+            Me.BackColor = Color.WhiteSmoke
+
+            ViewOnly = True
+
             TrackBar.Visible = False
             LB_max.Visible = False
-            LB_min.Visible = False
-            Me.Height = CInt(Me.Height / 2)
             BT_Play.Visible = False
             BT_Loop.Visible = False
             BT_Settings.Visible = False
+
+            If objVar.Formula <> "" Then
+                LB_min.Text = "Formula " & objVar.Formula
+                LB_min.Enabled = False
+                Me.Height = CInt(Me.Height / 1.6)
+            Else
+                LB_min.Visible = False
+                Me.Height = CInt(Me.Height / 2.2)
+            End If
+
         End If
 
         SetTrackBar()
@@ -94,7 +109,7 @@ Public Class UC_Slider
         TrackBar.LargeChange = TrackBar.TickFrequency
 
         GroupBox_Slider.Text = VarName
-        LB_min.Text = min.ToString
+        If Not ViewOnly Then LB_min.Text = min.ToString
         LB_max.Text = max.ToString
 
         If CadToValue(objVar.Value, UnitType) < TrackBar.Minimum Then

@@ -122,7 +122,7 @@ Partial Class Form_VarHandler
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MinimumSize = New System.Drawing.Size(280, 400)
         Me.Name = "Form_VarHandler"
-        Me.Text = "Solid Edge VarHandler v0.5"
+        Me.Text = "Solid Edge VarHandler v0.6"
         Me.TopMost = True
         Me.ToolStrip1.ResumeLayout(False)
         Me.ToolStrip1.PerformLayout()

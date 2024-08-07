@@ -92,22 +92,15 @@
 
     End Sub
 
-    Private Sub BT_Trace_Click(sender As Object, e As EventArgs) Handles BT_Trace.Click
+    Private Sub CB_Trace_CheckedChanged(sender As Object, e As EventArgs) Handles CB_Trace.CheckedChanged
 
         Dim tmpForm = CType(Me.Parent.Parent, Form_VarHandler)
+        tmpForm.Trace = CB_Trace.Checked
 
-        If BT_Trace.Tag.ToString = "Unchecked" Then
-
-            BT_Trace.Tag = "Checked"
-            BT_Trace.Image = My.Resources.TraceSelected
-            tmpForm.Trace = True
-
+        If CB_Trace.Checked Then
+            CB_Trace.Image = My.Resources.TraceSelected
         Else
-
-            BT_Trace.Tag = "Unchecked"
-            BT_Trace.Image = My.Resources.Trace
-            tmpForm.Trace = False
-
+            CB_Trace.Image = My.Resources.Trace
         End If
 
     End Sub

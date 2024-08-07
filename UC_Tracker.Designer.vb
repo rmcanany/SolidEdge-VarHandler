@@ -22,24 +22,24 @@ Partial Class UC_Tracker
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(UC_Tracker))
         Me.GroupBox_Tracker = New System.Windows.Forms.GroupBox()
+        Me.CB_Trace = New System.Windows.Forms.CheckBox()
         Me.CB_Closed = New System.Windows.Forms.CheckBox()
-        Me.BT_Loop = New System.Windows.Forms.Button()
         Me.LB_Z = New System.Windows.Forms.Label()
         Me.LB_X = New System.Windows.Forms.Label()
         Me.LB_Y = New System.Windows.Forms.Label()
         Me.BT_Delete = New System.Windows.Forms.Button()
         Me.BT_Settings = New System.Windows.Forms.Button()
+        Me.BT_Loop = New System.Windows.Forms.Button()
         Me.BT_Play = New System.Windows.Forms.Button()
-        Me.BT_Trace = New System.Windows.Forms.Button()
         Me.GroupBox_Tracker.SuspendLayout()
         Me.SuspendLayout()
         '
         'GroupBox_Tracker
         '
         Me.GroupBox_Tracker.AutoSize = True
-        Me.GroupBox_Tracker.BackColor = System.Drawing.Color.Transparent
+        Me.GroupBox_Tracker.BackColor = System.Drawing.Color.AliceBlue
+        Me.GroupBox_Tracker.Controls.Add(Me.CB_Trace)
         Me.GroupBox_Tracker.Controls.Add(Me.CB_Closed)
         Me.GroupBox_Tracker.Controls.Add(Me.BT_Loop)
         Me.GroupBox_Tracker.Controls.Add(Me.LB_Z)
@@ -48,7 +48,6 @@ Partial Class UC_Tracker
         Me.GroupBox_Tracker.Controls.Add(Me.BT_Delete)
         Me.GroupBox_Tracker.Controls.Add(Me.BT_Settings)
         Me.GroupBox_Tracker.Controls.Add(Me.BT_Play)
-        Me.GroupBox_Tracker.Controls.Add(Me.BT_Trace)
         Me.GroupBox_Tracker.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupBox_Tracker.Location = New System.Drawing.Point(0, 0)
         Me.GroupBox_Tracker.Name = "GroupBox_Tracker"
@@ -57,39 +56,49 @@ Partial Class UC_Tracker
         Me.GroupBox_Tracker.TabStop = False
         Me.GroupBox_Tracker.Text = "Tracker"
         '
+        'CB_Trace
+        '
+        Me.CB_Trace.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.CB_Trace.Appearance = System.Windows.Forms.Appearance.Button
+        Me.CB_Trace.AutoSize = True
+        Me.CB_Trace.BackColor = System.Drawing.Color.Transparent
+        Me.CB_Trace.FlatAppearance.BorderSize = 0
+        Me.CB_Trace.FlatAppearance.CheckedBackColor = System.Drawing.Color.Transparent
+        Me.CB_Trace.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlLight
+        Me.CB_Trace.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ControlLight
+        Me.CB_Trace.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.CB_Trace.Image = Global.SolidEdge_VarHandler.My.Resources.Resources.Trace
+        Me.CB_Trace.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.CB_Trace.Location = New System.Drawing.Point(178, 7)
+        Me.CB_Trace.Name = "CB_Trace"
+        Me.CB_Trace.Size = New System.Drawing.Size(59, 23)
+        Me.CB_Trace.TabIndex = 4
+        Me.CB_Trace.Text = "Trace"
+        Me.CB_Trace.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.CB_Trace.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+        Me.CB_Trace.UseVisualStyleBackColor = False
+        '
         'CB_Closed
         '
         Me.CB_Closed.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.CB_Closed.Appearance = System.Windows.Forms.Appearance.Button
         Me.CB_Closed.AutoSize = True
+        Me.CB_Closed.BackColor = System.Drawing.Color.Transparent
         Me.CB_Closed.FlatAppearance.BorderSize = 0
         Me.CB_Closed.FlatAppearance.CheckedBackColor = System.Drawing.Color.Transparent
+        Me.CB_Closed.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ControlLight
+        Me.CB_Closed.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ControlLight
         Me.CB_Closed.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.CB_Closed.Image = Global.SolidEdge_VarHandler.My.Resources.Resources.Unchecked
         Me.CB_Closed.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.CB_Closed.Location = New System.Drawing.Point(139, 7)
+        Me.CB_Closed.Location = New System.Drawing.Point(178, 30)
         Me.CB_Closed.Name = "CB_Closed"
-        Me.CB_Closed.Size = New System.Drawing.Size(97, 23)
+        Me.CB_Closed.Size = New System.Drawing.Size(98, 23)
         Me.CB_Closed.TabIndex = 4
-        Me.CB_Closed.Text = "     Closed curve"
+        Me.CB_Closed.Text = "Closed curve"
         Me.CB_Closed.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.CB_Closed.UseVisualStyleBackColor = True
-        '
-        'BT_Loop
-        '
-        Me.BT_Loop.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.BT_Loop.BackColor = System.Drawing.Color.Transparent
-        Me.BT_Loop.FlatAppearance.BorderSize = 0
-        Me.BT_Loop.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BT_Loop.Image = Global.SolidEdge_VarHandler.My.Resources.Resources._Loop
-        Me.BT_Loop.Location = New System.Drawing.Point(178, 7)
-        Me.BT_Loop.Margin = New System.Windows.Forms.Padding(0)
-        Me.BT_Loop.Name = "BT_Loop"
-        Me.BT_Loop.Size = New System.Drawing.Size(20, 20)
-        Me.BT_Loop.TabIndex = 3
-        Me.BT_Loop.Tag = "Unchecked"
-        Me.BT_Loop.UseVisualStyleBackColor = False
-        Me.BT_Loop.Visible = False
+        Me.CB_Closed.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+        Me.CB_Closed.UseVisualStyleBackColor = False
         '
         'LB_Z
         '
@@ -124,6 +133,7 @@ Partial Class UC_Tracker
         'BT_Delete
         '
         Me.BT_Delete.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BT_Delete.BackColor = System.Drawing.Color.Transparent
         Me.BT_Delete.FlatAppearance.BorderSize = 0
         Me.BT_Delete.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BT_Delete.Image = Global.SolidEdge_VarHandler.My.Resources.Resources.Remove
@@ -132,11 +142,12 @@ Partial Class UC_Tracker
         Me.BT_Delete.Name = "BT_Delete"
         Me.BT_Delete.Size = New System.Drawing.Size(20, 20)
         Me.BT_Delete.TabIndex = 1
-        Me.BT_Delete.UseVisualStyleBackColor = True
+        Me.BT_Delete.UseVisualStyleBackColor = False
         '
         'BT_Settings
         '
         Me.BT_Settings.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BT_Settings.BackColor = System.Drawing.Color.Transparent
         Me.BT_Settings.FlatAppearance.BorderSize = 0
         Me.BT_Settings.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BT_Settings.Image = Global.SolidEdge_VarHandler.My.Resources.Resources.Settings
@@ -146,7 +157,23 @@ Partial Class UC_Tracker
         Me.BT_Settings.Size = New System.Drawing.Size(20, 20)
         Me.BT_Settings.TabIndex = 1
         Me.BT_Settings.Tag = ""
-        Me.BT_Settings.UseVisualStyleBackColor = True
+        Me.BT_Settings.UseVisualStyleBackColor = False
+        '
+        'BT_Loop
+        '
+        Me.BT_Loop.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.BT_Loop.BackColor = System.Drawing.Color.Transparent
+        Me.BT_Loop.FlatAppearance.BorderSize = 0
+        Me.BT_Loop.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BT_Loop.Image = Global.SolidEdge_VarHandler.My.Resources.Resources._Loop
+        Me.BT_Loop.Location = New System.Drawing.Point(178, 7)
+        Me.BT_Loop.Margin = New System.Windows.Forms.Padding(0)
+        Me.BT_Loop.Name = "BT_Loop"
+        Me.BT_Loop.Size = New System.Drawing.Size(20, 20)
+        Me.BT_Loop.TabIndex = 3
+        Me.BT_Loop.Tag = "Unchecked"
+        Me.BT_Loop.UseVisualStyleBackColor = False
+        Me.BT_Loop.Visible = False
         '
         'BT_Play
         '
@@ -162,22 +189,6 @@ Partial Class UC_Tracker
         Me.BT_Play.Tag = "Play"
         Me.BT_Play.UseVisualStyleBackColor = True
         Me.BT_Play.Visible = False
-        '
-        'BT_Trace
-        '
-        Me.BT_Trace.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.BT_Trace.FlatAppearance.BorderSize = 0
-        Me.BT_Trace.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BT_Trace.Image = CType(resources.GetObject("BT_Trace.Image"), System.Drawing.Image)
-        Me.BT_Trace.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.BT_Trace.Location = New System.Drawing.Point(139, 27)
-        Me.BT_Trace.Margin = New System.Windows.Forms.Padding(0)
-        Me.BT_Trace.Name = "BT_Trace"
-        Me.BT_Trace.Size = New System.Drawing.Size(80, 20)
-        Me.BT_Trace.TabIndex = 1
-        Me.BT_Trace.Tag = "Unchecked"
-        Me.BT_Trace.Text = "Trace"
-        Me.BT_Trace.UseVisualStyleBackColor = True
         '
         'UC_Tracker
         '
@@ -196,13 +207,13 @@ Partial Class UC_Tracker
     End Sub
 
     Friend WithEvents GroupBox_Tracker As GroupBox
-    Friend WithEvents BT_Loop As Button
     Friend WithEvents LB_Z As Label
     Friend WithEvents LB_X As Label
     Friend WithEvents LB_Y As Label
     Friend WithEvents BT_Delete As Button
     Friend WithEvents BT_Settings As Button
-    Friend WithEvents BT_Play As Button
-    Friend WithEvents BT_Trace As Button
     Friend WithEvents CB_Closed As CheckBox
+    Friend WithEvents CB_Trace As CheckBox
+    Friend WithEvents BT_Loop As Button
+    Friend WithEvents BT_Play As Button
 End Class

@@ -182,6 +182,7 @@ Public Class Form_VarHandler
                     If IsNothing(Tracker_2D) Then
                         MsgBox("2D Tracker not found!", MsgBoxStyle.Information)
                         BT_Tracker.Checked = False
+                        Exit Sub
                     End If
                 Case Else
                     For Each item In objDoc.CoordinateSystems
@@ -192,6 +193,7 @@ Public Class Form_VarHandler
                     If IsNothing(Tracker_3D) Then
                         MsgBox("3D Tracker not found!", MsgBoxStyle.Information)
                         BT_Tracker.Checked = False
+                        Exit Sub
                     End If
             End Select
 
