@@ -44,7 +44,8 @@ Release versions [here](https://github.com/farfilli/SolidEdge-VarHandler/release
 **Videos**
 - Video in action [here](https://www.youtube.com/watch?v=krcpQPdgGos&t=3s&ab_channel=FrancescoArfilli)
 - New video [here](https://www.youtube.com/watch?v=krcpQPdgGos&t=3s&ab_channel=FrancescoArfilli)
-- Tracker tracing a spline [trace](https://www.youtube.com/watch?v=YH6zwButRlo&ab_channel=FrancescoArfilli)
+- 2D Tracker tracing a spline [trace](https://www.youtube.com/watch?v=YH6zwButRlo&ab_channel=FrancescoArfilli)
+- 3D Tracker in assembly [here](https://youtu.be/T-k3u4ftC2k?si=VSHl7Id2dQuqqkK0)
 
 **Example files**
 - Example file of the tracker [here](./2DVarHandler.zip)
