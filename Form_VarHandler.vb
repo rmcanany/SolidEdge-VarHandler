@@ -85,7 +85,9 @@ Public Class Form_VarHandler
 
     Private Sub Form_VarHandler_Load(sender As Object, e As EventArgs) Handles Me.Load
 
+        '################# Questo risolver il problema del bordo sgrazinato della ToolStrip
         ToolStrip1.Renderer = New MySR()
+        '################# rif: https://stackoverflow.com/questions/1918247/how-to-disable-the-line-under-tool-strip-in-winform-c
 
         Try
             objApp = GetObject(, "SolidEdge.Application")
