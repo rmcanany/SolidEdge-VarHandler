@@ -72,6 +72,10 @@
 
     Private Sub BT_Delete_Click(sender As Object, e As EventArgs) Handles BT_Delete.Click
 
+        Dim tmpForm = CType(Me.Parent.Parent, Form_VarHandler)
+        tmpForm.BT_Tracker.Checked = False
+        tmpForm.Trace = False
+
         Dim tmpFLP As FlowLayoutPanel = CType(Me.Parent, FlowLayoutPanel)
         If tmpFLP.Controls.Contains(Me) Then tmpFLP.Controls.Remove(Me)
 

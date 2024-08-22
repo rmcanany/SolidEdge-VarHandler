@@ -530,43 +530,46 @@ Public Class UC_Slider
 
         Next
 
+        'If tmpList.Count <> 0 Then
+
         If Trace2D Then
 
-            Dim tmpForm = CType(Me.Parent.Parent, Form_VarHandler)
-            Dim objDoc As SolidEdgeDraft.DraftDocument = tmpForm.objDoc
-            Dim tmpBsplineCurves2d = objDoc.ActiveSheet.BsplineCurves2d
-            Dim bSplineCurve2d As SolidEdgeFrameworkSupport.BSplineCurve2d = Nothing
+                Dim tmpForm = CType(Me.Parent.Parent, Form_VarHandler)
+                Dim objDoc As SolidEdgeDraft.DraftDocument = tmpForm.objDoc
+                Dim tmpBsplineCurves2d = objDoc.ActiveSheet.BsplineCurves2d
+                Dim bSplineCurve2d As SolidEdgeFrameworkSupport.BSplineCurve2d = Nothing
 
-            Dim Points = tmpList.ToArray
+                Dim Points = tmpList.ToArray
 
-            Try
-                bSplineCurve2d = tmpBsplineCurves2d.AddByPointsWithCloseOption(4, Points.Length \ 2, Points, ClosedCurve)
-            Catch ex As Exception
-                MessageBox.Show("Error while drawing path. Possibly too many steps or trace points too close together.", "VarHandler")
-            End Try
+                Try
+                    bSplineCurve2d = tmpBsplineCurves2d.AddByPointsWithCloseOption(4, Points.Length \ 2, Points, ClosedCurve)
+                Catch ex As Exception
+                    MessageBox.Show("Error while drawing path. Possibly too many steps or trace points too close together.", "VarHandler")
+                End Try
 
-        Else
+            Else
 
-            Dim tmpForm = CType(Me.Parent.Parent, Form_VarHandler)
-            Dim objDoc As SolidEdgeDocument = tmpForm.objDoc
-            Dim bSplineCurve3d As SolidEdgePart.BSplineCurve3D = Nothing
-            Dim Points = tmpList.ToArray
-
-
-            Dim objSketches3D = objDoc.Sketches3D
-            Dim objSketch3D = objSketches3D.Add()
-            Dim objBspLines3D = objSketch3D.BSplineCurves3D
+                Dim tmpForm = CType(Me.Parent.Parent, Form_VarHandler)
+                Dim objDoc As SolidEdgeDocument = tmpForm.objDoc
+                Dim bSplineCurve3d As SolidEdgePart.BSplineCurve3D = Nothing
+                Dim Points = tmpList.ToArray
 
 
-            Try
-                bSplineCurve3d = objBspLines3D.AddByPoints(Points.Length \ 3, Points, ClosedCurve)
-            Catch ex As Exception
-                MessageBox.Show("Error while drawing path. Possibly too many steps or trace points too close together.", "VarHandler")
-                objSketch3D.Delete
-            End Try
+                Dim objSketches3D = objDoc.Sketches3D
+                Dim objSketch3D = objSketches3D.Add()
+                Dim objBspLines3D = objSketch3D.BSplineCurves3D
 
-        End If
 
+                Try
+                    bSplineCurve3d = objBspLines3D.AddByPoints(Points.Length \ 3, Points, ClosedCurve)
+                Catch ex As Exception
+                    MessageBox.Show("Error while drawing path. Possibly too many steps or trace points too close together.", "VarHandler")
+                    objSketch3D.Delete
+                End Try
+
+            End If
+
+        'End If
 
     End Sub
 

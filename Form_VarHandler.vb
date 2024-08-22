@@ -201,6 +201,8 @@ Public Class Form_VarHandler
 
         Else
 
+            Trace = False
+
             For Each item In FLP_Vars.Controls
 
                 If TypeOf item Is UC_Tracker Then FLP_Vars.Controls.Remove(item)
