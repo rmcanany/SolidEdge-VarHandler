@@ -60,8 +60,7 @@ Public Class Form_VarHandler
                 If i = 0 Then
                     ' Its the first control, all subsequent controls follow
                     ' the anchor behavior of this control.
-
-                    c.Width = FLP_Vars.Width - 8
+                    c.Width = FLP_Vars.Width - 6
                     c.Anchor = AnchorStyles.Left + AnchorStyles.Top
 
                     If FLP_Vars.VerticalScroll.Visible Then c.Width += -SystemInformation.VerticalScrollBarWidth + 0
@@ -85,6 +84,8 @@ Public Class Form_VarHandler
     End Sub
 
     Private Sub Form_VarHandler_Load(sender As Object, e As EventArgs) Handles Me.Load
+
+        ToolStrip1.Renderer = New MySR()
 
         Try
             objApp = GetObject(, "SolidEdge.Application")
@@ -233,4 +234,14 @@ Public Class Form_VarHandler
 
     End Sub
 
+End Class
+
+Public Class MySR
+    Inherits ToolStripSystemRenderer
+
+    Public Sub New()
+    End Sub
+
+    Protected Overrides Sub OnRenderToolStripBorder(ByVal e As ToolStripRenderEventArgs)
+    End Sub
 End Class

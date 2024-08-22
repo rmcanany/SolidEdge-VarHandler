@@ -36,7 +36,8 @@ Partial Class Form_VarHandler
         '
         'ToolStrip1
         '
-        Me.ToolStrip1.BackColor = System.Drawing.Color.White
+        Me.ToolStrip1.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.ToolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
         Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BT_Reload, Me.BT_Aggiungi, Me.ToolStripSeparator1, Me.BT_Export, Me.BT_Tracker, Me.BT_Workflow})
         Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
         Me.ToolStrip1.Name = "ToolStrip1"
@@ -102,7 +103,6 @@ Partial Class Form_VarHandler
         '
         Me.FLP_Vars.AutoScroll = True
         Me.FLP_Vars.BackColor = System.Drawing.Color.White
-        Me.FLP_Vars.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.FLP_Vars.Dock = System.Windows.Forms.DockStyle.Fill
         Me.FLP_Vars.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
         Me.FLP_Vars.Location = New System.Drawing.Point(0, 25)
