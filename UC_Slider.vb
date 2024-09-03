@@ -60,10 +60,16 @@ Public Class UC_Slider
         maxV = CadToValue(maxV, UnitType)
         minV = CadToValue(minV, UnitType)
 
-        If CInt(maxV) <> 0 Or CInt(minV) <> 0 Then
-            max = CInt(maxV)
-            min = CInt(minV)
-        End If
+        Try
+            If CInt(maxV) <> 0 Or CInt(minV) <> 0 Then
+                max = CInt(maxV)
+                min = CInt(minV)
+            End If
+        Catch ex As Exception
+            max = 0
+            min = 0
+        End Try
+
 
         If min = 0 And max = 0 Then
             min = CInt(CadToValue(objVar.Value, UnitType)) - 10
