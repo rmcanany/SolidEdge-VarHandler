@@ -104,6 +104,12 @@
       <DependentUpon>Form_VarHandler.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Form_WorkFlow.Designer.vb">
+      <DependentUpon>Form_WorkFlow.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form_WorkFlow.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -132,6 +138,12 @@
     <Compile Include="UC_Tracker.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="UC_WorkFlowEvent.Designer.vb">
+      <DependentUpon>UC_WorkFlowEvent.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UC_WorkFlowEvent.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Form_SelectVariable.resx">
@@ -139,6 +151,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form_VarHandler.resx">
       <DependentUpon>Form_VarHandler.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_WorkFlow.resx">
+      <DependentUpon>Form_WorkFlow.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -151,6 +166,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UC_Tracker.resx">
       <DependentUpon>UC_Tracker.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UC_WorkFlowEvent.resx">
+      <DependentUpon>UC_WorkFlowEvent.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -273,6 +291,9 @@
     <None Include="Resources\icons8_plot_16.png" />
     <None Include="Resources\Trace_16.png" />
     <None Include="Resources\TraceSelected_16.png" />
+    <None Include="Resources\icons8_close_window_16.png" />
+    <None Include="Resources\icons8_opened_folder_16.png" />
+    <None Include="Resources\icons8_save_16.png" />
     <Content Include="slider.ico" />
     <Content Include="VarHandler.ico" />
     <Content Include="MainForm.png" />

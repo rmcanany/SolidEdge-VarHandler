@@ -232,7 +232,20 @@ Public Class Form_VarHandler
 
     Private Sub BT_Workflow_Click(sender As Object, e As EventArgs) Handles BT_Workflow.Click
 
-        MsgBox("Not implemented yet! :)", MsgBoxStyle.Information)
+        'MsgBox("Not implemented yet! :)", MsgBoxStyle.Information)
+
+        Dim tmpVariables = New List(Of Object)
+
+        For Each item As UC_Slider In FLP_Vars.Controls.OfType(Of UC_Slider)
+
+            If Not IsNothing(item) Then tmpVariables.Add(item.objVar)
+
+        Next
+
+        Dim tmpWorkFlow As New Form_WorkFlow
+        tmpWorkFlow.Variables = tmpVariables
+
+        tmpWorkFlow.ShowDialog(Me)
 
     End Sub
 

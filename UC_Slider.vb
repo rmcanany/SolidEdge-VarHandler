@@ -18,7 +18,7 @@ Public Class UC_Slider
     Dim TrackbarStep As Integer
 
     Dim UnitType As SolidEdgeFramework.UnitTypeConstants
-    Dim objVar As Object 'SolidEdgeFramework.variable
+    Public objVar As Object 'SolidEdgeFramework.variable
 
     Dim Multiplier As Integer = 10
     Dim PlayLoop As Boolean = False
