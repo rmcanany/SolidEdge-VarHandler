@@ -25,13 +25,15 @@ Partial Class Form_WorkFlow
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form_WorkFlow))
         Me.FLP_Events = New System.Windows.Forms.FlowLayoutPanel()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
-        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
-        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.BT_Reload = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.BT_Open = New System.Windows.Forms.ToolStripButton()
         Me.BT_Save = New System.Windows.Forms.ToolStripButton()
         Me.BT_Close = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.Add_Event = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
+        Me.BT_Play = New System.Windows.Forms.ToolStripButton()
         Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -51,22 +53,12 @@ Partial Class Form_WorkFlow
         '
         Me.ToolStrip1.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ToolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BT_Reload, Me.ToolStripSeparator1, Me.BT_Open, Me.BT_Save, Me.BT_Close, Me.ToolStripSeparator2, Me.Add_Event})
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BT_Reload, Me.ToolStripSeparator1, Me.BT_Open, Me.BT_Save, Me.BT_Close, Me.ToolStripSeparator2, Me.Add_Event, Me.ToolStripSeparator3, Me.BT_Play})
         Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
         Me.ToolStrip1.Name = "ToolStrip1"
         Me.ToolStrip1.Size = New System.Drawing.Size(284, 25)
         Me.ToolStrip1.TabIndex = 2
         Me.ToolStrip1.Text = "ToolStrip1"
-        '
-        'ToolStripSeparator1
-        '
-        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(6, 25)
-        '
-        'ToolStripSeparator2
-        '
-        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        Me.ToolStripSeparator2.Size = New System.Drawing.Size(6, 25)
         '
         'BT_Reload
         '
@@ -76,6 +68,13 @@ Partial Class Form_WorkFlow
         Me.BT_Reload.Name = "BT_Reload"
         Me.BT_Reload.Size = New System.Drawing.Size(23, 22)
         Me.BT_Reload.Text = "Reload"
+        Me.BT_Reload.Visible = False
+        '
+        'ToolStripSeparator1
+        '
+        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(6, 25)
+        Me.ToolStripSeparator1.Visible = False
         '
         'BT_Open
         '
@@ -104,6 +103,11 @@ Partial Class Form_WorkFlow
         Me.BT_Close.Size = New System.Drawing.Size(23, 22)
         Me.BT_Close.Text = "Close"
         '
+        'ToolStripSeparator2
+        '
+        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(6, 25)
+        '
         'Add_Event
         '
         Me.Add_Event.Image = Global.SolidEdge_VarHandler.My.Resources.Resources.Add
@@ -111,6 +115,19 @@ Partial Class Form_WorkFlow
         Me.Add_Event.Name = "Add_Event"
         Me.Add_Event.Size = New System.Drawing.Size(81, 22)
         Me.Add_Event.Text = "Add Event"
+        '
+        'ToolStripSeparator3
+        '
+        Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
+        Me.ToolStripSeparator3.Size = New System.Drawing.Size(6, 25)
+        '
+        'BT_Play
+        '
+        Me.BT_Play.Image = Global.SolidEdge_VarHandler.My.Resources.Resources.Play
+        Me.BT_Play.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BT_Play.Name = "BT_Play"
+        Me.BT_Play.Size = New System.Drawing.Size(49, 22)
+        Me.BT_Play.Text = "Play"
         '
         'Form_WorkFlow
         '
@@ -141,4 +158,6 @@ Partial Class Form_WorkFlow
     Friend WithEvents BT_Close As ToolStripButton
     Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
     Friend WithEvents Add_Event As ToolStripButton
+    Friend WithEvents BT_Play As ToolStripButton
+    Friend WithEvents ToolStripSeparator3 As ToolStripSeparator
 End Class
