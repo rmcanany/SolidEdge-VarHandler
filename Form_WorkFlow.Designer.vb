@@ -40,7 +40,7 @@ Partial Class Form_WorkFlow
         'FLP_Events
         '
         Me.FLP_Events.AutoScroll = True
-        Me.FLP_Events.BackColor = System.Drawing.Color.White
+        Me.FLP_Events.BackColor = System.Drawing.Color.WhiteSmoke
         Me.FLP_Events.Dock = System.Windows.Forms.DockStyle.Fill
         Me.FLP_Events.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
         Me.FLP_Events.Location = New System.Drawing.Point(0, 25)

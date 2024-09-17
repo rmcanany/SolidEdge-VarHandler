@@ -50,8 +50,9 @@ Public Class Form_WorkFlow
 
         tmpStep.DG_Variables.Columns.Item("check").Visible = False
         tmpStep.DG_Variables.Columns.Item("objVar").Visible = False
-        tmpStep.DG_Variables.Columns.Item("Value").Width = 100
+        tmpStep.DG_Variables.Columns.Item("Value").Width = 80
         tmpStep.DG_Variables.Columns.Item("Value").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+        tmpStep.DG_Variables.Columns.Item("Value").HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
         tmpStep.DG_Variables.Columns.Item("Name").AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
         tmpStep.DG_Variables.Columns.Item("Name").ReadOnly = True
 
@@ -82,7 +83,7 @@ Public Class Form_WorkFlow
                 If i = 0 Then
                     ' Its the first control, all subsequent controls follow
                     ' the anchor behavior of this control.
-                    c.Width = FLP_Events.Width - 0
+                    c.Width = FLP_Events.Width - 6
                     c.Anchor = AnchorStyles.Left + AnchorStyles.Top
 
                     If FLP_Events.VerticalScroll.Visible Then c.Width += -SystemInformation.VerticalScrollBarWidth + 0
@@ -111,6 +112,8 @@ Public Class Form_WorkFlow
 
             For Each StepEvent As UC_WorkFlowEvent In FLP_Events.Controls
 
+                StepEvent.LB_SEQ.ForeColor = Color.DarkGreen
+
                 SetSteps(StepEvent)
 
                 For i = 1 To 20
@@ -119,7 +122,7 @@ Public Class Form_WorkFlow
 
                     For Each tmpRow As DataGridViewRow In StepEvent.DG_Variables.Rows
 
-                        Dim tmpVariable As SolidEdgeFrameworkSupport.Dimension = tmpRow.Cells("objVar").Value
+                        Dim tmpVariable As Object = tmpRow.Cells("objVar").Value
 
                         tmpVariable.Value += UC_Slider.ValueToCad(tmpRow.Tag, tmpVariable.UnitsType)
 
@@ -129,6 +132,8 @@ Public Class Form_WorkFlow
                     Form_VarHandler.objDoc.Parent.DoIdle()
 
                 Next
+
+                StepEvent.LB_SEQ.ForeColor = Color.DarkGray
 
             Next
 
@@ -140,7 +145,7 @@ Public Class Form_WorkFlow
 
         For Each tmpRow As DataGridViewRow In stepEvent.DG_Variables.Rows
 
-            Dim tmpVariable As SolidEdgeFrameworkSupport.Dimension = tmpRow.Cells("objVar").Value
+            Dim tmpVariable As Object = tmpRow.Cells("objVar").Value
             Dim stepValue As Double = (CDbl(tmpRow.Cells("Value").Value) - UC_Slider.CadToValue(tmpVariable.Value, tmpVariable.UnitsType)) / 20
 
             tmpRow.Tag = stepValue

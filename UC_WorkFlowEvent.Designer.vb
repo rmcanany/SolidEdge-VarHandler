@@ -107,7 +107,8 @@ Partial Class UC_WorkFlowEvent
         '
         Me.LB_SEQ.AutoSize = True
         Me.LB_SEQ.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.LB_SEQ.Font = New System.Drawing.Font("Segoe UI", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LB_SEQ.Font = New System.Drawing.Font("Segoe UI", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LB_SEQ.ForeColor = System.Drawing.Color.DarkGray
         Me.LB_SEQ.Location = New System.Drawing.Point(3, 20)
         Me.LB_SEQ.Name = "LB_SEQ"
         Me.LB_SEQ.Size = New System.Drawing.Size(24, 128)
@@ -136,7 +137,7 @@ Partial Class UC_WorkFlowEvent
         Me.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Controls.Add(Me.TLP)
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Margin = New System.Windows.Forms.Padding(0, 0, 0, 1)
+        Me.Margin = New System.Windows.Forms.Padding(3, 0, 3, 3)
         Me.Name = "UC_WorkFlowEvent"
         Me.Size = New System.Drawing.Size(281, 148)
         Me.TLP.ResumeLayout(False)
