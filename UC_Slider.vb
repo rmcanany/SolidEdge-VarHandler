@@ -19,6 +19,7 @@ Public Class UC_Slider
 
     Dim UnitType As SolidEdgeFramework.UnitTypeConstants
     Public objVar As Object 'SolidEdgeFramework.variable
+    Public objDoc As SolidEdgeDocument
 
     Dim Multiplier As Integer = 10
     Dim PlayLoop As Boolean = False
@@ -370,6 +371,9 @@ Public Class UC_Slider
             End If
 
             objVar.Value = ValueToCad(ProgressValue, UnitType)
+
+
+            If objDoc.Type = SolidEdgeConstants.DocumentTypeConstants.igAssemblyDocument Then objDoc.UpdateAll
 
 
 

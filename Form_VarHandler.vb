@@ -25,6 +25,8 @@ Public Class Form_VarHandler
 
                 If tmpSlider2.Valid Then
 
+                    tmpSlider2.objDoc = objDoc
+
                     AddHandler tmpSlider2.LB_value.TextChanged, AddressOf Slider_Click
 
                     FLP_Vars.Controls.Add(tmpSlider2)
@@ -47,6 +49,8 @@ Public Class Form_VarHandler
             tmpSlider.UpdateLabel()
 
         Next
+
+        If objDoc.Type = DocumentTypeConstants.igAssemblyDocument Then objDoc.UpdateAll
 
     End Sub
 
