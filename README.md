@@ -14,6 +14,8 @@ The actual version is limited and will perhaps be expanded per user requests
   - Closed curve, the spline will be a closed curve
   - Settings button for shown decimals ![settings](./Resources/icons8_settings_16.png)
   - Remove button ![Autotune](./Resources/icons8_close_16.png)
+- Update document, updates the current document after each step ![Update](./Resources/icons8_Update_Done_16.png)
+- Workflow, opens the Workflow panel (more info below) ![Workflow](./Resources/icons8_workflow_16.png)
 - Exposed name retrieved from the variable table (if available)
 - Ability to vary Exposed name from the variable table (double click on the title to prompt)
 - Minimum and Maximum range retrieved from the variable table (if available)
@@ -24,7 +26,7 @@ The actual version is limited and will perhaps be expanded per user requests
 - Checkbox to auto-retrieve the variable on reload (**Autotune** on comments field) ![Autotune](./Resources/icons8_checked_checkbox_16.png)
 - Remove button ![Autotune](./Resources/icons8_close_16.png)
 - Taskbar to easily change values
-- Manuale vary the value (click on value to prompt)
+- Manual vary the value (click on value to prompt)
 - ReadOnly variables supported
 - Works on any Solid Edge environment (par, psm, asm, dft)
 
@@ -61,3 +63,11 @@ Release versions [here](https://github.com/farfilli/SolidEdge-VarHandler/release
 
 Exported results in excel after play
 ![export](./export.png)
+
+**WorkFlow**
+![WorkFlow Form](./Workflow.png)
+- Open button, opens a workflow ![Open](./Resources/icons8_opened_folder_16.png)
+- Save button, save current workflow ![Save](./Resources/icons8_save_16.png)
+- Close button, close current workflow ![Close](./Resources/icons8_close_window_16.png)
+- Add Event button, adds an event to the current workflow ![Add Event](./Resources/icons8_add_16.png)
+- Play button, plays the current workflow ![Play](./Resources/icons8_circled_play_16.png)
