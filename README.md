@@ -38,6 +38,7 @@ Release versions [here](https://github.com/farfilli/SolidEdge-VarHandler/release
 - 0.4 Support for System and User Variable and Dimensions, export results to excel, settings button
 - 0.5 Correctly handled the range values, enabled 2D\3D tracker
 - 0.6 Multiple variable selection, tracker widget, and ability to trace the tracker with a spline curve
+- 0.7 Update document option, Workflows
   
 **Known limits:**
 - ~~Only user variables supported~~
