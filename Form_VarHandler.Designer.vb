@@ -112,7 +112,7 @@ Partial Class Form_VarHandler
         Me.BT_Workflow.Image = Global.SolidEdge_VarHandler.My.Resources.Resources.program
         Me.BT_Workflow.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BT_Workflow.Name = "BT_Workflow"
-        Me.BT_Workflow.Size = New System.Drawing.Size(78, 20)
+        Me.BT_Workflow.Size = New System.Drawing.Size(78, 22)
         Me.BT_Workflow.Text = "Workflow"
         Me.BT_Workflow.ToolTipText = "Execute a sequence of variable changes"
         '
@@ -139,7 +139,7 @@ Partial Class Form_VarHandler
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MinimumSize = New System.Drawing.Size(280, 400)
         Me.Name = "Form_VarHandler"
-        Me.Text = "Solid Edge VarHandler v0.6"
+        Me.Text = "Solid Edge VarHandler v0.7"
         Me.TopMost = True
         Me.ToolStrip1.ResumeLayout(False)
         Me.ToolStrip1.PerformLayout()
