@@ -65,9 +65,15 @@ Exported results in excel after play
 ![export](./export.png)
 
 **WorkFlow**
-![WorkFlow Form](./Workflow.png)
+
+![WorkFlow Form](./WorkFlow.png)
 - Open button, opens a workflow ![Open](./Resources/icons8_opened_folder_16.png)
 - Save button, save current workflow ![Save](./Resources/icons8_save_16.png)
 - Close button, close current workflow ![Close](./Resources/icons8_close_window_16.png)
 - Add Event button, adds an event to the current workflow ![Add Event](./Resources/icons8_add_16.png)
 - Play button, plays the current workflow ![Play](./Resources/icons8_circled_play_16.png)
+
+A workflow is a sequence of steps; each steps is a settings of the VarHandler variables.
+When playing a workflow each step will reach the assigned variable values in sequence.
+
+Example video [Here](https://youtu.be/JcF9NA-WjCA)
