@@ -294,6 +294,7 @@
     <None Include="Resources\icons8_close_window_16.png" />
     <None Include="Resources\icons8_opened_folder_16.png" />
     <None Include="Resources\icons8_save_16.png" />
+    <None Include="Resources\icons8_Update_Done_16.png" />
     <Content Include="slider.ico" />
     <Content Include="VarHandler.ico" />
     <Content Include="MainForm.png" />

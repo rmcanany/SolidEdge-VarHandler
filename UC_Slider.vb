@@ -26,7 +26,7 @@ Public Class UC_Slider
     Dim Forward As Boolean = True
     Dim Export As Boolean = False
     Dim ExportSteps As List(Of Object)
-
+    Public UpdateDoc As Boolean = False
     Dim ViewOnly As Boolean = False
 
     Public Function Valid() As Boolean
@@ -153,11 +153,15 @@ Public Class UC_Slider
 
     Private Sub TrackBar_Scroll(sender As Object, e As EventArgs) Handles TrackBar.Scroll
 
-        objVar.Value = ValueToCad(TrackBar.Value, UnitType)
+        Try
 
-        LB_value.Text = TrackBar.Value.ToString
+            objVar.Value = ValueToCad(TrackBar.Value, UnitType)
+            LB_value.Text = TrackBar.Value.ToString
+            UpdateLabel()
 
-        UpdateLabel()
+        Catch ex As Exception
+
+        End Try
 
     End Sub
 
@@ -373,8 +377,7 @@ Public Class UC_Slider
             objVar.Value = ValueToCad(ProgressValue, UnitType)
 
 
-            If objDoc.Type = SolidEdgeConstants.DocumentTypeConstants.igAssemblyDocument Then objDoc.UpdateAll
-
+            If objDoc.Type = SolidEdgeConstants.DocumentTypeConstants.igAssemblyDocument And UpdateDoc Then objDoc.UpdateDocument 'objDoc.Parent.StartCommand(11292)
 
 
             'Example for future point tracking ################################################
@@ -641,13 +644,17 @@ Public Class UC_Slider
 
         'LB_value.Text = "" <--- questo causa l'evento nel form principale che scatena l'aggiornamento di tutti gli Slider e rende l'interfaccia non responsiva.
 
-        LB_name.Text = objVar.Name & " = " & e.UserState
+        Try
+            LB_name.Text = objVar.Name & " = " & e.UserState
 
-        If UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitDistance Then
-            LB_name.Text = LB_name.Text & " mm"
-        ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitAngle Then
-            LB_name.Text = LB_name.Text & " °"
-        End If
+            If UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitDistance Then
+                LB_name.Text = LB_name.Text & " mm"
+            ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitAngle Then
+                LB_name.Text = LB_name.Text & " °"
+            End If
+        Catch ex As Exception
+
+        End Try
 
     End Sub
 

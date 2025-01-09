@@ -26,7 +26,7 @@ Public Class Form_VarHandler
                 If tmpSlider2.Valid Then
 
                     tmpSlider2.objDoc = objDoc
-
+                    tmpSlider2.UpdateDoc = BT_Update.Checked
                     AddHandler tmpSlider2.LB_value.TextChanged, AddressOf Slider_Click
 
                     FLP_Vars.Controls.Add(tmpSlider2)
@@ -50,7 +50,7 @@ Public Class Form_VarHandler
 
         Next
 
-        If objDoc.Type = DocumentTypeConstants.igAssemblyDocument Then objDoc.UpdateAll
+        If objDoc.Type = DocumentTypeConstants.igAssemblyDocument And BT_Update.Checked Then objDoc.UpdateDocument 'objDoc.Parent.StartCommand(11292)
 
     End Sub
 
@@ -248,8 +248,19 @@ Public Class Form_VarHandler
 
         Dim tmpWorkFlow As New Form_WorkFlow
         tmpWorkFlow.Variables = tmpVariables
+        tmpWorkFlow.UpdateDoc = BT_Update.Checked
 
         tmpWorkFlow.ShowDialog(Me)
+
+    End Sub
+
+    Private Sub BT_Update_CheckedChanged(sender As Object, e As EventArgs) Handles BT_Update.CheckedChanged
+
+        For Each tmpSlider In FLP_Vars.Controls
+
+            If TypeOf tmpSlider Is UC_Slider Then tmpSlider.UpdateDoc = BT_Update.Checked
+
+        Next
 
     End Sub
 

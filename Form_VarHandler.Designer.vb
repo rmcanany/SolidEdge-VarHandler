@@ -29,6 +29,8 @@ Partial Class Form_VarHandler
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.BT_Export = New System.Windows.Forms.ToolStripButton()
         Me.BT_Tracker = New System.Windows.Forms.ToolStripButton()
+        Me.BT_Update = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.BT_Workflow = New System.Windows.Forms.ToolStripButton()
         Me.FLP_Vars = New System.Windows.Forms.FlowLayoutPanel()
         Me.ToolStrip1.SuspendLayout()
@@ -38,7 +40,7 @@ Partial Class Form_VarHandler
         '
         Me.ToolStrip1.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ToolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BT_Reload, Me.BT_Aggiungi, Me.ToolStripSeparator1, Me.BT_Export, Me.BT_Tracker, Me.BT_Workflow})
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BT_Reload, Me.BT_Aggiungi, Me.ToolStripSeparator1, Me.BT_Export, Me.BT_Tracker, Me.BT_Update, Me.ToolStripSeparator2, Me.BT_Workflow})
         Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
         Me.ToolStrip1.Name = "ToolStrip1"
         Me.ToolStrip1.Size = New System.Drawing.Size(284, 25)
@@ -89,13 +91,28 @@ Partial Class Form_VarHandler
         Me.BT_Tracker.Text = "Add Tracker"
         Me.BT_Tracker.ToolTipText = "Adds a tracker that trace a polyline on its movement"
         '
+        'BT_Update
+        '
+        Me.BT_Update.CheckOnClick = True
+        Me.BT_Update.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.BT_Update.Image = Global.SolidEdge_VarHandler.My.Resources.Resources.Update
+        Me.BT_Update.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BT_Update.Name = "BT_Update"
+        Me.BT_Update.Size = New System.Drawing.Size(23, 22)
+        Me.BT_Update.Text = "Update"
+        Me.BT_Update.ToolTipText = "Update document at each step"
+        '
+        'ToolStripSeparator2
+        '
+        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(6, 25)
+        '
         'BT_Workflow
         '
-        Me.BT_Workflow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.BT_Workflow.Image = Global.SolidEdge_VarHandler.My.Resources.Resources.program
         Me.BT_Workflow.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BT_Workflow.Name = "BT_Workflow"
-        Me.BT_Workflow.Size = New System.Drawing.Size(23, 22)
+        Me.BT_Workflow.Size = New System.Drawing.Size(78, 20)
         Me.BT_Workflow.Text = "Workflow"
         Me.BT_Workflow.ToolTipText = "Execute a sequence of variable changes"
         '
@@ -139,4 +156,6 @@ Partial Class Form_VarHandler
     Friend WithEvents BT_Workflow As ToolStripButton
     Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
     Friend WithEvents BT_Export As ToolStripButton
+    Friend WithEvents BT_Update As ToolStripButton
+    Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
 End Class
