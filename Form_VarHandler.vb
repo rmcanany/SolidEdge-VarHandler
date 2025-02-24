@@ -6,6 +6,7 @@ Public Class Form_VarHandler
 
     Dim objApp As SolidEdgeFramework.Application
     Public objDoc As SolidEdgeFramework.SolidEdgeDocument
+    Public LengthUnits As SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants
 
     Public Tracker_3D As SolidEdgePart.CoordinateSystem
     Public Tracker_2D As SolidEdgeDraft.BlockOccurrence
@@ -15,6 +16,7 @@ Public Class Form_VarHandler
 
         Dim tmpForm As New Form_SelectVariable
         tmpForm.objDoc = objDoc
+        tmpForm.LengthUnits = LengthUnits
         tmpForm.ShowDialog(Me)
 
         If tmpForm.Valid Then
@@ -26,6 +28,7 @@ Public Class Form_VarHandler
                 If tmpSlider2.Valid Then
 
                     tmpSlider2.objDoc = objDoc
+                    tmpSlider2.LengthUnits = LengthUnits
                     tmpSlider2.UpdateDoc = BT_Update.Checked
                     AddHandler tmpSlider2.LB_value.TextChanged, AddressOf Slider_Click
 
@@ -102,6 +105,7 @@ Public Class Form_VarHandler
 
         Try
             objDoc = objApp.ActiveDocument
+            LengthUnits = GetLengthUnits(objDoc)
         Catch ex As Exception
             MsgBox("A Solid Edge Document must be open", MsgBoxStyle.Critical)
             End
@@ -224,7 +228,7 @@ Public Class Form_VarHandler
 
     Private Sub SetupTracker()
 
-        Dim tmpTracker As New UC_Tracker("Tracker")
+        Dim tmpTracker As New UC_Tracker("Tracker", LengthUnits)
         If objDoc.Type = DocumentTypeConstants.igDraftDocument Then tmpTracker.Tracker_3D = False
 
         FLP_Vars.Controls.Add(tmpTracker)
@@ -249,6 +253,7 @@ Public Class Form_VarHandler
         Dim tmpWorkFlow As New Form_WorkFlow
         tmpWorkFlow.Variables = tmpVariables
         tmpWorkFlow.UpdateDoc = BT_Update.Checked
+        tmpWorkFlow.LengthUnits = LengthUnits
 
         tmpWorkFlow.ShowDialog(Me)
 
@@ -263,6 +268,21 @@ Public Class Form_VarHandler
         Next
 
     End Sub
+
+    Private Function GetLengthUnits(objDoc As SolidEdgeFramework.SolidEdgeDocument) As SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants
+        Dim tmpLengthUnits As SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants
+
+        Dim UnitsOfMeasure = objDoc.UnitsOfMeasure
+
+        For Each UnitOfMeasure As SolidEdgeFramework.UnitOfMeasure In UnitsOfMeasure
+            If UnitOfMeasure.Type = SolidEdgeConstants.UnitTypeConstants.igUnitDistance Then
+                tmpLengthUnits = UnitOfMeasure.Units
+                Exit For
+            End If
+        Next
+
+        Return tmpLengthUnits
+    End Function
 
 End Class
 

@@ -5,6 +5,7 @@ Public Class Form_WorkFlow
 
     Public Variables As List(Of Object)
     Public UpdateDoc As Boolean = False
+    Public LengthUnits As SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants
 
     Private Sub Add_Event_Click(sender As Object, e As EventArgs) Handles Add_Event.Click
 
@@ -29,7 +30,7 @@ Public Class Form_WorkFlow
                 Dim tmpVariable As New EventVariable
                 tmpVariable.Check = True
                 tmpVariable.Name = tmpVar.DisplayName
-                tmpVariable.Value = Math.Round(UC_Slider.CadToValue(tmpVar.value, tmpVar.UnitsType), 2)
+                tmpVariable.Value = Math.Round(UC_Slider.CadToValue(tmpVar.value, tmpVar.UnitsType, LengthUnits), 2)
                 tmpVariable.objVar = tmpVar
 
                 list.Add(tmpVariable)
@@ -125,7 +126,7 @@ Public Class Form_WorkFlow
 
                         Dim tmpVariable As Object = tmpRow.Cells("objVar").Value
 
-                        tmpVariable.Value += UC_Slider.ValueToCad(tmpRow.Tag, tmpVariable.UnitsType)
+                        tmpVariable.Value += UC_Slider.ValueToCad(tmpRow.Tag, tmpVariable.UnitsType, LengthUnits)
 
                     Next
 
@@ -149,7 +150,7 @@ Public Class Form_WorkFlow
         For Each tmpRow As DataGridViewRow In stepEvent.DG_Variables.Rows
 
             Dim tmpVariable As Object = tmpRow.Cells("objVar").Value
-            Dim stepValue As Double = (CDbl(tmpRow.Cells("Value").Value) - UC_Slider.CadToValue(tmpVariable.Value, tmpVariable.UnitsType)) / 20
+            Dim stepValue As Double = (CDbl(tmpRow.Cells("Value").Value) - UC_Slider.CadToValue(tmpVariable.Value, tmpVariable.UnitsType, LengthUnits)) / 20
 
             tmpRow.Tag = stepValue
 
