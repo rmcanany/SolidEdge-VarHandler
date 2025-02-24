@@ -118,7 +118,8 @@ Public Class Form_WorkFlow
 
                 SetSteps(StepEvent)
 
-                For i = 1 To 20
+                'For i = 1 To 20
+                For i = 1 To StepEvent.steps
 
                     Form_VarHandler.objDoc.Parent.DelayCompute = True
 
@@ -147,10 +148,13 @@ Public Class Form_WorkFlow
 
     Private Sub SetSteps(stepEvent As UC_WorkFlowEvent)
 
+        Dim tmpSteps = stepEvent.steps
+
         For Each tmpRow As DataGridViewRow In stepEvent.DG_Variables.Rows
 
             Dim tmpVariable As Object = tmpRow.Cells("objVar").Value
-            Dim stepValue As Double = (CDbl(tmpRow.Cells("Value").Value) - UC_Slider.CadToValue(tmpVariable.Value, tmpVariable.UnitsType, LengthUnits)) / 20
+            'Dim stepValue As Double = (CDbl(tmpRow.Cells("Value").Value) - UC_Slider.CadToValue(tmpVariable.Value, tmpVariable.UnitsType, LengthUnits)) / 20
+            Dim stepValue As Double = (CDbl(tmpRow.Cells("Value").Value) - UC_Slider.CadToValue(tmpVariable.Value, tmpVariable.UnitsType, LengthUnits)) / tmpSteps
 
             tmpRow.Tag = stepValue
 
