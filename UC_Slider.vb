@@ -1,5 +1,6 @@
 ﻿
 Imports System.ComponentModel
+Imports System.IO
 Imports Microsoft.Office.Interop
 Imports Microsoft.Office.Interop.Excel
 Imports SolidEdgeConstants
@@ -28,6 +29,8 @@ Public Class UC_Slider
     Dim Export As Boolean = False
     Dim ExportSteps As List(Of Object)
     Public UpdateDoc As Boolean = False
+    Public SaveImages As Boolean = False
+    Public CheckInterference As Boolean = False
     Dim ViewOnly As Boolean = False
 
     Public Function Valid() As Boolean
@@ -395,6 +398,8 @@ Public Class UC_Slider
             GenerateStep()
         }
 
+        Dim Idx As Integer = 0
+
         Do 'Until ProgressValue = max
 
             If Forward Then
@@ -420,6 +425,9 @@ Public Class UC_Slider
 
             If objDoc.Type = SolidEdgeConstants.DocumentTypeConstants.igAssemblyDocument And UpdateDoc Then objDoc.UpdateDocument 'objDoc.Parent.StartCommand(11292)
 
+            If SaveImages Then DoSaveImage(Idx)
+
+            If CheckInterference Then If Not DoCheckInterference(Idx) Then Return
 
             'Example for future point tracking ################################################
             'If Export Then
@@ -456,6 +464,7 @@ Public Class UC_Slider
 
             End If
 
+            Idx += 1
         Loop
 
     End Sub
@@ -588,40 +597,40 @@ Public Class UC_Slider
 
         If Trace2D Then
 
-                Dim tmpForm = CType(Me.Parent.Parent, Form_VarHandler)
-                Dim objDoc As SolidEdgeDraft.DraftDocument = tmpForm.objDoc
-                Dim tmpBsplineCurves2d = objDoc.ActiveSheet.BsplineCurves2d
-                Dim bSplineCurve2d As SolidEdgeFrameworkSupport.BSplineCurve2d = Nothing
+            Dim tmpForm = CType(Me.Parent.Parent, Form_VarHandler)
+            Dim objDoc As SolidEdgeDraft.DraftDocument = tmpForm.objDoc
+            Dim tmpBsplineCurves2d = objDoc.ActiveSheet.BsplineCurves2d
+            Dim bSplineCurve2d As SolidEdgeFrameworkSupport.BSplineCurve2d = Nothing
 
-                Dim Points = tmpList.ToArray
+            Dim Points = tmpList.ToArray
 
-                Try
-                    bSplineCurve2d = tmpBsplineCurves2d.AddByPointsWithCloseOption(4, Points.Length \ 2, Points, ClosedCurve)
-                Catch ex As Exception
-                    MessageBox.Show("Error while drawing path. Possibly too many steps or trace points too close together.", "VarHandler")
-                End Try
+            Try
+                bSplineCurve2d = tmpBsplineCurves2d.AddByPointsWithCloseOption(4, Points.Length \ 2, Points, ClosedCurve)
+            Catch ex As Exception
+                MessageBox.Show("Error while drawing path. Possibly too many steps or trace points too close together.", "VarHandler")
+            End Try
 
-            Else
+        Else
 
-                Dim tmpForm = CType(Me.Parent.Parent, Form_VarHandler)
-                Dim objDoc As SolidEdgeDocument = tmpForm.objDoc
-                Dim bSplineCurve3d As SolidEdgePart.BSplineCurve3D = Nothing
-                Dim Points = tmpList.ToArray
-
-
-                Dim objSketches3D = objDoc.Sketches3D
-                Dim objSketch3D = objSketches3D.Add()
-                Dim objBspLines3D = objSketch3D.BSplineCurves3D
+            Dim tmpForm = CType(Me.Parent.Parent, Form_VarHandler)
+            Dim objDoc As SolidEdgeDocument = tmpForm.objDoc
+            Dim bSplineCurve3d As SolidEdgePart.BSplineCurve3D = Nothing
+            Dim Points = tmpList.ToArray
 
 
-                Try
-                    bSplineCurve3d = objBspLines3D.AddByPoints(Points.Length \ 3, Points, ClosedCurve)
-                Catch ex As Exception
-                    MessageBox.Show("Error while drawing path. Possibly too many steps or trace points too close together.", "VarHandler")
-                    objSketch3D.Delete
-                End Try
+            Dim objSketches3D = objDoc.Sketches3D
+            Dim objSketch3D = objSketches3D.Add()
+            Dim objBspLines3D = objSketch3D.BSplineCurves3D
 
-            End If
+
+            Try
+                bSplineCurve3d = objBspLines3D.AddByPoints(Points.Length \ 3, Points, ClosedCurve)
+            Catch ex As Exception
+                MessageBox.Show("Error while drawing path. Possibly too many steps or trace points too close together.", "VarHandler")
+                objSketch3D.Delete
+            End Try
+
+        End If
 
         'End If
 
@@ -630,52 +639,52 @@ Public Class UC_Slider
 
     Private Sub ExportResult()
 
-        Me.Cursor = Cursors.WaitCursor
+        'Me.Cursor = Cursors.WaitCursor
 
-        Dim objApp As Excel.Application
-        Dim objBook As Excel._Workbook
-        Dim objBooks As Excel.Workbooks
-        Dim objSheets As Excel.Sheets
-        Dim objSheet As Excel._Worksheet
+        'Dim objApp As Excel.Application
+        'Dim objBook As Excel._Workbook
+        'Dim objBooks As Excel.Workbooks
+        'Dim objSheets As Excel.Sheets
+        'Dim objSheet As Excel._Worksheet
 
-        objApp = New Excel.Application()
-        objBooks = objApp.Workbooks
-        objBook = objBooks.Add
-        objSheets = objBook.Worksheets
-        objSheet = objSheets(1)
+        'objApp = New Excel.Application()
+        'objBooks = objApp.Workbooks
+        'objBook = objBooks.Add
+        'objSheets = objBook.Worksheets
+        'objSheet = objSheets(1)
 
-        Dim Riga = 2
-        For Each item In ExportSteps
+        'Dim Riga = 2
+        'For Each item In ExportSteps
 
-            Dim Colonna = 2
-            For Each stepItem As (Nome As String, Valore As Double) In item
+        '    Dim Colonna = 2
+        '    For Each stepItem As (Nome As String, Valore As Double) In item
 
-                objSheet.Cells(1, Colonna).value = stepItem.Nome
-                objSheet.Cells(Riga, 1).value = Riga - 1
-                objSheet.Cells(Riga, Colonna).value = stepItem.Valore
+        '        objSheet.Cells(1, Colonna).value = stepItem.Nome
+        '        objSheet.Cells(Riga, 1).value = Riga - 1
+        '        objSheet.Cells(Riga, Colonna).value = stepItem.Valore
 
-                Colonna += 1
+        '        Colonna += 1
 
-            Next
+        '    Next
 
-            Riga += 1
+        '    Riga += 1
 
-        Next
+        'Next
 
-        'objSheet.Range("A1:X1").EntireColumn.AutoFit()
-        objSheet.Cells.Select()
+        ''objSheet.Range("A1:X1").EntireColumn.AutoFit()
+        'objSheet.Cells.Select()
 
-        'With objApp.Selection.Font
-        '    .Name = "Calibri"
-        '    .Size = 10
-        'End With
+        ''With objApp.Selection.Font
+        ''    .Name = "Calibri"
+        ''    .Size = 10
+        ''End With
 
-        objSheet.Range("A1").Select()
+        'objSheet.Range("A1").Select()
 
-        objApp.Visible = True
-        objBook.Activate()
+        'objApp.Visible = True
+        'objBook.Activate()
 
-        Me.Cursor = Cursors.Default
+        'Me.Cursor = Cursors.Default
 
     End Sub
 
@@ -800,5 +809,99 @@ Public Class UC_Slider
         BT_Play.Enabled = True
 
     End Sub
+
+    Public Sub DoSaveImage(Idx As Integer)
+
+        If objDoc.Type = SolidEdgeConstants.DocumentTypeConstants.igDraftDocument Then
+            ' Nothing to do here
+            Return
+        End If
+
+        Dim Dirname = System.IO.Path.GetDirectoryName(objDoc.FullName)
+        Dirname = String.Format("{0}\images", Dirname)
+        If Not FileIO.FileSystem.DirectoryExists(Dirname) Then
+            FileIO.FileSystem.CreateDirectory(Dirname)
+        End If
+
+        If Idx = 0 Then
+            ' Remove previous images
+            Dim DI As New DirectoryInfo(Dirname)
+            For Each File As FileInfo In DI.GetFiles
+                File.Delete()
+            Next
+        End If
+
+        Dim Filename As String = String.Format("{0}\{1,5}.jpg", Dirname, Idx)
+
+        Dim Window As SolidEdgeFramework.Window
+        Dim View As SolidEdgeFramework.View
+
+        Window = CType(objDoc.Application.ActiveWindow, SolidEdgeFramework.Window)
+        View = Window.View
+
+        View.SaveAsImage(Filename)
+
+    End Sub
+
+    Public Function DoCheckInterference(Idx As Integer) As Boolean
+
+        Dim Proceed As Boolean = True
+
+        If Not objDoc.Type = SolidEdgeConstants.DocumentTypeConstants.igAssemblyDocument Then
+            ' Nothing to do here
+            Return True
+        End If
+
+        Dim tmpSEDoc = CType(objDoc, SolidEdgeAssembly.AssemblyDocument)
+
+        Dim ComparisonMethod = SolidEdgeConstants.InterferenceComparisonConstants.seInterferenceComparisonSet1vsItself
+        Dim Status As SolidEdgeAssembly.InterferenceStatusConstants
+        Dim Occurrences As SolidEdgeAssembly.Occurrences = tmpSEDoc.Occurrences
+        Dim Occurrence As SolidEdgeAssembly.Occurrence = Nothing
+        Dim i As Integer
+        Dim NumInterferences As Object = Nothing
+        Dim IgnoreT = SolidEdgeConstants.InterferenceOptionsConstants.seIntfOptIgnoreThreadVsNonThreaded
+        Dim IgnoreD = SolidEdgeConstants.InterferenceOptionsConstants.seIntfOptIgnoreSameNominalDia
+
+
+        Dim SetList As New List(Of Object)
+
+        For i = 1 To Occurrences.Count
+            SetList.Add(Occurrences.Item(i))
+        Next
+
+        If SetList.Count > 0 Then
+            Try
+                tmpSEDoc.CheckInterference2(
+                    NumElementsSet1:=SetList.Count,
+                    Set1:=SetList.ToArray,
+                    Status:=Status,
+                    ComparisonMethod:=ComparisonMethod,
+                    AddInterferenceAsOccurrence:=False,
+                    NumInterferences:=NumInterferences,
+                    IgnoreSameNominalDiaConstant:=IgnoreD,
+                    IgnoreNonThreadVsThreadConstant:=IgnoreT)
+
+                If Not Status = SolidEdgeAssembly.InterferenceStatusConstants.seInterferenceStatusNoInterference Then
+                    Dim s As String = "Interference detected."
+                    s = String.Format("{0}{1} Click OK to continue, Cancel to quit.", s, vbCrLf)
+                    Dim Result As MsgBoxResult = MsgBox(s, vbOKCancel)
+                    If Result = MsgBoxResult.Cancel Then
+                        Proceed = False
+                    End If
+                End If
+
+            Catch ex As Exception
+                Dim s As String = "Error on interference check."
+                s = String.Format("{0}{1} Click OK to continue, Cancel to quit.", s, vbCrLf)
+                Dim Result As MsgBoxResult = MsgBox(s, vbOKCancel)
+                If Result = MsgBoxResult.Cancel Then
+                    Proceed = False
+                End If
+            End Try
+        End If
+
+        Return Proceed
+    End Function
 
 End Class
