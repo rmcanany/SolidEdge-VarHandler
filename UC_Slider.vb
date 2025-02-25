@@ -20,6 +20,7 @@ Public Class UC_Slider
     Dim UnitType As SolidEdgeFramework.UnitTypeConstants
     Public objVar As Object 'SolidEdgeFramework.variable
     Public objDoc As SolidEdgeDocument
+    Public LengthUnits As SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants
 
     Dim Multiplier As Integer = 10
     Dim PlayLoop As Boolean = False
@@ -58,8 +59,8 @@ Public Class UC_Slider
         objVar.GetValueRangeHighValue(maxV)
         objVar.GetValueRangeLowValue(minV)
 
-        maxV = CadToValue(maxV, UnitType)
-        minV = CadToValue(minV, UnitType)
+        maxV = CadToValue(maxV, UnitType, LengthUnits)
+        minV = CadToValue(minV, UnitType, LengthUnits)
 
         Try
             If CInt(maxV) <> 0 Or CInt(minV) <> 0 Then
@@ -73,8 +74,8 @@ Public Class UC_Slider
 
 
         If min = 0 And max = 0 Then
-            min = CInt(CadToValue(objVar.Value, UnitType)) - 10
-            max = CInt(CadToValue(objVar.Value, UnitType)) + 10
+            min = CInt(CadToValue(objVar.Value, UnitType, LengthUnits)) - 10
+            max = CInt(CadToValue(objVar.Value, UnitType, LengthUnits)) + 10
         End If
 
         If objVar.IsReadOnly Or objVar.Formula <> "" Then
@@ -119,17 +120,17 @@ Public Class UC_Slider
         If Not ViewOnly Then LB_min.Text = min.ToString
         LB_max.Text = max.ToString
 
-        If CadToValue(objVar.Value, UnitType) < TrackBar.Minimum Then
+        If CadToValue(objVar.Value, UnitType, LengthUnits) < TrackBar.Minimum Then
             TrackBar.Value = TrackBar.Minimum
-            objVar.Value = ValueToCad(TrackBar.Value, UnitType)
-        ElseIf CadToValue(objVar.Value, UnitType) > TrackBar.Maximum Then
+            objVar.Value = ValueToCad(TrackBar.Value, UnitType, LengthUnits)
+        ElseIf CadToValue(objVar.Value, UnitType, LengthUnits) > TrackBar.Maximum Then
             TrackBar.Value = TrackBar.Maximum
-            objVar.Value = ValueToCad(TrackBar.Value, UnitType)
+            objVar.Value = ValueToCad(TrackBar.Value, UnitType, LengthUnits)
         Else
-            TrackBar.Value = CInt(CadToValue(objVar.Value, UnitType))
+            TrackBar.Value = CInt(CadToValue(objVar.Value, UnitType, LengthUnits))
         End If
 
-        LB_value.Text = CadToValue(objVar.Value, UnitType).ToString  'TrackBar.Value.ToString
+        LB_value.Text = CadToValue(objVar.Value, UnitType, LengthUnits).ToString  'TrackBar.Value.ToString
 
         LB_name.Text = objVar.Name
 
@@ -155,7 +156,7 @@ Public Class UC_Slider
 
         Try
 
-            objVar.Value = ValueToCad(TrackBar.Value, UnitType)
+            objVar.Value = ValueToCad(TrackBar.Value, UnitType, LengthUnits)
             LB_value.Text = TrackBar.Value.ToString
             UpdateLabel()
 
@@ -167,12 +168,16 @@ Public Class UC_Slider
 
     Public Sub UpdateLabel()
 
-        LB_value.Text = CadToValue(objVar.Value, UnitType).ToString
+        LB_value.Text = CadToValue(objVar.Value, UnitType, LengthUnits).ToString
 
         LB_name.Text = objVar.Name & " = " & LB_value.Text
 
         If UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitDistance Then
-            LB_name.Text = LB_name.Text & " mm"
+            If LengthUnits = SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants.seLengthInch Then
+                LB_name.Text = LB_name.Text & " in"
+            ElseIf LengthUnits = SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants.seLengthMillimeter Then
+                LB_name.Text = LB_name.Text & " mm"
+            End If
         ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitAngle Then
             LB_name.Text = LB_name.Text & " °"
         End If
@@ -188,7 +193,7 @@ Public Class UC_Slider
         End Try
 
         '15 for conditions is (=> ; <=)
-        objVar.SetValueRangeValues(ValueToCad(min, objVar.UnitsType), 15, ValueToCad(max, objVar.UnitsType))
+        objVar.SetValueRangeValues(ValueToCad(min, objVar.UnitsType, LengthUnits), 15, ValueToCad(max, objVar.UnitsType, LengthUnits))
 
         SetTrackBar()
 
@@ -203,7 +208,7 @@ Public Class UC_Slider
         End Try
 
         '15 for conditions is (=> ; <=)
-        objVar.SetValueRangeValues(ValueToCad(min, objVar.UnitsType), 15, ValueToCad(max, objVar.UnitsType))
+        objVar.SetValueRangeValues(ValueToCad(min, objVar.UnitsType, LengthUnits), 15, ValueToCad(max, objVar.UnitsType, LengthUnits))
 
         SetTrackBar()
 
@@ -244,11 +249,29 @@ Public Class UC_Slider
 
     End Sub
 
-    Public Shared Function CadToValue(Value As Double, UnitType As SolidEdgeFramework.UnitTypeConstants) As Double
+    Public Shared Function CadToValue(
+        Value As Double,
+        UnitType As SolidEdgeFramework.UnitTypeConstants,
+        LengthUnits As SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants
+        ) As Double
 
         If UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitDistance Then
 
-            CadToValue = Value * 1000
+            If LengthUnits = SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants.seLengthInch Then
+
+                CadToValue = Value * 1000 / 25.4
+
+            ElseIf LengthUnits = SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants.seLengthMillimeter Then
+
+                CadToValue = Value * 1000
+
+            Else
+
+                MsgBox(String.Format("Unrecognized length units '{0}'", LengthUnits.ToString), MsgBoxStyle.Critical)
+
+                CadToValue = Value
+
+            End If
 
         ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitAngle Then
 
@@ -262,11 +285,29 @@ Public Class UC_Slider
 
     End Function
 
-    Public Shared Function ValueToCad(Value As Double, UnitType As SolidEdgeFramework.UnitTypeConstants) As Double
+    Public Shared Function ValueToCad(
+        Value As Double,
+        UnitType As SolidEdgeFramework.UnitTypeConstants,
+        LengthUnits As SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants
+        ) As Double
 
         If UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitDistance Then
 
-            ValueToCad = Value / 1000
+            If LengthUnits = SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants.seLengthInch Then
+
+                ValueToCad = Value * 25.4 / 1000
+
+            ElseIf LengthUnits = SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants.seLengthMillimeter Then
+
+                ValueToCad = Value / 1000
+
+            Else
+
+                MsgBox(String.Format("Unrecognized length units '{0}'", LengthUnits.ToString), MsgBoxStyle.Critical)
+
+                ValueToCad = Value
+
+            End If
 
         ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitAngle Then
 
@@ -374,7 +415,7 @@ Public Class UC_Slider
 
             End If
 
-            objVar.Value = ValueToCad(ProgressValue, UnitType)
+            objVar.Value = ValueToCad(ProgressValue, UnitType, LengthUnits)
 
 
             If objDoc.Type = SolidEdgeConstants.DocumentTypeConstants.igAssemblyDocument And UpdateDoc Then objDoc.UpdateDocument 'objDoc.Parent.StartCommand(11292)
@@ -432,7 +473,7 @@ Public Class UC_Slider
 
                 Dim tmpValue As (Nome As String, Valore As Double)
                 tmpValue.Nome = tmpItem.objVar.name.ToString
-                tmpValue.Valore = CadToValue(tmpItem.objVar.value, tmpItem.UnitType)
+                tmpValue.Valore = CadToValue(tmpItem.objVar.value, tmpItem.UnitType, LengthUnits)
 
                 tmpStep.Add(tmpValue)
 
@@ -456,17 +497,17 @@ Public Class UC_Slider
 
                 Dim tmpValueX As (Nome As String, Valore As Double)
                 tmpValueX.Nome = "Tracker X"
-                tmpValueX.Valore = CadToValue(objXOffset, SolidEdgeFramework.UnitTypeConstants.igUnitDistance)
+                tmpValueX.Valore = CadToValue(objXOffset, SolidEdgeFramework.UnitTypeConstants.igUnitDistance, LengthUnits)
                 tmpStep.Add(tmpValueX)
 
                 Dim tmpValueY As (Nome As String, Valore As Double)
                 tmpValueY.Nome = "Tracker Y"
-                tmpValueY.Valore = CadToValue(objYOffset, SolidEdgeFramework.UnitTypeConstants.igUnitDistance)
+                tmpValueY.Valore = CadToValue(objYOffset, SolidEdgeFramework.UnitTypeConstants.igUnitDistance, LengthUnits)
                 tmpStep.Add(tmpValueY)
 
                 Dim tmpValueZ As (Nome As String, Valore As Double)
                 tmpValueZ.Nome = "Tracker Z"
-                tmpValueZ.Valore = CadToValue(objZOffset, SolidEdgeFramework.UnitTypeConstants.igUnitDistance)
+                tmpValueZ.Valore = CadToValue(objZOffset, SolidEdgeFramework.UnitTypeConstants.igUnitDistance, LengthUnits)
                 tmpStep.Add(tmpValueZ)
 
             ElseIf Not IsNothing(tmpForm.Tracker_2D) Then
@@ -477,12 +518,12 @@ Public Class UC_Slider
 
                 Dim tmpValueX As (Nome As String, Valore As Double)
                 tmpValueX.Nome = "Tracker X"
-                tmpValueX.Valore = CadToValue(objX, SolidEdgeFramework.UnitTypeConstants.igUnitDistance)
+                tmpValueX.Valore = CadToValue(objX, SolidEdgeFramework.UnitTypeConstants.igUnitDistance, LengthUnits)
                 tmpStep.Add(tmpValueX)
 
                 Dim tmpValueY As (Nome As String, Valore As Double)
                 tmpValueY.Nome = "Tracker Y"
-                tmpValueY.Valore = CadToValue(objY, SolidEdgeFramework.UnitTypeConstants.igUnitDistance)
+                tmpValueY.Valore = CadToValue(objY, SolidEdgeFramework.UnitTypeConstants.igUnitDistance, LengthUnits)
                 tmpStep.Add(tmpValueY)
 
             End If
@@ -535,7 +576,7 @@ Public Class UC_Slider
                 Select Case stepItem.Nome
 
                     Case = "Tracker X", "Tracker Y", "Tracker Z"
-                        tmpList.Add(ValueToCad(stepItem.Valore, SolidEdgeFramework.UnitTypeConstants.igUnitDistance))
+                        tmpList.Add(ValueToCad(stepItem.Valore, SolidEdgeFramework.UnitTypeConstants.igUnitDistance, LengthUnits))
 
                 End Select
 
@@ -648,7 +689,11 @@ Public Class UC_Slider
             LB_name.Text = objVar.Name & " = " & e.UserState
 
             If UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitDistance Then
-                LB_name.Text = LB_name.Text & " mm"
+                If LengthUnits = SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants.seLengthMillimeter Then
+                    LB_name.Text = LB_name.Text & " mm"
+                ElseIf LengthUnits = SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants.seLengthInch Then
+                    LB_name.Text = LB_name.Text & " in"
+                End If
             ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitAngle Then
                 LB_name.Text = LB_name.Text & " °"
             End If
@@ -706,7 +751,7 @@ Public Class UC_Slider
             Exit Sub
         End Try
 
-        objVar.Value = ValueToCad(TrackBar.Value, UnitType)
+        objVar.Value = ValueToCad(TrackBar.Value, UnitType, LengthUnits)
 
         LB_value.Text = TrackBar.Value.ToString
 

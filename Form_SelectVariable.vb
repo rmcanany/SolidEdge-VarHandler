@@ -4,6 +4,7 @@ Public Class Form_SelectVariable
 
     Public objDoc As SolidEdgeFramework.SolidEdgeDocument
     Public Valid As Boolean = False
+    Public LengthUnits As SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants
 
     Private Sub Form_SelectVariable_Load(sender As Object, e As EventArgs) Handles Me.Load
 
@@ -24,6 +25,7 @@ Public Class Form_SelectVariable
             For Each item In _FindVars
 
                 Dim tmpVar As New VarListItem(item)
+                tmpVar.LengthUnits = LengthUnits
                 ListBox_Variables.Items.Add(tmpVar)
 
             Next
@@ -96,6 +98,7 @@ Public Class VarListItem
     Public Property objVariable As Object 'SolidEdgeFramework.variable
     'Public Property objDimension As SolidEdgeFrameworkSupport.Dimension
     Public Property ExName As String
+    Public Property LengthUnits As SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants
 
     Public Sub New(objVar As Object) 'SolidEdgeFramework.variable)
 
@@ -113,10 +116,14 @@ Public Class VarListItem
 
         Dim UnitType = objVar.UnitsType
 
-        Value = UC_Slider.CadToValue(objVar.Value, UnitType).ToString
+        Value = UC_Slider.CadToValue(objVar.Value, UnitType, LengthUnits).ToString
 
         If UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitDistance Then
-            Value = Value & " mm"
+            If LengthUnits = UnitOfMeasureLengthReadoutConstants.seLengthInch Then
+                Value = Value & " in"
+            ElseIf LengthUnits = UnitOfMeasureLengthReadoutConstants.seLengthMillimeter Then
+                Value = Value & " mm"
+            End If
         ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitAngle Then
             Value = Value & " °"
         End If

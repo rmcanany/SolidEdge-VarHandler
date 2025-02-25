@@ -22,7 +22,7 @@ Partial Class UC_WorkFlowEvent
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.TLP = New System.Windows.Forms.TableLayoutPanel()
         Me.DG_Variables = New System.Windows.Forms.DataGridView()
         Me.Check = New System.Windows.Forms.DataGridViewCheckBoxColumn()
@@ -30,8 +30,11 @@ Partial Class UC_WorkFlowEvent
         Me.VarValue = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.LB_SEQ = New System.Windows.Forms.Label()
         Me.BT_Close = New System.Windows.Forms.Button()
+        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.BT_Steps = New System.Windows.Forms.Button()
         Me.TLP.SuspendLayout()
         CType(Me.DG_Variables, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TableLayoutPanel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'TLP
@@ -40,14 +43,15 @@ Partial Class UC_WorkFlowEvent
         Me.TLP.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TLP.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TLP.Controls.Add(Me.DG_Variables, 1, 0)
-        Me.TLP.Controls.Add(Me.LB_SEQ, 0, 1)
         Me.TLP.Controls.Add(Me.BT_Close, 0, 0)
+        Me.TLP.Controls.Add(Me.TableLayoutPanel1, 0, 1)
         Me.TLP.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TLP.Location = New System.Drawing.Point(0, 0)
         Me.TLP.Name = "TLP"
         Me.TLP.RowCount = 2
         Me.TLP.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TLP.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TLP.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TLP.Size = New System.Drawing.Size(281, 148)
         Me.TLP.TabIndex = 0
         '
@@ -61,14 +65,14 @@ Partial Class UC_WorkFlowEvent
         Me.DG_Variables.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
         Me.DG_Variables.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DG_Variables.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Check, Me.VarName, Me.VarValue})
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ControlLight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.DG_Variables.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.ControlLight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DG_Variables.DefaultCellStyle = DataGridViewCellStyle3
         Me.DG_Variables.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DG_Variables.GridColor = System.Drawing.SystemColors.Control
         Me.DG_Variables.Location = New System.Drawing.Point(30, 0)
@@ -109,9 +113,9 @@ Partial Class UC_WorkFlowEvent
         Me.LB_SEQ.Dock = System.Windows.Forms.DockStyle.Fill
         Me.LB_SEQ.Font = New System.Drawing.Font("Segoe UI", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LB_SEQ.ForeColor = System.Drawing.Color.DarkGray
-        Me.LB_SEQ.Location = New System.Drawing.Point(3, 20)
+        Me.LB_SEQ.Location = New System.Drawing.Point(3, 25)
         Me.LB_SEQ.Name = "LB_SEQ"
-        Me.LB_SEQ.Size = New System.Drawing.Size(24, 128)
+        Me.LB_SEQ.Size = New System.Drawing.Size(24, 103)
         Me.LB_SEQ.TabIndex = 1
         Me.LB_SEQ.Text = "1"
         Me.LB_SEQ.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -129,6 +133,32 @@ Partial Class UC_WorkFlowEvent
         Me.BT_Close.TabIndex = 2
         Me.BT_Close.UseVisualStyleBackColor = True
         '
+        'TableLayoutPanel1
+        '
+        Me.TableLayoutPanel1.ColumnCount = 1
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel1.Controls.Add(Me.LB_SEQ, 0, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.BT_Steps, 0, 0)
+        Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 20)
+        Me.TableLayoutPanel1.Margin = New System.Windows.Forms.Padding(0)
+        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
+        Me.TableLayoutPanel1.RowCount = 2
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(30, 128)
+        Me.TableLayoutPanel1.TabIndex = 3
+        '
+        'BT_Steps
+        '
+        Me.BT_Steps.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.BT_Steps.Image = Global.SolidEdge_VarHandler.My.Resources.Resources.Settings
+        Me.BT_Steps.Location = New System.Drawing.Point(3, 3)
+        Me.BT_Steps.Name = "BT_Steps"
+        Me.BT_Steps.Size = New System.Drawing.Size(24, 19)
+        Me.BT_Steps.TabIndex = 2
+        Me.BT_Steps.UseVisualStyleBackColor = True
+        '
         'UC_WorkFlowEvent
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -141,8 +171,9 @@ Partial Class UC_WorkFlowEvent
         Me.Name = "UC_WorkFlowEvent"
         Me.Size = New System.Drawing.Size(281, 148)
         Me.TLP.ResumeLayout(False)
-        Me.TLP.PerformLayout()
         CType(Me.DG_Variables, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TableLayoutPanel1.ResumeLayout(False)
+        Me.TableLayoutPanel1.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -154,4 +185,6 @@ Partial Class UC_WorkFlowEvent
     Friend WithEvents VarName As DataGridViewTextBoxColumn
     Friend WithEvents VarValue As DataGridViewTextBoxColumn
     Friend WithEvents BT_Close As Button
+    Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
+    Friend WithEvents BT_Steps As Button
 End Class
