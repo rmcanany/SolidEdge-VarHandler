@@ -255,6 +255,8 @@ Public Class Form_VarHandler
         Dim tmpWorkFlow As New Form_WorkFlow
         tmpWorkFlow.Variables = tmpVariables
         tmpWorkFlow.UpdateDoc = BT_Update.Checked
+        tmpWorkFlow.SaveImages = BT_SaveImages.Checked
+        tmpWorkFlow.CheckInterference = BT_CheckInterference.Checked
         tmpWorkFlow.LengthUnits = LengthUnits
 
         tmpWorkFlow.ShowDialog(Me)

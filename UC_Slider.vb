@@ -423,9 +423,9 @@ Public Class UC_Slider
 
             If objDoc.Type = SolidEdgeConstants.DocumentTypeConstants.igAssemblyDocument And UpdateDoc Then objDoc.UpdateDocument 'objDoc.Parent.StartCommand(11292)
 
-            If SaveImages Then DoSaveImage()
+            If SaveImages Then DoSaveImage(objDoc)
 
-            If CheckInterference Then If Not DoCheckInterference() Then Return
+            If CheckInterference Then If Not DoCheckInterference(objDoc) Then Return
 
             'Example for future point tracking ################################################
             'If Export Then
@@ -807,14 +807,14 @@ Public Class UC_Slider
 
     End Sub
 
-    Public Sub DoSaveImage()
+    Public Shared Sub DoSaveImage(_objDoc As SolidEdgeFramework.SolidEdgeDocument)
 
-        If objDoc.Type = SolidEdgeConstants.DocumentTypeConstants.igDraftDocument Then
+        If _objDoc.Type = SolidEdgeConstants.DocumentTypeConstants.igDraftDocument Then
             ' Nothing to do here
             Return
         End If
 
-        Dim Dirname = System.IO.Path.GetDirectoryName(objDoc.FullName)
+        Dim Dirname = System.IO.Path.GetDirectoryName(_objDoc.FullName)
         Dirname = String.Format("{0}\images", Dirname)
         If Not FileIO.FileSystem.DirectoryExists(Dirname) Then
             FileIO.FileSystem.CreateDirectory(Dirname)
@@ -842,23 +842,23 @@ Public Class UC_Slider
         Dim Window As SolidEdgeFramework.Window
         Dim View As SolidEdgeFramework.View
 
-        Window = CType(objDoc.Application.ActiveWindow, SolidEdgeFramework.Window)
+        Window = CType(_objDoc.Application.ActiveWindow, SolidEdgeFramework.Window)
         View = Window.View
 
         View.SaveAsImage(Filename)
 
     End Sub
 
-    Public Function DoCheckInterference() As Boolean
+    Public Shared Function DoCheckInterference(_objDoc As SolidEdgeFramework.SolidEdgeDocument) As Boolean
 
         Dim Proceed As Boolean = True
 
-        If Not objDoc.Type = SolidEdgeConstants.DocumentTypeConstants.igAssemblyDocument Then
+        If Not _objDoc.Type = SolidEdgeConstants.DocumentTypeConstants.igAssemblyDocument Then
             ' Nothing to do here
             Return True
         End If
 
-        Dim tmpSEDoc = CType(objDoc, SolidEdgeAssembly.AssemblyDocument)
+        Dim tmpSEDoc = CType(_objDoc, SolidEdgeAssembly.AssemblyDocument)
 
         Dim ComparisonMethod = SolidEdgeConstants.InterferenceComparisonConstants.seInterferenceComparisonSet1vsItself
         Dim Status As SolidEdgeAssembly.InterferenceStatusConstants
