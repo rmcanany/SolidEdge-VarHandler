@@ -398,8 +398,6 @@ Public Class UC_Slider
             GenerateStep()
         }
 
-        Dim Idx As Integer = 0
-
         Do 'Until ProgressValue = max
 
             If Forward Then
@@ -425,9 +423,9 @@ Public Class UC_Slider
 
             If objDoc.Type = SolidEdgeConstants.DocumentTypeConstants.igAssemblyDocument And UpdateDoc Then objDoc.UpdateDocument 'objDoc.Parent.StartCommand(11292)
 
-            If SaveImages Then DoSaveImage(Idx)
+            If SaveImages Then DoSaveImage()
 
-            If CheckInterference Then If Not DoCheckInterference(Idx) Then Return
+            If CheckInterference Then If Not DoCheckInterference() Then Return
 
             'Example for future point tracking ################################################
             'If Export Then
@@ -464,7 +462,6 @@ Public Class UC_Slider
 
             End If
 
-            Idx += 1
         Loop
 
     End Sub
@@ -810,7 +807,7 @@ Public Class UC_Slider
 
     End Sub
 
-    Public Sub DoSaveImage(Idx As Integer)
+    Public Sub DoSaveImage()
 
         If objDoc.Type = SolidEdgeConstants.DocumentTypeConstants.igDraftDocument Then
             ' Nothing to do here
@@ -823,15 +820,24 @@ Public Class UC_Slider
             FileIO.FileSystem.CreateDirectory(Dirname)
         End If
 
-        If Idx = 0 Then
-            ' Remove previous images
-            Dim DI As New DirectoryInfo(Dirname)
+        Dim Idx As Integer
+        Dim IdxMax As Integer = 0
+
+        Dim DI As New DirectoryInfo(Dirname)
+
+        If DI.GetFiles.Count = 0 Then
+            Idx = 0
+        Else
             For Each File As FileInfo In DI.GetFiles
-                File.Delete()
+                If System.IO.Path.GetExtension(File.Name) = ".jpg" Then
+                    Dim i = CInt(System.IO.Path.GetFileNameWithoutExtension(File.Name))
+                    If i > IdxMax Then IdxMax = i
+                End If
             Next
+            Idx = IdxMax + 1
         End If
 
-        Dim Filename As String = String.Format("{0}\{1,5}.jpg", Dirname, Idx)
+        Dim Filename As String = String.Format("{0}\{1:D5}.jpg", Dirname, Idx)
 
         Dim Window As SolidEdgeFramework.Window
         Dim View As SolidEdgeFramework.View
@@ -843,7 +849,7 @@ Public Class UC_Slider
 
     End Sub
 
-    Public Function DoCheckInterference(Idx As Integer) As Boolean
+    Public Function DoCheckInterference() As Boolean
 
         Dim Proceed As Boolean = True
 
