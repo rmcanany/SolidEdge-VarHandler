@@ -24,18 +24,18 @@ Partial Class Form_VarHandler
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form_VarHandler))
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
+        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
+        Me.FLP_Vars = New System.Windows.Forms.FlowLayoutPanel()
         Me.BT_Reload = New System.Windows.Forms.ToolStripButton()
         Me.BT_Aggiungi = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.BT_Export = New System.Windows.Forms.ToolStripButton()
         Me.BT_Tracker = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
         Me.BT_Update = New System.Windows.Forms.ToolStripButton()
         Me.BT_SaveImages = New System.Windows.Forms.ToolStripButton()
         Me.BT_CheckInterference = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.BT_Workflow = New System.Windows.Forms.ToolStripButton()
-        Me.FLP_Vars = New System.Windows.Forms.FlowLayoutPanel()
         Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -49,6 +49,33 @@ Partial Class Form_VarHandler
         Me.ToolStrip1.Size = New System.Drawing.Size(335, 25)
         Me.ToolStrip1.TabIndex = 0
         Me.ToolStrip1.Text = "ToolStrip1"
+        '
+        'ToolStripSeparator1
+        '
+        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(6, 25)
+        '
+        'ToolStripSeparator3
+        '
+        Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
+        Me.ToolStripSeparator3.Size = New System.Drawing.Size(6, 25)
+        '
+        'ToolStripSeparator2
+        '
+        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(6, 25)
+        '
+        'FLP_Vars
+        '
+        Me.FLP_Vars.AutoScroll = True
+        Me.FLP_Vars.BackColor = System.Drawing.Color.White
+        Me.FLP_Vars.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.FLP_Vars.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
+        Me.FLP_Vars.Location = New System.Drawing.Point(0, 25)
+        Me.FLP_Vars.Name = "FLP_Vars"
+        Me.FLP_Vars.Size = New System.Drawing.Size(335, 436)
+        Me.FLP_Vars.TabIndex = 1
+        Me.FLP_Vars.WrapContents = False
         '
         'BT_Reload
         '
@@ -66,11 +93,6 @@ Partial Class Form_VarHandler
         Me.BT_Aggiungi.Name = "BT_Aggiungi"
         Me.BT_Aggiungi.Size = New System.Drawing.Size(93, 22)
         Me.BT_Aggiungi.Text = "Add Variable"
-        '
-        'ToolStripSeparator1
-        '
-        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(6, 25)
         '
         'BT_Export
         '
@@ -94,11 +116,6 @@ Partial Class Form_VarHandler
         Me.BT_Tracker.Text = "Add Tracker"
         Me.BT_Tracker.ToolTipText = "Adds a tracker that trace a polyline on its movement"
         '
-        'ToolStripSeparator3
-        '
-        Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
-        Me.ToolStripSeparator3.Size = New System.Drawing.Size(6, 25)
-        '
         'BT_Update
         '
         Me.BT_Update.CheckOnClick = True
@@ -114,7 +131,7 @@ Partial Class Form_VarHandler
         '
         Me.BT_SaveImages.CheckOnClick = True
         Me.BT_SaveImages.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BT_SaveImages.Image = Global.SolidEdge_VarHandler.My.Resources.Resources.SaveAsImage
+        Me.BT_SaveImages.Image = Global.SolidEdge_VarHandler.My.Resources.Resources.full_image
         Me.BT_SaveImages.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BT_SaveImages.Name = "BT_SaveImages"
         Me.BT_SaveImages.Size = New System.Drawing.Size(23, 22)
@@ -125,17 +142,12 @@ Partial Class Form_VarHandler
         '
         Me.BT_CheckInterference.CheckOnClick = True
         Me.BT_CheckInterference.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BT_CheckInterference.Image = Global.SolidEdge_VarHandler.My.Resources.Resources.CheckInterference
+        Me.BT_CheckInterference.Image = Global.SolidEdge_VarHandler.My.Resources.Resources.Interference
         Me.BT_CheckInterference.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.BT_CheckInterference.Name = "BT_CheckInterference"
         Me.BT_CheckInterference.Size = New System.Drawing.Size(23, 22)
         Me.BT_CheckInterference.Text = "ToolStripButton2"
         Me.BT_CheckInterference.ToolTipText = "Check interference at each step"
-        '
-        'ToolStripSeparator2
-        '
-        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        Me.ToolStripSeparator2.Size = New System.Drawing.Size(6, 25)
         '
         'BT_Workflow
         '
@@ -145,18 +157,6 @@ Partial Class Form_VarHandler
         Me.BT_Workflow.Size = New System.Drawing.Size(78, 20)
         Me.BT_Workflow.Text = "Workflow"
         Me.BT_Workflow.ToolTipText = "Execute a sequence of variable changes"
-        '
-        'FLP_Vars
-        '
-        Me.FLP_Vars.AutoScroll = True
-        Me.FLP_Vars.BackColor = System.Drawing.Color.White
-        Me.FLP_Vars.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.FLP_Vars.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
-        Me.FLP_Vars.Location = New System.Drawing.Point(0, 25)
-        Me.FLP_Vars.Name = "FLP_Vars"
-        Me.FLP_Vars.Size = New System.Drawing.Size(335, 436)
-        Me.FLP_Vars.TabIndex = 1
-        Me.FLP_Vars.WrapContents = False
         '
         'Form_VarHandler
         '
