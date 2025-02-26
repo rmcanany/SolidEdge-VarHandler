@@ -306,6 +306,9 @@
     <None Include="Resources\icons8_Update_Done_16.png" />
     <None Include="Resources\SaveAsImage.png" />
     <None Include="Resources\CheckInterference.png" />
+    <None Include="Resources\icons8_full_image_16.png" />
+    <None Include="Resources\icons8_image_16.png" />
+    <None Include="Resources\Interference_16.png" />
     <Content Include="slider.ico" />
     <Content Include="VarHandler.ico" />
     <Content Include="MainForm.png" />
