@@ -12,8 +12,10 @@ Public Class UC_Slider
 
     Dim VarName As String = ""
 
-    Dim min As Integer = 0
-    Dim max As Integer = 0
+    'Dim min As Integer = 0
+    'Dim max As Integer = 0
+    Dim min As Double = 0
+    Dim max As Double = 0
 
     Dim steps As Integer = 20
     Dim TrackbarStep As Integer
@@ -65,20 +67,24 @@ Public Class UC_Slider
         maxV = CadToValue(maxV, UnitType, LengthUnits)
         minV = CadToValue(minV, UnitType, LengthUnits)
 
-        Try
-            If CInt(maxV) <> 0 Or CInt(minV) <> 0 Then
-                max = CInt(maxV)
-                min = CInt(minV)
-            End If
-        Catch ex As Exception
-            max = 0
-            min = 0
-        End Try
+        'Try
+        '    If CInt(maxV) <> 0 Or CInt(minV) <> 0 Then
+        '        max = CInt(maxV)
+        '        min = CInt(minV)
+        '    End If
+        'Catch ex As Exception
+        '    max = 0
+        '    min = 0
+        'End Try
+        max = maxV
+        min = minV
 
 
         If min = 0 And max = 0 Then
-            min = CInt(CadToValue(objVar.Value, UnitType, LengthUnits)) - 10
-            max = CInt(CadToValue(objVar.Value, UnitType, LengthUnits)) + 10
+            'min = CInt(CadToValue(objVar.Value, UnitType, LengthUnits)) - 10
+            'max = CInt(CadToValue(objVar.Value, UnitType, LengthUnits)) + 10
+            min = CadToValue(objVar.Value, UnitType, LengthUnits) - 10
+            max = CadToValue(objVar.Value, UnitType, LengthUnits) + 10
         End If
 
         If objVar.IsReadOnly Or objVar.Formula <> "" Then
@@ -110,10 +116,12 @@ Public Class UC_Slider
 
     Private Sub SetTrackBar()
 
-        TrackBar.Minimum = min
-        TrackBar.Maximum = max
+        'TrackBar.Minimum = min
+        'TrackBar.Maximum = max
+        TrackBar.Minimum = Math.Round(min)
+        TrackBar.Maximum = Math.Round(max)
 
-        TrackbarStep = CInt((max - min) / steps)
+        TrackbarStep = Math.Round((max - min) / steps)
         TrackBar.TickFrequency = TrackbarStep 'CInt((max - min) / steps)
 
         TrackBar.SmallChange = TrackBar.TickFrequency ' / 5
