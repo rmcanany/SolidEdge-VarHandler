@@ -30,6 +30,8 @@ Public Class Form_VarHandler
                     tmpSlider2.objDoc = objDoc
                     tmpSlider2.LengthUnits = LengthUnits
                     tmpSlider2.UpdateDoc = BT_Update.Checked
+                    tmpSlider2.SaveImages = BT_SaveImages.Checked
+                    tmpSlider2.CheckInterference = BT_CheckInterference.Checked
                     AddHandler tmpSlider2.LB_value.TextChanged, AddressOf Slider_Click
 
                     FLP_Vars.Controls.Add(tmpSlider2)
@@ -253,6 +255,8 @@ Public Class Form_VarHandler
         Dim tmpWorkFlow As New Form_WorkFlow
         tmpWorkFlow.Variables = tmpVariables
         tmpWorkFlow.UpdateDoc = BT_Update.Checked
+        tmpWorkFlow.SaveImages = BT_SaveImages.Checked
+        tmpWorkFlow.CheckInterference = BT_CheckInterference.Checked
         tmpWorkFlow.LengthUnits = LengthUnits
 
         tmpWorkFlow.ShowDialog(Me)
@@ -267,6 +271,24 @@ Public Class Form_VarHandler
 
         Next
 
+    End Sub
+
+    Private Sub BT_SaveImages_Click(sender As Object, e As EventArgs) Handles BT_SaveImages.Click
+        For Each C As Control In FLP_Vars.Controls
+            If TypeOf C Is UC_Slider Then
+                Dim tmpSlider As UC_Slider = CType(C, UC_Slider)
+                tmpSlider.SaveImages = BT_SaveImages.Checked
+            End If
+        Next
+    End Sub
+
+    Private Sub BT_CheckInterference_Click(sender As Object, e As EventArgs) Handles BT_CheckInterference.Click
+        For Each C As Control In FLP_Vars.Controls
+            If TypeOf C Is UC_Slider Then
+                Dim tmpSlider As UC_Slider = CType(C, UC_Slider)
+                tmpSlider.CheckInterference = BT_CheckInterference.Checked
+            End If
+        Next
     End Sub
 
     Private Function GetLengthUnits(objDoc As SolidEdgeFramework.SolidEdgeDocument) As SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants

@@ -5,6 +5,8 @@ Public Class Form_WorkFlow
 
     Public Variables As List(Of Object)
     Public UpdateDoc As Boolean = False
+    Public SaveImages As Boolean = False
+    Public CheckInterference As Boolean = False
     Public LengthUnits As SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants
 
     Private Sub Add_Event_Click(sender As Object, e As EventArgs) Handles Add_Event.Click
@@ -135,6 +137,10 @@ Public Class Form_WorkFlow
                     If Form_VarHandler.objDoc.Type = SolidEdgeConstants.DocumentTypeConstants.igAssemblyDocument And UpdateDoc Then Form_VarHandler.objDoc.UpdateDocument
 
                     Form_VarHandler.objDoc.Parent.DoIdle()
+
+                    If SaveImages Then UC_Slider.DoSaveImage(Form_VarHandler.objDoc)
+
+                    If CheckInterference Then If Not UC_Slider.DoCheckInterference(Form_VarHandler.objDoc) Then Exit For
 
                 Next
 

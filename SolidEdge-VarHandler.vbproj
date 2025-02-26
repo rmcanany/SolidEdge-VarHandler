@@ -202,6 +202,15 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+    <COMReference Include="SolidEdgeAssembly">
+      <Guid>{3E2B3BD4-F0B9-11D1-BDFD-080036B4D502}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
     <COMReference Include="SolidEdgeConstants">
       <Guid>{C467A6F5-27ED-11D2-BE30-080036B4D502}</Guid>
       <VersionMajor>1</VersionMajor>
@@ -295,6 +304,8 @@
     <None Include="Resources\icons8_opened_folder_16.png" />
     <None Include="Resources\icons8_save_16.png" />
     <None Include="Resources\icons8_Update_Done_16.png" />
+    <None Include="Resources\SaveAsImage.png" />
+    <None Include="Resources\CheckInterference.png" />
     <Content Include="slider.ico" />
     <Content Include="VarHandler.ico" />
     <Content Include="MainForm.png" />
