@@ -32,7 +32,8 @@ Public Class Form_WorkFlow
                 Dim tmpVariable As New EventVariable
                 tmpVariable.Check = True
                 tmpVariable.Name = tmpVar.DisplayName
-                tmpVariable.Value = Math.Round(UC_Slider.CadToValue(tmpVar.value, tmpVar.UnitsType, LengthUnits), 2)
+                'tmpVariable.Value = Math.Round(UC_Slider.CadToValue(tmpVar.value, tmpVar.UnitsType, LengthUnits), 2)
+                tmpVariable.Value = Math.Round(UC_Slider.CadToValue(tmpVar.value, tmpVar.UnitsType, LengthUnits), 3)
                 tmpVariable.objVar = tmpVar
 
                 list.Add(tmpVariable)
@@ -190,7 +191,8 @@ Public Class Form_WorkFlow
 
                 Next
 
-                tmpRiga = tmpRiga.Substring(0, tmpRiga.Length - 1)
+                'tmpRiga = tmpRiga.Substring(0, tmpRiga.Length - 1)
+                tmpRiga += String.Format("Steps:{0}", StepEvent.steps)
 
                 tmpRighe += tmpRiga & vbCrLf
 
@@ -217,10 +219,12 @@ Public Class Form_WorkFlow
     End Sub
 
     Private Sub BT_Open_Click(sender As Object, e As EventArgs) Handles BT_Open.Click
+        'alpha:90|theta:0.001|Steps:20
+        'alpha:130|theta:0.001|Steps:5
 
         Dim tmpFileDialog As New OpenFileDialog
         tmpFileDialog.Filter = "Text File|*.txt"
-        tmpFileDialog.Title = "Save a Text File"
+        tmpFileDialog.Title = "Open a Text File"
         tmpFileDialog.ShowDialog()
 
         If tmpFileDialog.FileName <> "" Then
@@ -238,8 +242,14 @@ Public Class Form_WorkFlow
 
                 tmpStep.DG_Variables.ClearSelection()
 
-                SetValues(tmpStep, righe(i))
+                Dim StepIdx As Integer = righe(i).IndexOf("|Steps:")
+                Dim StepString = righe(i).Substring(StepIdx)
+                tmpStep.steps = CInt(StepString.Split(CChar(":"))(1))
+                Dim ValString = righe(i).Substring(0, StepIdx)
 
+                'SetValues(tmpStep, righe(i))
+                SetValues(tmpStep, ValString)
+                Dim j = 0
             Next
 
             FLP_Events.ResumeLayout()

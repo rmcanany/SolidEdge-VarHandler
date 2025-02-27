@@ -37,7 +37,8 @@ Public Class Form_SelectVariable
     Private Function FindVars() As Object
 
         Dim NameBy As Object = Nothing
-        If CB_Users.Checked And Not CB_System.Checked Then NameBy = 2
+        'If CB_Users.Checked And Not CB_System.Checked Then NameBy = 2  ' <---- I think this is a typo
+        If CB_Users.Checked And CB_System.Checked Then NameBy = 2
         If Not CB_Users.Checked And CB_System.Checked Then NameBy = 1
         If CB_Users.Checked And Not CB_System.Checked Then NameBy = 0
         If Not CB_Users.Checked And Not CB_System.Checked Then Return Nothing
