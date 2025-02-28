@@ -6,25 +6,25 @@ The actual version is limited and will perhaps be expanded per user requests
 
 
 **Feature list:**
-- Reload button ![Autotune](./Resources/icons8_replay_16.png)
-- Add any system or user variables and dimensions ![Add](./Resources/icons8_add_16.png)
-- Export results to excel when play a variable ![Excel](./Resources/icons8_data_sheet_16_extended.png)
-- Point tracker, return the coordinate of a 3D coordinate system or a 2D block ![Tracker](./Resources/icons8_center_of_gravity_16_edited.png)
-  - Trace button, it creates a spline curve when playing a variable ![Trace](./Resources/icons8_plot_16.png)
+- ![Autotune](./Resources/icons8_replay_16.png)  Reload button 
+- ![Add](./Resources/icons8_add_16.png)  Add any system or user variables and dimensions
+- ![Excel](./Resources/icons8_data_sheet_16_extended.png)  Export results to excel when play a variable
+- ![Tracker](./Resources/icons8_center_of_gravity_16_edited.png)  Point tracker, return the coordinate of a 3D coordinate system or a 2D block 
+  - ![Trace](./Resources/icons8_plot_16.png)  Trace button, it creates a spline curve when playing a variable
   - Closed curve, the spline will be a closed curve
-  - Settings button for shown decimals ![settings](./Resources/icons8_settings_16.png)
-  - Remove button ![Autotune](./Resources/icons8_close_16.png)
-- Update document, updates the current document after each step ![Update](./Resources/icons8_Update_Done_16.png)
-- Workflow, opens the Workflow panel (more info below) ![Workflow](./Resources/icons8_workflow_16.png)
+  - ![settings](./Resources/icons8_settings_16.png)  Settings button for shown decimals
+  - ![Autotune](./Resources/icons8_close_16.png)  Remove button
+- ![Update](./Resources/icons8_Update_Done_16.png)  Update document, updates the current document after each step 
+- ![Workflow](./Resources/icons8_workflow_16.png)  Workflow, opens the Workflow panel (more info below) 
 - Exposed name retrieved from the variable table (if available)
 - Ability to vary Exposed name from the variable table (double click on the title to prompt)
 - Minimum and Maximum range retrieved from the variable table (if available)
 - Ability to vary Minimum and Maximum range from the user interface (click on values to prompt)
-- Loop button, the trackbar will move from one end to the other and reverse continuously ![Autotune](./Resources/icons8_repeat_16.png)
-- Play button, the trackbar will move to the end ![Autotune](./Resources/icons8_circled_play_16.png)
-- Settings button to select the number of steps to perform on play ![settings](./Resources/icons8_settings_16.png)
-- Checkbox to auto-retrieve the variable on reload (**Autotune** on comments field) ![Autotune](./Resources/icons8_checked_checkbox_16.png)
-- Remove button ![Autotune](./Resources/icons8_close_16.png)
+- ![Autotune](./Resources/icons8_repeat_16.png)  Loop button, the trackbar will move from one end to the other and reverse continuously 
+- ![Autotune](./Resources/icons8_circled_play_16.png)  Play button, the trackbar will move to the end 
+- ![settings](./Resources/icons8_settings_16.png)  Settings button to select the number of steps to perform on play 
+- ![Autotune](./Resources/icons8_checked_checkbox_16.png)  Checkbox to auto-retrieve the variable on reload (**Autotune** on comments field) 
+- ![Autotune](./Resources/icons8_close_16.png)  Remove button 
 - Taskbar to easily change values
 - Manual vary the value (click on value to prompt)
 - ReadOnly variables supported
