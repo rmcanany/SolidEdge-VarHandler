@@ -261,6 +261,15 @@ Public Class Form_VarHandler
 
         tmpWorkFlow.ShowDialog(Me)
 
+        ' TODO: When this dialog returns, the variable values may have changed.  
+        ' I think this is screwing up subsequent manual cycling of any UC_Slider.
+
+        For Each item As UC_Slider In FLP_Vars.Controls.OfType(Of UC_Slider)
+
+            If Not IsNothing(item) Then item.SetTrackBar()
+
+        Next
+
     End Sub
 
     Private Sub BT_Update_CheckedChanged(sender As Object, e As EventArgs) Handles BT_Update.CheckedChanged
