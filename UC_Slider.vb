@@ -117,7 +117,7 @@ Public Class UC_Slider
 
     End Sub
 
-    Private Sub SetTrackBar()
+    Public Sub SetTrackBar()
 
         'TrackBar.Minimum = min
         'TrackBar.Maximum = max
@@ -412,17 +412,20 @@ Public Class UC_Slider
     End Function
 
     Private Function CloseEnough(This As Double, That As Double, Threshold As Double) As Boolean
-        Dim Result As Boolean = True
+        'Dim Result As Boolean = True
 
-        If This = 0 And That = 0 Then Return True
+        'If This = 0 And That = 0 Then Return True
 
-        If Not This = 0 Then
-            Result = Math.Abs(Threshold) > Math.Abs((This - That) / This)
-        Else
-            Result = Math.Abs(Threshold) > Math.Abs((This - That) / That)
-        End If
+        'If Not This = 0 Then
+        '    Result = Math.Abs(Threshold) > Math.Abs((This - That) / This)
+        'Else
+        '    Result = Math.Abs(Threshold) > Math.Abs((This - That) / That)
+        'End If
 
-        Return Result
+        'Return Result
+
+        Return Math.Abs(Threshold) > Math.Abs(This - That)
+
     End Function
 
     Private Sub BG_Play_DoWork(sender As Object, e As DoWorkEventArgs) Handles BG_Play.DoWork
@@ -445,6 +448,12 @@ Public Class UC_Slider
                 If SaveImages Then DoSaveImage(objDoc)
 
                 If CheckInterference Then If Not DoCheckInterference(objDoc) Then Return
+
+                ' When initialized, Forward is set to True.
+                ' If the variable is at its max value, toggle Forward to False
+                If CloseEnough(ProgressValue, max, Threshold:=0.000001) Then
+                    Forward = False
+                End If
             End If
 
             If Forward Then
@@ -455,7 +464,7 @@ Public Class UC_Slider
                 '    ProgressValue += TrackbarStep
                 'End If
 
-                If CloseEnough(ProgressValue + StepWidth, max, Threshold:=0.001) Then
+                If CloseEnough(ProgressValue + StepWidth, max, Threshold:=0.000001) Then
                     ProgressValue = max
                 Else
                     ProgressValue += StepWidth
@@ -467,7 +476,7 @@ Public Class UC_Slider
                 '    ProgressValue -= TrackbarStep
                 'End If
 
-                If CloseEnough(ProgressValue - StepWidth, min, Threshold:=0.001) Then
+                If CloseEnough(ProgressValue - StepWidth, min, Threshold:=0.000001) Then
                     ProgressValue = min
                 Else
                     ProgressValue -= StepWidth
@@ -747,7 +756,7 @@ Public Class UC_Slider
     Private Sub BG_Play_ProgressChanged(sender As Object, e As ProgressChangedEventArgs) Handles BG_Play.ProgressChanged
 
         'TrackBar.Value = CInt(e.UserState)
-        Dim tmpValue = CDbl(e.UserState)
+        Dim tmpValue = Math.Round(CDbl(e.UserState), 6)
         Dim Percentile As Double = (tmpValue - min) / (max - min)
         TrackBar.Value = Math.Round((TrackBar.Maximum - TrackBar.Minimum) * Percentile - TrackBar.Minimum)
 
