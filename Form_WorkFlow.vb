@@ -113,6 +113,8 @@ Public Class Form_WorkFlow
 
     Private Sub BT_Play_Click(sender As Object, e As EventArgs) Handles BT_Play.Click
 
+        Dim Proceed As Boolean = True
+
         If FLP_Events.Controls.Count > 0 Then
 
             For Each StepEvent As UC_WorkFlowEvent In FLP_Events.Controls
@@ -144,9 +146,16 @@ Public Class Form_WorkFlow
 
                     If SaveImages Then UC_Slider.DoSaveImage(Form_VarHandler.objDoc)
 
-                    If CheckInterference Then If Not UC_Slider.DoCheckInterference(Form_VarHandler.objDoc) Then Exit For
+                    If CheckInterference Then
+                        If Not UC_Slider.DoCheckInterference(Form_VarHandler.objDoc) Then
+                            Proceed = False
+                            Exit For
+                        End If
+                    End If
 
                 Next
+
+                If Not Proceed Then Exit For
 
                 StepEvent.LB_SEQ.ForeColor = Color.DarkGray
 
