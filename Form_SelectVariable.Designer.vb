@@ -158,6 +158,7 @@ Partial Class Form_SelectVariable
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Form_SelectVariable"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Variables"
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.TableLayoutPanel1.PerformLayout()

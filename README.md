@@ -1,80 +1,134 @@
 # SolidEdge-VarHandler
 
-Inspired by a post on Siemens Community I decided to create this control center to easily evaluate variables range values
+Francesco Arfilli 2025
 
-The actual version is limited and will perhaps be expanded per user requests
+Solid Edge VarHandler helps you do engineering analysis on moving parts and assemblies.  You can create scripted animations, trace out keypoint paths in 2D or 3D, check interference through a range of motion, and more.
 
+It works by stepping through values you define on variables you select.  The variables can be processed sequentially or in parallel, or a combination of both.
 
-**Feature list:**
-- ![Autotune](./Resources/icons8_replay_16.png)  Reload button 
-- ![Add](./Resources/icons8_add_16.png)  Add any system or user variables and dimensions
-- ![Excel](./Resources/icons8_data_sheet_16_extended.png)  Export results to excel when play a variable
-- ![Tracker](./Resources/icons8_center_of_gravity_16_edited.png)  Point tracker, return the coordinate of a 3D coordinate system or a 2D block 
-  - ![Trace](./Resources/icons8_plot_16.png)  Trace button, it creates a spline curve when playing a variable
-  - Closed curve, the spline will be a closed curve
-  - ![settings](./Resources/icons8_settings_16.png)  Settings button for shown decimals
-  - ![Autotune](./Resources/icons8_close_16.png)  Remove button
-- ![Update](./Resources/icons8_Update_Done_16.png)  Update document, updates the current document after each step 
-- ![Workflow](./Resources/icons8_workflow_16.png)  Workflow, opens the Workflow panel (more info below) 
-- Exposed name retrieved from the variable table (if available)
-- Ability to vary Exposed name from the variable table (double click on the title to prompt)
-- Minimum and Maximum range retrieved from the variable table (if available)
-- Ability to vary Minimum and Maximum range from the user interface (click on values to prompt)
-- ![Autotune](./Resources/icons8_repeat_16.png)  Loop button, the trackbar will move from one end to the other and reverse continuously 
-- ![Autotune](./Resources/icons8_circled_play_16.png)  Play button, the trackbar will move to the end 
-- ![settings](./Resources/icons8_settings_16.png)  Settings button to select the number of steps to perform on play 
-- ![Autotune](./Resources/icons8_checked_checkbox_16.png)  Checkbox to auto-retrieve the variable on reload (**Autotune** on comments field) 
-- ![Autotune](./Resources/icons8_close_16.png)  Remove button 
-- Taskbar to easily change values
-- Manual vary the value (click on value to prompt)
-- ReadOnly variables supported
-- Works on any Solid Edge environment (par, psm, asm, dft)
+![Main Form](./Media/Form_VarHandler.png)
 
+**Setup**
 
-Release versions [here](https://github.com/farfilli/SolidEdge-VarHandler/releases):
-- 0.1 Very initial and rude one
-- 0.2 Better error handling, variable selector and stay on top
-- 0.3 Decimal support for initial value, Play button, Loop button, Stay on top, Manual value edit
-- 0.4 Support for System and User Variable and Dimensions, export results to excel, settings button
-- 0.5 Correctly handled the range values, enabled 2D\3D tracker
-- 0.6 Multiple variable selection, tracker widget, and ability to trace the tracker with a spline curve
-- 0.7 Update document option, Workflows
-  
-**Known limits:**
-- ~~Only user variables supported~~
-- mm, degree, and scalar units supported, other units will result in unpredicted values
+To get started, open the file in Solid Edge.  Prepare your analysis using the following steps and options.  
 
-**Videos**
-- Video in action [here](https://www.youtube.com/watch?v=krcpQPdgGos&t=3s&ab_channel=FrancescoArfilli)
-- New video [here](https://www.youtube.com/watch?v=krcpQPdgGos&t=3s&ab_channel=FrancescoArfilli)
-- 2D Tracker tracing a spline [trace](https://www.youtube.com/watch?v=YH6zwButRlo&ab_channel=FrancescoArfilli)
-- 3D Tracker in assembly [here](https://youtu.be/T-k3u4ftC2k?si=VSHl7Id2dQuqqkK0)
+- ![Reset](./Resources/icons8_replay_16.png)  Reset.  Clears the list and reloads variables with Autotune enabled (see below).
 
-**Example files**
-- Example file of the tracker [here](./2DVarHandler.zip)
-- An example assembly is provided [here](./Crane.zip)
+- ![Add](./Resources/icons8_add_16.png)  Add.  Opens the Select Variables dialog.  You can choose variables and/or dimensions, either created by the user and/or by the system.  Once selected, variables are presented in a panel for checking/editing.  (For read-only variables, editing is disabled).
+![Slider](./Media/UC_Slider.png)
 
-**User UI:**
+  - Set the desired range by editing the numbers on the track bar.
 
-![MainForm](./MainForm.png)
-![Variable selector](./VarSelector.png)
-![Trace](./2DTracker.png)
-![Crane](./Crane.png)
-![Variable table](./VarTable.png)
+  - ![Loop](./Resources/icons8_repeat_16.png)  Loop.  Cycle continuously from low to high and back. 
 
-Exported results in excel after play
-![export](./export.png)
+  - ![Play](./Resources/icons8_circled_play_16.png)  Play.  Click to move to the end of the range.  Click again to move back.
+
+  - ![Settings](./Resources/icons8_settings_16.png)  Settings.  Set the number of steps between low and high.
+
+  - ![Autotune](./Resources/icons8_checked_checkbox_16.png)  Autotune.  Enable this option to save range information to the file.
+
+  - ![Remove](./Resources/icons8_close_16.png)  Remove.  Delete the variable from the form.
+
+  - Change the variable's Expose Name by double-clicking the name at the top of the panel.
+
+  - Change the variable's current value by dragging the task bar indicator, or editing the value in the displayed formula.
+
+- ![Excel](./Resources/icons8_data_sheet_16_extended.png)  Export.  Saves the results to excel for plotting or further analysis.
+
+- ![Tracker](./Resources/icons8_center_of_gravity_16_edited.png)  Track.  Enables key point tracing.  For model files, key points are identified with a coordinate system in the file.  For drawings, they are defined with a 2D block.  In either case, the item must be named "Tracker".
+![Tracker](./Media/UC_Tracker.png)
+
+  - ![Trace](./Resources/icons8_plot_16.png)  Trace.  Records the keypoint motion path with a spline curve.
+
+  - Closed curve.  Enable this option to create a closed trace curve.
+
+  - ![settings](./Resources/icons8_settings_16.png)  Settings.  Set the number of decimal points to use in the report.
+
+  - ![Remove](./Resources/icons8_close_16.png)  Remove.  Delete the tracker.
+
+- ![Update](./Resources/icons8_Update_Done_16.png)  Update.  Runs the Update Document command after each step.  This is necessary if dimension changes occur in subassemblies, or the geometry of any part in the model changes as a result of processing. 
+
+- ![Save Images](./Resources/SaveAsImage.png)  Save Images.  Saves an image at each step.
+
+- ![Check Interference](./Resources/Interference_16.png)  Check Interference.  Runs the Check Interference command at each step.
+
+- ![Workflow](./Resources/icons8_workflow_16.png)  Workflow.  Opens the Workflow panel (see next).
 
 **WorkFlow**
 
-![WorkFlow Form](./WorkFlow.png)
-- Open button, opens a workflow ![Open](./Resources/icons8_opened_folder_16.png)
-- Save button, save current workflow ![Save](./Resources/icons8_save_16.png)
-- Close button, close current workflow ![Close](./Resources/icons8_close_window_16.png)
-- Add Event button, adds an event to the current workflow ![Add Event](./Resources/icons8_add_16.png)
-- Play button, plays the current workflow ![Play](./Resources/icons8_circled_play_16.png)
+A workflow is a sequence of "events".  Each event changes each variable from its start value to its end value in a certain number of steps.  
 
-A workflow is a sequence of steps; each steps is a settings of the VarHandler variables.
-When playing a workflow each step will reach the assigned variable values in sequence.
+![WorkFlow Form](./Media/UC_Workflow.png)
 
-Example video [Here](https://youtu.be/JcF9NA-WjCA)
+The variables are those added during setup.  The start value is from the previous step, or from initialization.  The end value is set in the event panel.  (If the start and end are the same, which is common, no change occurs).  The number of steps is changed via the Settings button.
+
+At each step in each event, any analysis you set up (trace, check interference, etc.) will be performed.
+
+The workflow controls are detailed below.
+
+- ![Open](./Resources/icons8_opened_folder_16.png) Open.  Loads a saved workflow. 
+- ![Save](./Resources/icons8_save_16.png) Save.  Saves the current workflow to disk.
+- ![Close](./Resources/icons8_close_window_16.png) Close.  Closes current workflow.
+- ![Add Event](./Resources/icons8_add_16.png) Add Event.  Adds an event to the current workflow.
+- ![Play](./Resources/icons8_circled_play_16.png) Play.  Runs the events from beginning to end.
+- ![Settings](./Resources/icons8_settings_16.png)  Settings.  Set the number of steps for the event.
+
+Example video [here](https://youtu.be/JcF9NA-WjCA).
+
+**Releases**
+
+All released versions [here](https://github.com/farfilli/SolidEdge-VarHandler/releases).
+
+**Release notes**
+
+- 0.1 Very initial and rude one
+
+- 0.2 Better error handling, variable selector and stay on top
+
+- 0.3 Decimal support for initial value, Play button, Loop button, Stay on top, Manual value edit
+
+- 0.4 Support for System and User Variable and Dimensions, export results to excel, settings button
+
+- 0.5 Correctly handled the range values, enabled 2D\3D tracker
+
+- 0.6 Multiple variable selection, tracker widget, and ability to trace the tracker with a spline curve
+
+- 0.7 Update document option, Workflows
+  
+**Known limits**
+- ~~Only user variables supported~~
+- Supported units are `mm`, `in`, `degree`, and `scalar`.  Other units will result in an error.
+
+**Example videos**
+- Video in action [here](https://www.youtube.com/watch?v=krcpQPdgGos&t=3s&ab_channel=FrancescoArfilli)
+- If you liked that last one as much as I did, you can see it again [here](https://www.youtube.com/watch?v=krcpQPdgGos&t=3s&ab_channel=FrancescoArfilli)
+- 2D Tracker tracing a spline [here](https://www.youtube.com/watch?v=YH6zwButRlo&ab_channel=FrancescoArfilli)
+- 3D Tracker in assembly [here](https://youtu.be/T-k3u4ftC2k?si=VSHl7Id2dQuqqkK0)
+
+**Example files**
+
+The following links open in GitHub.  To download, click the download button as shown.
+
+![](./Media/github_download.png)
+
+- Example file of the 2D tracker [here](./2DVarHandler.zip)
+- An example assembly is provided [here](./Crane.zip)
+
+**Example images**
+
+2D Trace
+
+![Trace](./2DTracker.png)
+
+Animation
+
+![Crane](./Crane.png)
+
+Populated variable table
+
+![Variable table](./VarTable.png)
+
+Exported results in excel after processing
+
+![export](./export.png)
+
