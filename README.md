@@ -10,7 +10,7 @@ It works by stepping through values you define on variables you select.  The var
 
 **Setup**
 
-To get started, open the file in Solid Edge.  Prepare your analysis using the following steps and options.  
+To get started, open the file in Solid Edge.  Then, prepare your analysis using the following steps and options.  
 
 - ![Reset](./Resources/icons8_replay_16.png)  Reset.  Clears the list and reloads variables with Autotune enabled (see below).
 
@@ -46,7 +46,7 @@ To get started, open the file in Solid Edge.  Prepare your analysis using the fo
 
   - ![Remove](./Resources/icons8_close_16.png)  Remove.  Delete the tracker.
 
-- ![Update](./Resources/icons8_Update_Done_16.png)  Update.  Runs the Update Document command after each step.  This is necessary if dimension changes occur in subassemblies, or the geometry of any part in the model changes as a result of processing. 
+- ![Update](./Resources/icons8_Update_Done_16.png)  Update.  Runs the Update Document command after each step.  This is necessary for variables that control changes at the part or subassembly level. 
 
 - ![Save Images](./Resources/SaveAsImage.png)  Save Images.  Saves an image at each step.
 
@@ -68,7 +68,7 @@ The workflow controls are detailed below.
 
 - ![Open](./Resources/icons8_opened_folder_16.png) Open.  Loads a saved workflow. 
 - ![Save](./Resources/icons8_save_16.png) Save.  Saves the current workflow to disk.
-- ![Close](./Resources/icons8_close_window_16.png) Close.  Closes current workflow.
+- ![Close](./Resources/icons8_close_window_16.png) Close.  Closes the current workflow.
 - ![Add Event](./Resources/icons8_add_16.png) Add Event.  Adds an event to the current workflow.
 - ![Play](./Resources/icons8_circled_play_16.png) Play.  Runs the events from beginning to end.
 - ![Settings](./Resources/icons8_settings_16.png)  Settings.  Set the number of steps for the event.

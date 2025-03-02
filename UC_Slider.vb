@@ -741,20 +741,21 @@ Public Class UC_Slider
         'objSheet = objSheets(1)
 
         'Dim Riga = 2
+
         'For Each item In ExportSteps
 
-        '    Dim Colonna = 2
-        '    For Each stepItem As (Nome As String, Valore As Double) In item
+        'Dim Colonna = 2
+        'For Each stepItem As (Nome As String, Valore As Double) In item
 
-        '        objSheet.Cells(1, Colonna).value = stepItem.Nome
-        '        objSheet.Cells(Riga, 1).value = Riga - 1
-        '        objSheet.Cells(Riga, Colonna).value = stepItem.Valore
+        '    objSheet.Cells(1, Colonna).value = stepItem.Nome
+        '    objSheet.Cells(Riga, 1).value = Riga - 1
+        '    objSheet.Cells(Riga, Colonna).value = stepItem.Valore
 
-        '        Colonna += 1
+        '    Colonna += 1
 
-        '    Next
+        'Next
 
-        '    Riga += 1
+        'Riga += 1
 
         'Next
 
@@ -772,6 +773,47 @@ Public Class UC_Slider
         'objBook.Activate()
 
         'Me.Cursor = Cursors.Default
+
+        Dim Dirname = System.IO.Path.GetDirectoryName(objDoc.FullName)
+        Dim Filename As String = String.Format("{0}\results.csv", Dirname)
+        Dim Idx As Integer = 0
+
+        Dim Outlist As New List(Of String)
+        Dim s As String = ""
+
+        For Each item In ExportSteps
+
+            If Idx = 0 Then
+                For Each stepItem As (Nome As String, Valore As Double) In item
+                    If s = "" Then
+                        s = stepItem.Nome
+                    Else
+                        s = String.Format("{0}, {1}", s, stepItem.Nome)
+                    End If
+                Next
+
+                Outlist.Add(s)
+                s = ""
+            End If
+
+            For Each stepItem As (Nome As String, Valore As Double) In item
+                If s = "" Then
+                    s = CStr(stepItem.Valore)
+                Else
+                    s = String.Format("{0}, {1}", s, CStr(stepItem.Valore))
+                End If
+            Next
+
+            Outlist.Add(s)
+            s = ""
+            Idx += 1
+        Next
+
+        Try
+            IO.File.WriteAllLines(Filename, Outlist)
+        Catch ex As Exception
+            MsgBox(String.Format("Could not save results file '{0}'", Filename))
+        End Try
 
     End Sub
 
