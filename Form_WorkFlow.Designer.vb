@@ -34,18 +34,25 @@ Partial Class Form_WorkFlow
         Me.Add_Event = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
         Me.BT_Play = New System.Windows.Forms.ToolStripButton()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.LabelStatus = New System.Windows.Forms.Label()
         Me.ToolStrip1.SuspendLayout()
+        Me.Panel1.SuspendLayout()
+        Me.Panel2.SuspendLayout()
         Me.SuspendLayout()
         '
         'FLP_Events
         '
+        Me.FLP_Events.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.FLP_Events.AutoScroll = True
         Me.FLP_Events.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.FLP_Events.Dock = System.Windows.Forms.DockStyle.Fill
         Me.FLP_Events.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
-        Me.FLP_Events.Location = New System.Drawing.Point(0, 25)
+        Me.FLP_Events.Location = New System.Drawing.Point(0, 0)
         Me.FLP_Events.Name = "FLP_Events"
-        Me.FLP_Events.Size = New System.Drawing.Size(284, 436)
+        Me.FLP_Events.Size = New System.Drawing.Size(282, 405)
         Me.FLP_Events.TabIndex = 3
         Me.FLP_Events.WrapContents = False
         '
@@ -129,21 +136,54 @@ Partial Class Form_WorkFlow
         Me.BT_Play.Size = New System.Drawing.Size(49, 22)
         Me.BT_Play.Text = "Play"
         '
+        'Panel1
+        '
+        Me.Panel1.Controls.Add(Me.FLP_Events)
+        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Panel1.Location = New System.Drawing.Point(0, 25)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(284, 436)
+        Me.Panel1.TabIndex = 4
+        '
+        'Panel2
+        '
+        Me.Panel2.Controls.Add(Me.LabelStatus)
+        Me.Panel2.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.Panel2.Location = New System.Drawing.Point(0, 431)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(284, 30)
+        Me.Panel2.TabIndex = 5
+        '
+        'LabelStatus
+        '
+        Me.LabelStatus.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.LabelStatus.AutoSize = True
+        Me.LabelStatus.Location = New System.Drawing.Point(3, 8)
+        Me.LabelStatus.Name = "LabelStatus"
+        Me.LabelStatus.Size = New System.Drawing.Size(16, 13)
+        Me.LabelStatus.TabIndex = 0
+        Me.LabelStatus.Text = "   "
+        '
         'Form_WorkFlow
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(284, 461)
-        Me.Controls.Add(Me.FLP_Events)
+        Me.Controls.Add(Me.Panel2)
+        Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.ToolStrip1)
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MinimumSize = New System.Drawing.Size(280, 400)
         Me.Name = "Form_WorkFlow"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "WorkFlow"
         Me.TopMost = True
         Me.ToolStrip1.ResumeLayout(False)
         Me.ToolStrip1.PerformLayout()
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel2.ResumeLayout(False)
+        Me.Panel2.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -160,4 +200,7 @@ Partial Class Form_WorkFlow
     Friend WithEvents Add_Event As ToolStripButton
     Friend WithEvents BT_Play As ToolStripButton
     Friend WithEvents ToolStripSeparator3 As ToolStripSeparator
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel2 As Panel
+    Friend WithEvents LabelStatus As Label
 End Class

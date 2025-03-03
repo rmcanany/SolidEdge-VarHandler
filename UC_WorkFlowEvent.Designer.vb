@@ -22,15 +22,15 @@ Partial Class UC_WorkFlowEvent
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.TLP = New System.Windows.Forms.TableLayoutPanel()
         Me.DG_Variables = New System.Windows.Forms.DataGridView()
         Me.Check = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.VarName = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.VarValue = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.LB_SEQ = New System.Windows.Forms.Label()
         Me.BT_Close = New System.Windows.Forms.Button()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.LB_SEQ = New System.Windows.Forms.Label()
         Me.BT_Steps = New System.Windows.Forms.Button()
         Me.TLP.SuspendLayout()
         CType(Me.DG_Variables, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -65,14 +65,14 @@ Partial Class UC_WorkFlowEvent
         Me.DG_Variables.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
         Me.DG_Variables.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DG_Variables.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Check, Me.VarName, Me.VarValue})
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.ControlLight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.DG_Variables.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.ControlLight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DG_Variables.DefaultCellStyle = DataGridViewCellStyle2
         Me.DG_Variables.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DG_Variables.GridColor = System.Drawing.SystemColors.Control
         Me.DG_Variables.Location = New System.Drawing.Point(30, 0)
@@ -107,19 +107,6 @@ Partial Class UC_WorkFlowEvent
         Me.VarValue.Name = "VarValue"
         Me.VarValue.Width = 50
         '
-        'LB_SEQ
-        '
-        Me.LB_SEQ.AutoSize = True
-        Me.LB_SEQ.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.LB_SEQ.Font = New System.Drawing.Font("Segoe UI", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LB_SEQ.ForeColor = System.Drawing.Color.DarkGray
-        Me.LB_SEQ.Location = New System.Drawing.Point(3, 25)
-        Me.LB_SEQ.Name = "LB_SEQ"
-        Me.LB_SEQ.Size = New System.Drawing.Size(24, 103)
-        Me.LB_SEQ.TabIndex = 1
-        Me.LB_SEQ.Text = "1"
-        Me.LB_SEQ.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
         'BT_Close
         '
         Me.BT_Close.Dock = System.Windows.Forms.DockStyle.Fill
@@ -148,6 +135,19 @@ Partial Class UC_WorkFlowEvent
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(30, 128)
         Me.TableLayoutPanel1.TabIndex = 3
+        '
+        'LB_SEQ
+        '
+        Me.LB_SEQ.AutoSize = True
+        Me.LB_SEQ.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.LB_SEQ.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LB_SEQ.ForeColor = System.Drawing.Color.DarkGray
+        Me.LB_SEQ.Location = New System.Drawing.Point(3, 25)
+        Me.LB_SEQ.Name = "LB_SEQ"
+        Me.LB_SEQ.Size = New System.Drawing.Size(24, 103)
+        Me.LB_SEQ.TabIndex = 1
+        Me.LB_SEQ.Text = "1"
+        Me.LB_SEQ.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'BT_Steps
         '

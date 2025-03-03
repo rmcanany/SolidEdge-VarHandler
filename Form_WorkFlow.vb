@@ -113,6 +113,8 @@ Public Class Form_WorkFlow
 
     Private Sub BT_Play_Click(sender As Object, e As EventArgs) Handles BT_Play.Click
 
+        Dim InterferenceMessage As String = ""
+
         If FLP_Events.Controls.Count > 0 Then
 
             For Each StepEvent As UC_WorkFlowEvent In FLP_Events.Controls
@@ -123,6 +125,26 @@ Public Class Form_WorkFlow
 
                 'For i = 1 To 20
                 For i = 1 To StepEvent.steps
+
+                    LabelStatus.Text = String.Format("Event {0}, Step {1}", StepEvent.LB_SEQ.Text, i)
+
+                    ' Process first step before incrementing variables
+                    If (StepEvent.LB_SEQ.Text = "1") And (i = 1) Then
+                        If UpdateDoc Then UC_Slider.DoUpdateDoc(Form_VarHandler.objDoc)
+
+                        Form_VarHandler.objDoc.Parent.DoIdle()
+
+                        If SaveImages Then UC_Slider.DoSaveImage(Form_VarHandler.objDoc)
+
+                        If CheckInterference Then
+                            If Not UC_Slider.DoCheckInterference(Form_VarHandler.objDoc) Then
+                                If InterferenceMessage = "" Then
+                                    InterferenceMessage = String.Format("Interference first detected in Event {0}, Step {1}", StepEvent.LB_SEQ.Text, i)
+                                End If
+                            End If
+                        End If
+
+                    End If
 
                     Form_VarHandler.objDoc.Parent.DelayCompute = True
 
@@ -144,13 +166,25 @@ Public Class Form_WorkFlow
 
                     If SaveImages Then UC_Slider.DoSaveImage(Form_VarHandler.objDoc)
 
-                    If CheckInterference Then If Not UC_Slider.DoCheckInterference(Form_VarHandler.objDoc) Then Exit For
+                    If CheckInterference Then
+                        If Not UC_Slider.DoCheckInterference(Form_VarHandler.objDoc) Then
+                            If InterferenceMessage = "" Then
+                                InterferenceMessage = String.Format("Interference first detected in Event {0}, Step {1}", StepEvent.LB_SEQ.Text, i)
+                            End If
+                        End If
+                    End If
 
                 Next
 
                 StepEvent.LB_SEQ.ForeColor = Color.DarkGray
 
             Next
+
+            LabelStatus.Text = "Processing complete"
+
+            If Not InterferenceMessage = "" Then
+                MsgBox(InterferenceMessage, vbOKOnly)
+            End If
 
         End If
 

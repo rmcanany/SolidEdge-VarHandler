@@ -302,6 +302,8 @@ Public Class UC_Slider
 
         Else
 
+            MsgBox(String.Format("Unrecognized unit type '{0}'", UnitType.ToString), MsgBoxStyle.Critical)
+
             CadToValue = Value
 
         End If
@@ -337,6 +339,8 @@ Public Class UC_Slider
             ValueToCad = Value * Math.PI / 180
 
         Else
+
+            MsgBox(String.Format("Unrecognized unit type '{0}'", UnitType.ToString), MsgBoxStyle.Critical)
 
             ValueToCad = Value
 
@@ -439,6 +443,8 @@ Public Class UC_Slider
 
         Dim Idx As Integer = 0
 
+        Dim InterferenceMessage As String = ""
+
         Do 'Until ProgressValue = max
 
             ' Process the initial state
@@ -447,7 +453,13 @@ Public Class UC_Slider
 
                 If SaveImages Then DoSaveImage(objDoc)
 
-                If CheckInterference Then If Not DoCheckInterference(objDoc) Then Return
+                If CheckInterference Then
+                    If Not DoCheckInterference(objDoc) Then
+                        If InterferenceMessage = "" Then
+                            InterferenceMessage = String.Format("Interference first detected at Step {0}", Idx)
+                        End If
+                    End If
+                End If
 
                 ' When initialized, Forward is set to True.
                 ' If the variable is at its max value, toggle Forward to False
@@ -492,7 +504,13 @@ Public Class UC_Slider
 
             If SaveImages Then DoSaveImage(objDoc)
 
-            If CheckInterference Then If Not DoCheckInterference(objDoc) Then Return
+            If CheckInterference Then
+                If Not DoCheckInterference(objDoc) Then
+                    If InterferenceMessage = "" Then
+                        InterferenceMessage = String.Format("Interference first detected at Step {0}", Idx)
+                    End If
+                End If
+            End If
 
             'Example for future point tracking ################################################
             'If Export Then
@@ -531,6 +549,10 @@ Public Class UC_Slider
 
             Idx += 1
         Loop
+
+        If Not InterferenceMessage = "" Then
+            MsgBox(InterferenceMessage, vbOKOnly)
+        End If
 
     End Sub
 
@@ -719,20 +741,21 @@ Public Class UC_Slider
         'objSheet = objSheets(1)
 
         'Dim Riga = 2
+
         'For Each item In ExportSteps
 
-        '    Dim Colonna = 2
-        '    For Each stepItem As (Nome As String, Valore As Double) In item
+        'Dim Colonna = 2
+        'For Each stepItem As (Nome As String, Valore As Double) In item
 
-        '        objSheet.Cells(1, Colonna).value = stepItem.Nome
-        '        objSheet.Cells(Riga, 1).value = Riga - 1
-        '        objSheet.Cells(Riga, Colonna).value = stepItem.Valore
+        '    objSheet.Cells(1, Colonna).value = stepItem.Nome
+        '    objSheet.Cells(Riga, 1).value = Riga - 1
+        '    objSheet.Cells(Riga, Colonna).value = stepItem.Valore
 
-        '        Colonna += 1
+        '    Colonna += 1
 
-        '    Next
+        'Next
 
-        '    Riga += 1
+        'Riga += 1
 
         'Next
 
@@ -750,6 +773,47 @@ Public Class UC_Slider
         'objBook.Activate()
 
         'Me.Cursor = Cursors.Default
+
+        Dim Dirname = System.IO.Path.GetDirectoryName(objDoc.FullName)
+        Dim Filename As String = String.Format("{0}\results.csv", Dirname)
+        Dim Idx As Integer = 0
+
+        Dim Outlist As New List(Of String)
+        Dim s As String = ""
+
+        For Each item In ExportSteps
+
+            If Idx = 0 Then
+                For Each stepItem As (Nome As String, Valore As Double) In item
+                    If s = "" Then
+                        s = stepItem.Nome
+                    Else
+                        s = String.Format("{0}, {1}", s, stepItem.Nome)
+                    End If
+                Next
+
+                Outlist.Add(s)
+                s = ""
+            End If
+
+            For Each stepItem As (Nome As String, Valore As Double) In item
+                If s = "" Then
+                    s = CStr(stepItem.Valore)
+                Else
+                    s = String.Format("{0}, {1}", s, CStr(stepItem.Valore))
+                End If
+            Next
+
+            Outlist.Add(s)
+            s = ""
+            Idx += 1
+        Next
+
+        Try
+            IO.File.WriteAllLines(Filename, Outlist)
+        Catch ex As Exception
+            MsgBox(String.Format("Could not save results file '{0}'", Filename))
+        End Try
 
     End Sub
 
@@ -949,7 +1013,7 @@ Public Class UC_Slider
 
     Public Shared Function DoCheckInterference(_objDoc As SolidEdgeFramework.SolidEdgeDocument) As Boolean
 
-        Dim Proceed As Boolean = True
+        Dim Success As Boolean = True
 
         If Not _objDoc.Type = SolidEdgeConstants.DocumentTypeConstants.igAssemblyDocument Then
             ' Nothing to do here
@@ -987,25 +1051,29 @@ Public Class UC_Slider
                     IgnoreNonThreadVsThreadConstant:=IgnoreT)
 
                 If Not Status = SolidEdgeAssembly.InterferenceStatusConstants.seInterferenceStatusNoInterference Then
-                    Dim s As String = "Interference detected."
-                    s = String.Format("{0}{1} Click OK to continue, Cancel to quit.", s, vbCrLf)
-                    Dim Result As MsgBoxResult = MsgBox(s, vbOKCancel)
-                    If Result = MsgBoxResult.Cancel Then
-                        Proceed = False
-                    End If
+                    'Dim s As String = "Interference detected."
+                    's = String.Format("{0}{1} Click OK to continue, Cancel to quit.", s, vbCrLf)
+                    'Dim Result As MsgBoxResult = MsgBox(s, vbOKCancel)
+                    'If Result = MsgBoxResult.Cancel Then
+                    '    Success = False
+                    'End If
+
+                    Success = False
                 End If
 
             Catch ex As Exception
-                Dim s As String = "Error on interference check."
-                s = String.Format("{0}{1} Click OK to continue, Cancel to quit.", s, vbCrLf)
-                Dim Result As MsgBoxResult = MsgBox(s, vbOKCancel)
-                If Result = MsgBoxResult.Cancel Then
-                    Proceed = False
-                End If
+                'Dim s As String = "Error on interference check."
+                's = String.Format("{0}{1} Click OK to continue, Cancel to quit.", s, vbCrLf)
+                'Dim Result As MsgBoxResult = MsgBox(s, vbOKCancel)
+                'If Result = MsgBoxResult.Cancel Then
+                '    Success = False
+                'End If
+
+                Success = False
             End Try
         End If
 
-        Return Proceed
+        Return Success
     End Function
 
 End Class
