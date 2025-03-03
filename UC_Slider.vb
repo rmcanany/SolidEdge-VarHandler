@@ -300,6 +300,10 @@ Public Class UC_Slider
 
             CadToValue = Value * 180 / Math.PI
 
+        ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitTime Then
+
+            CadToValue = Value
+
         Else
 
             MsgBox(String.Format("Unrecognized unit type '{0}'", UnitType.ToString), MsgBoxStyle.Critical)
@@ -337,6 +341,10 @@ Public Class UC_Slider
         ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitAngle Then
 
             ValueToCad = Value * Math.PI / 180
+
+        ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitTime Then
+
+            ValueToCad = Value
 
         Else
 

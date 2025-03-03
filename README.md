@@ -12,47 +12,47 @@ It works by stepping through values you define on variables you select.  The var
 
 To get started, open the file in Solid Edge.  Then, prepare your analysis using the following steps and options.  
 
-- ![Reset](./Resources/icons8_replay_16.png)  Reset.  Clears the list and reloads variables with Autotune enabled (see below).
+- ![Reset](./Resources/icons8_replay_16.png)  *Reset*.  Clears the list and reloads variables that have Autotune enabled (see below).
 
-- ![Add](./Resources/icons8_add_16.png)  Add.  Opens the Select Variables dialog.  You can choose variables and/or dimensions, either created by the user and/or by the system.  Once selected, variables are presented in a panel for checking/editing.  (For read-only variables, editing is disabled).
+- ![Add](./Resources/icons8_add_16.png)  *Add*.  Opens the Select Variables dialog.  You can choose variables and/or dimensions, either created by the user and/or by the system.  Once selected, variables are presented in a panel for checking/editing.  (For read-only variables, editing is disabled).
 ![Slider](./Media/UC_Slider.png)
 
-  - Set the desired range by editing the numbers on the track bar.
+  - *Range*.  Set the desired range by editing the numbers on the track bar.
 
-  - ![Loop](./Resources/icons8_repeat_16.png)  Loop.  Cycle continuously from low to high and back. 
+  - ![Loop](./Resources/icons8_repeat_16.png)  *Loop*.  Cycle continuously from low to high and back. 
 
-  - ![Play](./Resources/icons8_circled_play_16.png)  Play.  Click to move to the end of the range.  Click again to move back.
+  - ![Play](./Resources/icons8_circled_play_16.png)  *Play*.  Click to move to the end of the range.  Click again to move back.
 
-  - ![Settings](./Resources/icons8_settings_16.png)  Settings.  Set the number of steps between low and high.
+  - ![Settings](./Resources/icons8_settings_16.png)  *Settings*.  Set the number of steps between low and high.
 
-  - ![Autotune](./Resources/icons8_checked_checkbox_16.png)  Autotune.  Enable this option to save range information to the file.
+  - ![Autotune](./Resources/icons8_checked_checkbox_16.png)  *Autotune*.  Enable this option to save range information to the file.
 
-  - ![Remove](./Resources/icons8_close_16.png)  Remove.  Delete the variable from the form.
+  - ![Remove](./Resources/icons8_close_16.png)  *Remove*.  Delete the variable from the form.
 
-  - Change the variable's Expose Name by double-clicking the name at the top of the panel.
+  - *Expose name*.  Change the variable's expose name by double-clicking the name at the top of the panel.
 
-  - Change the variable's current value by dragging the task bar indicator, or editing the value in the displayed formula.
+  - *Current value*.  Change the variable's current value by dragging the task bar indicator, or editing the value in the displayed formula.
 
-- ![Excel](./Resources/icons8_data_sheet_16_extended.png)  Export.  Saves the results to excel for plotting or further analysis.
+- ![Excel](./Resources/icons8_data_sheet_16_extended.png)  *Export*.  Saves the results to excel for plotting or further analysis.
 
-- ![Tracker](./Resources/icons8_center_of_gravity_16_edited.png)  Track.  Enables key point tracing.  For model files, key points are identified with a coordinate system in the file.  For drawings, they are defined with a 2D block.  In either case, the item must be named "Tracker".
+- ![Tracker](./Resources/icons8_center_of_gravity_16_edited.png)  *Track*.  Enables key point tracing.  For model files, key points are defined with a Coordinate System.  For drawings, they are defined with a Block.  In either case, the item must be named "Tracker".
 ![Tracker](./Media/UC_Tracker.png)
 
-  - ![Trace](./Resources/icons8_plot_16.png)  Trace.  Records the keypoint motion path with a spline curve.
+  - ![Trace](./Resources/icons8_plot_16.png)  *Trace*.  Records the keypoint motion path with a spline curve.
 
-  - Closed curve.  Enable this option to create a closed trace curve.
+  - *Closed curve*.  Enable this option to create a closed trace curve.
 
-  - ![settings](./Resources/icons8_settings_16.png)  Settings.  Set the number of decimal points to use in the report.
+  - ![settings](./Resources/icons8_settings_16.png)  *Settings*.  Set the number of decimal points to use in the report.
 
-  - ![Remove](./Resources/icons8_close_16.png)  Remove.  Delete the tracker.
+  - ![Remove](./Resources/icons8_close_16.png)  *Remove*.  Delete the tracker.
 
-- ![Update](./Resources/icons8_Update_Done_16.png)  Update.  Runs the Update Document command after each step.  This is necessary for variables that control changes at the part or subassembly level. 
+- ![Update](./Resources/icons8_Update_Done_16.png)  *Update*.  Runs the Update Document command after each step.  This is necessary to visualize  changes that occur beneath the top level of the file. 
 
-- ![Save Images](./Resources/SaveAsImage.png)  Save Images.  Saves an image at each step.
+- ![Save Images](./Resources/SaveAsImage.png)  *Save Images*.  Saves an image at each step.
 
-- ![Check Interference](./Resources/Interference_16.png)  Check Interference.  Runs the Check Interference command at each step.
+- ![Check Interference](./Resources/Interference_16.png)  *Check Interference*.  Runs the Check Interference command at each step.
 
-- ![Workflow](./Resources/icons8_workflow_16.png)  Workflow.  Opens the Workflow panel (see next).
+- ![Workflow](./Resources/icons8_workflow_16.png)  *Workflow*.  Opens the Workflow panel (see next).
 
 **WorkFlow**
 
@@ -60,24 +60,24 @@ A workflow is a sequence of "events".  Each event changes each variable from its
 
 ![WorkFlow Form](./Media/UC_Workflow.png)
 
-The variables are those added during setup.  The start value is from the previous step, or from initialization.  The end value is set in the event panel.  (If the start and end are the same, which is common, no change occurs).  The number of steps is changed via the Settings button.
+The variables are those added during setup.  The start value is from the previous step, or from initialization.  The end value is set in the event panel.  (If the start and end are the same, which is common, no change occurs).  The steps parameter sets the number of analysis points for the event.
 
 At each step in each event, any analysis you set up (trace, check interference, etc.) will be performed.
 
 The workflow controls are detailed below.
 
-- ![Open](./Resources/icons8_opened_folder_16.png) Open.  Loads a saved workflow. 
-- ![Save](./Resources/icons8_save_16.png) Save.  Saves the current workflow to disk.
-- ![Close](./Resources/icons8_close_window_16.png) Close.  Closes the current workflow.
-- ![Add Event](./Resources/icons8_add_16.png) Add Event.  Adds an event to the current workflow.
-- ![Play](./Resources/icons8_circled_play_16.png) Play.  Runs the events from beginning to end.
-- ![Settings](./Resources/icons8_settings_16.png)  Settings.  Set the number of steps for the event.
+- ![Open](./Resources/icons8_opened_folder_16.png) *Open*.  Loads a saved workflow. 
+- ![Save](./Resources/icons8_save_16.png) *Save*.  Saves the current workflow to disk.
+- ![Close](./Resources/icons8_close_window_16.png) *Close*.  Closes the current workflow.
+- ![Add Event](./Resources/icons8_add_16.png) *Add Event*.  Adds an event to the current workflow.
+- ![Play](./Resources/icons8_circled_play_16.png) *Play*.  Runs the events from beginning to end.
+- ![Settings](./Resources/icons8_settings_16.png)  *Settings*.  Set the number of steps for the event.
 
-Example video [here](https://youtu.be/JcF9NA-WjCA).
+Example video [<ins>here</ins>](https://youtu.be/JcF9NA-WjCA).
 
 **Releases**
 
-All released versions [here](https://github.com/farfilli/SolidEdge-VarHandler/releases).
+All released versions [<ins>here</ins>](https://github.com/farfilli/SolidEdge-VarHandler/releases).
 
 **Release notes**
 
@@ -97,13 +97,13 @@ All released versions [here](https://github.com/farfilli/SolidEdge-VarHandler/re
   
 **Known limits**
 - ~~Only user variables supported~~
-- Supported units are `mm`, `in`, `degree`, and `scalar`.  Other units will result in an error.
+- Supported units are `mm`, `in`, `degree`, `second`, and `scalar`.  Other units will result in a warning.
 
 **Example videos**
-- Video in action [here](https://www.youtube.com/watch?v=krcpQPdgGos&t=3s&ab_channel=FrancescoArfilli)
-- If you liked that last one as much as I did, you can see it again [here](https://www.youtube.com/watch?v=krcpQPdgGos&t=3s&ab_channel=FrancescoArfilli)
-- 2D Tracker tracing a spline [here](https://www.youtube.com/watch?v=YH6zwButRlo&ab_channel=FrancescoArfilli)
-- 3D Tracker in assembly [here](https://youtu.be/T-k3u4ftC2k?si=VSHl7Id2dQuqqkK0)
+- Video in action [<ins>here</ins>](https://www.youtube.com/watch?v=krcpQPdgGos&t=3s&ab_channel=FrancescoArfilli).
+- If you liked that last one as much as I did, you can see it again [<ins>here</ins>](https://www.youtube.com/watch?v=krcpQPdgGos&t=3s&ab_channel=FrancescoArfilli).
+- 2D Tracker tracing a spline [<ins>here</ins>](https://www.youtube.com/watch?v=YH6zwButRlo&ab_channel=FrancescoArfilli).
+- 3D Tracker in assembly [<ins>here</ins>](https://youtu.be/T-k3u4ftC2k?si=VSHl7Id2dQuqqkK0).
 
 **Example files**
 
@@ -111,8 +111,8 @@ The following links open in GitHub.  To download, click the download button as s
 
 ![](./Media/github_download.png)
 
-- Example file of the 2D tracker [here](./2DVarHandler.zip)
-- An example assembly is provided [here](./Crane.zip)
+- Example file of the 2D tracker [<ins>here</ins>](./2DVarHandler.zip).
+- An example assembly is provided [<ins>here</ins>](./Crane.zip).
 
 **Example images**
 
@@ -120,7 +120,7 @@ The following links open in GitHub.  To download, click the download button as s
 
 ![Trace](./2DTracker.png)
 
-Animation
+Assembly
 
 ![Crane](./Crane.png)
 
