@@ -300,6 +300,10 @@ Public Class UC_Slider
 
             CadToValue = Value * 180 / Math.PI
 
+        ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitTime Then
+
+            CadToValue = Value
+
         Else
 
             MsgBox(String.Format("Unrecognized unit type '{0}'", UnitType.ToString), MsgBoxStyle.Critical)
@@ -337,6 +341,10 @@ Public Class UC_Slider
         ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitAngle Then
 
             ValueToCad = Value * Math.PI / 180
+
+        ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitTime Then
+
+            ValueToCad = Value
 
         Else
 
@@ -535,14 +543,24 @@ Public Class UC_Slider
 
                 If ProgressValue = max Then
                     Forward = False
-                    If Not PlayLoop Then Return
+                    If Not PlayLoop Then
+                        If Not InterferenceMessage = "" Then
+                            MsgBox(InterferenceMessage, vbOKOnly)
+                        End If
+                        Return
+                    End If
                 End If
 
             Else
 
                 If ProgressValue = min Then
                     Forward = True
-                    If Not PlayLoop Then Return
+                    If Not PlayLoop Then
+                        If Not InterferenceMessage = "" Then
+                            MsgBox(InterferenceMessage, vbOKOnly)
+                        End If
+                        Return
+                    End If
                 End If
 
             End If
@@ -550,9 +568,6 @@ Public Class UC_Slider
             Idx += 1
         Loop
 
-        If Not InterferenceMessage = "" Then
-            MsgBox(InterferenceMessage, vbOKOnly)
-        End If
 
     End Sub
 

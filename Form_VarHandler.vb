@@ -12,6 +12,7 @@ Public Class Form_VarHandler
     Public Tracker_2D As SolidEdgeDraft.BlockOccurrence
     Public Tracking As Boolean = False
     Public Trace As Boolean = False
+
     Private Sub BT_Aggiungi_Click(sender As Object, e As EventArgs) Handles BT_Aggiungi.Click
 
         Dim tmpForm As New Form_SelectVariable
@@ -154,6 +155,13 @@ Public Class Form_VarHandler
             For Each item In tmpList
 
                 Dim tmpSlider As New UC_Slider(item)
+
+                tmpSlider.objDoc = objDoc
+                tmpSlider.LengthUnits = LengthUnits
+                tmpSlider.UpdateDoc = BT_Update.Checked
+                tmpSlider.SaveImages = BT_SaveImages.Checked
+                tmpSlider.CheckInterference = BT_CheckInterference.Checked
+
                 AddHandler tmpSlider.LB_value.TextChanged, AddressOf Slider_Click
 
                 FLP_Vars.Controls.Add(tmpSlider)
@@ -258,6 +266,7 @@ Public Class Form_VarHandler
         tmpWorkFlow.SaveImages = BT_SaveImages.Checked
         tmpWorkFlow.CheckInterference = BT_CheckInterference.Checked
         tmpWorkFlow.LengthUnits = LengthUnits
+        tmpWorkFlow.Export = BT_Export.Checked
 
         tmpWorkFlow.ShowDialog(Me)
 

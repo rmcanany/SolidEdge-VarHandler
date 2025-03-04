@@ -8,6 +8,7 @@ Public Class Form_WorkFlow
     Public SaveImages As Boolean = False
     Public CheckInterference As Boolean = False
     Public LengthUnits As SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants
+    Public Export As Boolean = False
 
     Private Sub Add_Event_Click(sender As Object, e As EventArgs) Handles Add_Event.Click
 
@@ -111,9 +112,42 @@ Public Class Form_WorkFlow
         SetupAnchors()
     End Sub
 
+    Private Sub DoUpdateExports(
+        ExportList As List(Of String),
+        StepEvent As UC_WorkFlowEvent)
+
+        ' ExportList format
+        ' Event, Var1, Var2, ...
+        ' 1, 1.75, 30, ...
+        ' 1, 2.00, 29, ...
+
+        Dim RowString As String = ""
+        Dim EventNumber As String = StepEvent.LB_SEQ.Text
+
+        If ExportList.Count = 0 Then  ' Needs a header row
+            RowString = "Event"
+            For Each tmpRow As DataGridViewRow In StepEvent.DG_Variables.Rows
+                Dim tmpVariable As Object = tmpRow.Cells("objVar").Value
+                RowString = String.Format("{0},{1}", RowString, tmpVariable.Name)
+                ExportList.Add(RowString)
+            Next
+        End If
+
+        RowString = EventNumber
+        For Each tmpRow As DataGridViewRow In StepEvent.DG_Variables.Rows
+            Dim tmpVariable As Object = tmpRow.Cells("objVar").Value
+            RowString = String.Format("{0},{1}", RowString, CStr(UC_Slider.CadToValue(tmpVariable.Value, tmpVariable.UnitsType, LengthUnits)))
+            ExportList.Add(RowString)
+        Next
+
+    End Sub
+
+
     Private Sub BT_Play_Click(sender As Object, e As EventArgs) Handles BT_Play.Click
 
         Dim InterferenceMessage As String = ""
+        Dim ExportList As List(Of String) = Nothing
+        If Export Then ExportList = New List(Of String)
 
         If FLP_Events.Controls.Count > 0 Then
 
@@ -143,6 +177,8 @@ Public Class Form_WorkFlow
                                 End If
                             End If
                         End If
+
+                        If Export Then DoUpdateExports(ExportList, StepEvent)
 
                     End If
 
@@ -174,12 +210,25 @@ Public Class Form_WorkFlow
                         End If
                     End If
 
+                    If Export Then DoUpdateExports(ExportList, StepEvent)
+
                 Next
 
                 StepEvent.LB_SEQ.ForeColor = Color.DarkGray
 
             Next
 
+            If Export Then
+                Dim Dirname = System.IO.Path.GetDirectoryName(Form_VarHandler.objDoc.FullName)
+                Dim Filename As String = String.Format("{0}\results.csv", Dirname)
+
+                Try
+                    IO.File.WriteAllLines(Filename, ExportList)
+                Catch ex As Exception
+                    MsgBox(String.Format("Could not save results file '{0}'", Filename))
+                End Try
+
+            End If
             LabelStatus.Text = "Processing complete"
 
             If Not InterferenceMessage = "" Then
