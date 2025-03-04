@@ -543,14 +543,24 @@ Public Class UC_Slider
 
                 If ProgressValue = max Then
                     Forward = False
-                    If Not PlayLoop Then Return
+                    If Not PlayLoop Then
+                        If Not InterferenceMessage = "" Then
+                            MsgBox(InterferenceMessage, vbOKOnly)
+                        End If
+                        Return
+                    End If
                 End If
 
             Else
 
                 If ProgressValue = min Then
                     Forward = True
-                    If Not PlayLoop Then Return
+                    If Not PlayLoop Then
+                        If Not InterferenceMessage = "" Then
+                            MsgBox(InterferenceMessage, vbOKOnly)
+                        End If
+                        Return
+                    End If
                 End If
 
             End If
@@ -558,9 +568,6 @@ Public Class UC_Slider
             Idx += 1
         Loop
 
-        If Not InterferenceMessage = "" Then
-            MsgBox(InterferenceMessage, vbOKOnly)
-        End If
 
     End Sub
 

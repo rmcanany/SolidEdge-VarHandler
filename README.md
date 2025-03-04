@@ -15,6 +15,7 @@ To get started, open the file in Solid Edge.  Then, prepare your analysis using 
 - ![Reset](./Resources/icons8_replay_16.png)  *Reset*.  Clears the list and reloads variables that have Autotune enabled (see below).
 
 - ![Add](./Resources/icons8_add_16.png)  *Add*.  Opens the Select Variables dialog.  You can choose variables and/or dimensions, either created by the user and/or by the system.  Once selected, variables are presented in a panel for checking/editing.  (For read-only variables, editing is disabled).
+
 ![Slider](./Media/UC_Slider.png)
 
   - *Range*.  Set the desired range by editing the numbers on the track bar.
@@ -36,6 +37,7 @@ To get started, open the file in Solid Edge.  Then, prepare your analysis using 
 - ![Excel](./Resources/icons8_data_sheet_16_extended.png)  *Export*.  Saves the results to excel for plotting or further analysis.
 
 - ![Tracker](./Resources/icons8_center_of_gravity_16_edited.png)  *Track*.  Enables key point tracing.  For model files, key points are defined with a Coordinate System.  For drawings, they are defined with a Block.  In either case, the item must be named "Tracker".
+
 ![Tracker](./Media/UC_Tracker.png)
 
   - ![Trace](./Resources/icons8_plot_16.png)  *Trace*.  Records the keypoint motion path with a spline curve.
@@ -113,6 +115,8 @@ The following links open in GitHub.  To download, click the download button as s
 
 - Example file of the 2D tracker [<ins>here</ins>](./2DVarHandler.zip).
 - An example assembly is provided [<ins>here</ins>](./Crane.zip).
+- An example interference check is provided [<ins>here</ins>](./Examples/interference.zip).
+- An example motor sizing calculation is provided [<ins>here</ins>](./Examples/motor_sizing.zip).
 
 **Example images**
 
