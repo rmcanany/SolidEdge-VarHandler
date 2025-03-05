@@ -103,7 +103,7 @@ All released versions [<ins>here</ins>](https://github.com/farfilli/SolidEdge-Va
 
 **Example videos**
 - Video in action [<ins>here</ins>](https://www.youtube.com/watch?v=krcpQPdgGos&t=3s&ab_channel=FrancescoArfilli).
-- If you liked that last one as much as I did, you can see it again [<ins>here</ins>](https://www.youtube.com/watch?v=krcpQPdgGos&t=3s&ab_channel=FrancescoArfilli).
+- A second video in action [<ins>here</ins>](https://youtu.be/izA-oFQAoVA?si=1aqEMtKb33YCjdMl).
 - 2D Tracker tracing a spline [<ins>here</ins>](https://www.youtube.com/watch?v=YH6zwButRlo&ab_channel=FrancescoArfilli).
 - 3D Tracker in assembly [<ins>here</ins>](https://youtu.be/T-k3u4ftC2k?si=VSHl7Id2dQuqqkK0).
 
