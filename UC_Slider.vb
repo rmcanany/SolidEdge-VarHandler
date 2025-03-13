@@ -444,6 +444,7 @@ Public Class UC_Slider
 
         'Dim ProgressValue As Integer = CInt(e.Argument)
         Dim ProgressValue As Double = e.Argument
+        Dim tf As Boolean
 
         ExportSteps = New List(Of Object) From {
             GenerateStep()
@@ -484,7 +485,10 @@ Public Class UC_Slider
                 '    ProgressValue += TrackbarStep
                 'End If
 
-                If CloseEnough(ProgressValue + StepWidth, max, Threshold:=0.000001) Then
+                tf = CloseEnough(ProgressValue + StepWidth, max, Threshold:=0.000001)
+                tf = tf Or ProgressValue + StepWidth > max
+
+                If tf Then
                     ProgressValue = max
                 Else
                     ProgressValue += StepWidth
@@ -496,7 +500,10 @@ Public Class UC_Slider
                 '    ProgressValue -= TrackbarStep
                 'End If
 
-                If CloseEnough(ProgressValue - StepWidth, min, Threshold:=0.000001) Then
+                tf = CloseEnough(ProgressValue - StepWidth, min, Threshold:=0.000001)
+                tf = tf Or ProgressValue - StepWidth < min
+
+                If tf Then
                     ProgressValue = min
                 Else
                     ProgressValue -= StepWidth
@@ -836,7 +843,9 @@ Public Class UC_Slider
 
         'TrackBar.Value = CInt(e.UserState)
         Dim tmpValue = Math.Round(CDbl(e.UserState), 6)
+
         Dim Percentile As Double = (tmpValue - min) / (max - min)
+
         TrackBar.Value = Math.Round((TrackBar.Maximum - TrackBar.Minimum) * Percentile - TrackBar.Minimum)
 
         'LB_value.Text = "" <--- questo causa l'evento nel form principale che scatena l'aggiornamento di tutti gli Slider e rende l'interfaccia non responsiva.
