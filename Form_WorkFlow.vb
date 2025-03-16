@@ -188,6 +188,9 @@ Public Class Form_WorkFlow
 
                         Dim tmpVariable As Object = tmpRow.Cells("objVar").Value
 
+                        ' ###### TODO The variable is sometimes getting out of range in SE. ######
+                        ' Need a min/max check somewhere.  Not sure this is the place to do it.
+
                         tmpVariable.Value += UC_Slider.ValueToCad(tmpRow.Tag, tmpVariable.UnitsType, LengthUnits)
 
                     Next
@@ -306,18 +309,38 @@ Public Class Form_WorkFlow
         'alpha:130|theta:0.001|Steps:5
 
         Dim tmpFileDialog As New OpenFileDialog
-        tmpFileDialog.Filter = "Text File|*.txt"
+
+        'tmpFileDialog.Filter = "Text File|*.txt"
+        tmpFileDialog.Filter = "Text files|*.txt|CSV files|*.csv"
+
         tmpFileDialog.Title = "Open a Text File"
         tmpFileDialog.ShowDialog()
 
-        If tmpFileDialog.FileName <> "" Then
+        Me.Cursor = Cursors.WaitCursor
 
-            Dim prg = My.Computer.FileSystem.ReadAllText(tmpFileDialog.FileName)
+        Dim Filename = tmpFileDialog.FileName
+
+        'If tmpFileDialog.FileName <> "" Then
+        If Filename <> "" Then
+
+            Dim ext As String = IO.Path.GetExtension(Filename)
+            If ext = ".csv" Then
+                Filename = ParseCSV(Filename)
+                If Filename Is Nothing Then Exit Sub
+            End If
+
+            'Dim prg = My.Computer.FileSystem.ReadAllText(tmpFileDialog.FileName)
+            Dim prg = My.Computer.FileSystem.ReadAllText(Filename)
             Dim righe = prg.Replace(vbCrLf, vbCr).Split(vbCrLf)
 
             FLP_Events.SuspendLayout()
 
             For i = 0 To righe.Count - 1
+
+                LabelStatus.Text = String.Format("Event {0}", i + 1)
+                System.Windows.Forms.Application.DoEvents()
+
+                If righe(i).Trim = "" Then Continue For
 
                 Dim tmpStep = NewEvent()
 
@@ -332,16 +355,144 @@ Public Class Form_WorkFlow
 
                 'SetValues(tmpStep, righe(i))
                 SetValues(tmpStep, ValString)
-                Dim j = 0
+
             Next
 
             FLP_Events.ResumeLayout()
+
+            LabelStatus.Text = ""
+            System.Windows.Forms.Application.DoEvents()
 
             SetupAnchors()
 
         End If
 
+        Me.Cursor = Cursors.Default
+
     End Sub
+
+    Private Function ParseCSV(CSVFilename As String) As String
+
+        ' ###### CSV format example ######
+        '[REF]Notes,Whatever,Whatever,Whatever
+        '[REF]Event,1,2,3
+        'Steps,20,5,20
+        'robot_x,33,,
+        'robot_y,11.75,20,
+
+        Dim NewFilename As String = IO.Path.ChangeExtension(CSVFilename, ".txt")
+
+        Dim InText As List(Of String) = IO.File.ReadAllLines(CSVFilename).ToList
+
+        Dim VarsAndVals As New Dictionary(Of String, List(Of String))
+
+        ' ###### Dictionary format example ######
+        ' "Steps": ["20", "5", "20"]
+        ' "robot_x": ["33", "", ""]
+        ' "robot_y": ["11.75", "20", ""]
+
+        Dim EventsCount As Integer
+        Dim OutList As New List(Of String)
+        Dim OutString As String
+        Dim VarName As String
+        Dim VarValue As String
+
+        For Each Line As String In InText
+
+            ' ###### Check for '[REF]' ######
+            If Line.ToLower.Trim.StartsWith("[ref]") Then Continue For
+
+            Dim InList As List(Of String) = Line.Split(CChar(",")).ToList
+
+            Dim Var = InList(0).Trim
+            InList.RemoveAt(0)
+
+            LabelStatus.Text = Var
+            System.Windows.Forms.Application.DoEvents()
+
+            ' ###### Check for unnamed variables ######
+            If Var = "" Then
+                MsgBox(String.Format("Blank variable name in '{0}'", CSVFilename), vbOKOnly)
+                Return Nothing
+            End If
+
+            ' ###### Check first value is not blank ######
+            If InList(0).Trim = "" Then
+                MsgBox(String.Format("First value in '{0}' cannot be blank", Var), vbOKOnly)
+                Return Nothing
+            End If
+
+            ' ###### Check duplicate variable names ######
+            If VarsAndVals.Keys.Contains(Var) Then
+                MsgBox(String.Format("Duplicate variable '{0}' in '{1}'", Var, CSVFilename), vbOKOnly)
+                Return Nothing
+            Else
+                VarsAndVals(Var) = InList
+            End If
+        Next
+
+        ' #### Check for a 'Steps' variable ####
+        If Not VarsAndVals.Keys.Contains("Steps") Then
+            MsgBox(String.Format("Missing variable 'Steps' in '{0}'", CSVFilename), vbOKOnly)
+            Return Nothing
+        End If
+
+        EventsCount = VarsAndVals(VarsAndVals.Keys(0)).Count
+
+        ' ###### Check all variable have the same number of values ######
+        For Each VarName In VarsAndVals.Keys
+            If Not VarsAndVals(VarName).Count = EventsCount Then
+                MsgBox(String.Format("Variable '{0}' wrong number of values", VarName), vbOKOnly)
+                Return Nothing
+            End If
+        Next
+
+        ' ###### Fill in blank values ######
+        For Each VarName In VarsAndVals.Keys
+            For i = 0 To EventsCount - 1
+                VarValue = VarsAndVals(VarName)(i).Trim
+                If VarValue = "" Then
+                    VarsAndVals(VarName)(i) = VarsAndVals(VarName)(i - 1)
+                End If
+            Next
+        Next
+
+        ' ###### Workflow format example ######
+        ' robot_x:33|robot_y:11.75|Steps:20
+        ' robot_x:33|robot_y:20|Steps:5
+        ' robot_x:33|robot_y:20|Steps:20
+
+        For i = 0 To EventsCount - 1
+
+            OutString = ""
+
+            For Each VarName In VarsAndVals.Keys
+
+                LabelStatus.Text = VarName
+                System.Windows.Forms.Application.DoEvents()
+
+                If VarName = "Steps" Then Continue For
+
+                VarValue = VarsAndVals(VarName)(i).Trim
+                If VarValue = "" Then VarValue = VarsAndVals(VarName)(i - 1)
+
+                OutString = String.Format("{0}{1}:{2}|", OutString, VarName, VarValue)
+            Next
+
+            ' ###### Add the 'Steps' variable at the end ######
+            VarValue = VarsAndVals("Steps")(i).Trim
+            If VarValue = "" Then VarValue = VarsAndVals("Steps")(i - 1)
+
+            OutString = String.Format("{0}Steps:{1}", OutString, VarValue)
+
+            OutList.Add(OutString)
+
+        Next
+
+        IO.File.WriteAllLines(NewFilename, OutList)
+
+        Return NewFilename
+    End Function
 
     Private Sub SetValues(tmpStep As UC_WorkFlowEvent, riga As String)
 
