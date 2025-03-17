@@ -45,7 +45,7 @@ Public Class UC_Slider
 
     End Function
 
-    Public Sub New(objVarV As Object, LengthUnits As SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants) 'SolidEdgeFramework.variable)
+    Public Sub New(objVarV As Object, _LengthUnits As SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants) 'SolidEdgeFramework.variable)
 
         ' This call is required by the designer.
         InitializeComponent()
@@ -53,6 +53,7 @@ Public Class UC_Slider
         ' Add any initialization after the InitializeComponent() call.
 
         objVar = objVarV
+        LengthUnits = _LengthUnits
 
         UnitType = CType(objVar.UnitsType, SolidEdgeFramework.UnitTypeConstants)
 

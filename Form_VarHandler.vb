@@ -29,7 +29,7 @@ Public Class Form_VarHandler
                 If tmpSlider2.Valid Then
 
                     tmpSlider2.objDoc = objDoc
-                    tmpSlider2.LengthUnits = LengthUnits
+                    'tmpSlider2.LengthUnits = LengthUnits
                     tmpSlider2.UpdateDoc = BT_Update.Checked
                     tmpSlider2.SaveImages = BT_SaveImages.Checked
                     tmpSlider2.CheckInterference = BT_CheckInterference.Checked
@@ -157,7 +157,7 @@ Public Class Form_VarHandler
                 Dim tmpSlider As New UC_Slider(item, LengthUnits)
 
                 tmpSlider.objDoc = objDoc
-                tmpSlider.LengthUnits = LengthUnits
+                'tmpSlider.LengthUnits = LengthUnits
                 tmpSlider.UpdateDoc = BT_Update.Checked
                 tmpSlider.SaveImages = BT_SaveImages.Checked
                 tmpSlider.CheckInterference = BT_CheckInterference.Checked
