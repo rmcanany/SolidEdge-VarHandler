@@ -24,7 +24,7 @@ Public Class Form_VarHandler
 
             For Each item In tmpForm.ListBox_Variables.SelectedItems
 
-                Dim tmpSlider2 As New UC_Slider(item.objVariable)
+                Dim tmpSlider2 As New UC_Slider(item.objVariable, LengthUnits)
 
                 If tmpSlider2.Valid Then
 
@@ -154,7 +154,7 @@ Public Class Form_VarHandler
 
             For Each item In tmpList
 
-                Dim tmpSlider As New UC_Slider(item)
+                Dim tmpSlider As New UC_Slider(item, LengthUnits)
 
                 tmpSlider.objDoc = objDoc
                 tmpSlider.LengthUnits = LengthUnits

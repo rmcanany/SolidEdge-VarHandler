@@ -24,8 +24,9 @@ Public Class Form_SelectVariable
 
             For Each item In _FindVars
 
-                Dim tmpVar As New VarListItem(item)
-                tmpVar.LengthUnits = LengthUnits
+                Dim tmpVar As New VarListItem(item, LengthUnits)
+
+                'tmpVar.LengthUnits = LengthUnits   '<---- This has to be set before the VarListItem is created
                 ListBox_Variables.Items.Add(tmpVar)
 
             Next
@@ -101,7 +102,9 @@ Public Class VarListItem
     Public Property ExName As String
     Public Property LengthUnits As SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants
 
-    Public Sub New(objVar As Object) 'SolidEdgeFramework.variable)
+    Public Sub New(objVar As Object, _LengthUnits As SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants) 'SolidEdgeFramework.variable)
+
+        LengthUnits = _LengthUnits
 
         'If TypeOf (objVar) Is SolidEdgeFramework.variable Then
         objVariable = objVar

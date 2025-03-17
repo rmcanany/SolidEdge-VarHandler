@@ -45,7 +45,7 @@ Public Class UC_Slider
 
     End Function
 
-    Public Sub New(objVarV As Object) 'SolidEdgeFramework.variable)
+    Public Sub New(objVarV As Object, LengthUnits As SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants) 'SolidEdgeFramework.variable)
 
         ' This call is required by the designer.
         InitializeComponent()
@@ -302,6 +302,19 @@ Public Class UC_Slider
 
         ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitTime Then
 
+            CadToValue = Value
+
+        ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitMass Then
+            CadToValue = Value
+        ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitMassMomentOfInertia Then
+            CadToValue = Value
+        ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitScalar Then
+            CadToValue = Value
+        ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitDensity Then
+            CadToValue = Value
+        ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitVolume Then
+            CadToValue = Value
+        ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitArea Then
             CadToValue = Value
 
         Else
