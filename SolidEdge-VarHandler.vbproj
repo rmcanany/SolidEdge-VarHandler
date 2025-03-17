@@ -309,6 +309,8 @@
     <None Include="Resources\icons8_full_image_16.png" />
     <None Include="Resources\icons8_image_16.png" />
     <None Include="Resources\Interference_16.png" />
+    <None Include="Resources\icons8-step-16.png" />
+    <None Include="Resources\icons8-skip-16.png" />
     <Content Include="slider.ico" />
     <Content Include="VarHandler.ico" />
     <Content Include="MainForm.png" />
