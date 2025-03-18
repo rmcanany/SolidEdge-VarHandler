@@ -279,6 +279,38 @@ Public Class UC_Slider
         LengthUnits As SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants
         ) As Double
 
+        ' ParseUnit
+        'Accepts a valid unit string as input and returns the corresponding value in database units.
+        'https://community.sw.siemens.com/s/question/0D54O000061x030SAA/units-of-measuresproblem-solved-but-this-is-not-the-solution
+        'E.g. the call of 
+        'ParseUnit(igUnitDistance, "128 mm") would return the value 0.128 m and 
+        'ParseUnit(igUnitDistance, "128 in") wourd return the value 3.2512 m.
+        'https://community.sw.siemens.com/s/question/0D54O000061xomTSAQ/units-of-variables-in-variable-table
+        'https://community.sw.siemens.com/s/question/0D54O000078zhhZSAQ/how-to-change-the-input-units
+        'UnitsOfMeasure in the API help, especially ParseUnit and FormatUnit 
+        'https://community.sw.siemens.com/s/question/0D54O00006q9zGCSAY/how-to-edit-a-variable-of-a-fop-member
+        'Dim UOM As SolidEdgeFramework.UnitsOfMeasure = Nothing
+        'UOM = oPart.UnitsOfMeasure
+        'UOM.ParseUnit(SolidEdgeConstants.UnitTypeConstants.igUnitDistance, "10")
+        'https://community.sw.siemens.com/s/question/0D54O000061x00fSAA/how-can-i-create-the-protrusion-in-a-circular-profile
+        'https://community.sw.siemens.com/s/question/0D54O000061x1XGSAY/xpressroutetubing-automation-problem-help
+        'Set UOM = ObjApp.ActiveDocument.UnitsOfMeasure
+
+        'FormatUnit
+        'Accepts a value in database units as input and returns a string in the user-specified unit and precision.
+        'https://community.sw.siemens.com/s/question/0D54O000061xseOSAQ/computephysicalproperties-gets-wrong-answer
+        'String strArea = doc.UnitsOfMeasure.FormatUnit(SolidEdgeFramework.UnitTypeConstants.igUnitArea, area);
+        'String strVolume = doc.UnitsOfMeasure.FormatUnit(SolidEdgeFramework.UnitTypeConstants.igUnitVolume, volume);
+        'https://community.sw.siemens.com/s/question/0D54O000061xAOdSAM/length-readout-unit-draft-document
+        'Set objSE = GetObject(, "solidedge.application")
+        'Set objDraft = objSE.ActiveDocument
+        'Dim myString As String
+        'myString = objDraft.UnitsOfMeasure.FormatUnit(igUnitDistance, 1)
+        ' In my case, myString results "1000,00 mm"
+        'https://community.sw.siemens.com/s/question/0D54O000061xqh6SAA/reading-drawing-data
+        'sValue = objUOM.FormatUnit(UnitTypeConstants.igUnitDistance, objVariable.Value.ToString)
+
+
         If UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitDistance Then
 
             If LengthUnits = SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants.seLengthInch Then
