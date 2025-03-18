@@ -34,6 +34,8 @@ Partial Class Form_WorkFlow
         Me.Add_Event = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
         Me.BT_Play = New System.Windows.Forms.ToolStripButton()
+        Me.BT_Step = New System.Windows.Forms.ToolStripButton()
+        Me.BT_Skip = New System.Windows.Forms.ToolStripButton()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.LabelStatus = New System.Windows.Forms.Label()
@@ -60,7 +62,7 @@ Partial Class Form_WorkFlow
         '
         Me.ToolStrip1.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ToolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BT_Reload, Me.ToolStripSeparator1, Me.BT_Open, Me.BT_Save, Me.BT_Close, Me.ToolStripSeparator2, Me.Add_Event, Me.ToolStripSeparator3, Me.BT_Play})
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BT_Reload, Me.ToolStripSeparator1, Me.BT_Open, Me.BT_Save, Me.BT_Close, Me.ToolStripSeparator2, Me.Add_Event, Me.ToolStripSeparator3, Me.BT_Play, Me.BT_Skip, Me.BT_Step})
         Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
         Me.ToolStrip1.Name = "ToolStrip1"
         Me.ToolStrip1.Size = New System.Drawing.Size(284, 25)
@@ -120,8 +122,8 @@ Partial Class Form_WorkFlow
         Me.Add_Event.Image = Global.SolidEdge_VarHandler.My.Resources.Resources.Add
         Me.Add_Event.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.Add_Event.Name = "Add_Event"
-        Me.Add_Event.Size = New System.Drawing.Size(81, 22)
-        Me.Add_Event.Text = "Add Event"
+        Me.Add_Event.Size = New System.Drawing.Size(49, 22)
+        Me.Add_Event.Text = "Add"
         '
         'ToolStripSeparator3
         '
@@ -135,6 +137,23 @@ Partial Class Form_WorkFlow
         Me.BT_Play.Name = "BT_Play"
         Me.BT_Play.Size = New System.Drawing.Size(49, 22)
         Me.BT_Play.Text = "Play"
+        '
+        'BT_Step
+        '
+        Me.BT_Step.Image = Global.SolidEdge_VarHandler.My.Resources.Resources._step
+        Me.BT_Step.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BT_Step.Name = "BT_Step"
+        Me.BT_Step.Size = New System.Drawing.Size(50, 22)
+        Me.BT_Step.Text = "Step"
+        '
+        'BT_Skip
+        '
+        Me.BT_Skip.Image = Global.SolidEdge_VarHandler.My.Resources.Resources.skip
+        Me.BT_Skip.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BT_Skip.Name = "BT_Skip"
+        Me.BT_Skip.Size = New System.Drawing.Size(49, 22)
+        Me.BT_Skip.Text = "Skip"
+        Me.BT_Skip.ToolTipText = "Skip"
         '
         'Panel1
         '
@@ -174,7 +193,7 @@ Partial Class Form_WorkFlow
         Me.Controls.Add(Me.ToolStrip1)
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.MinimumSize = New System.Drawing.Size(280, 400)
+        Me.MinimumSize = New System.Drawing.Size(300, 250)
         Me.Name = "Form_WorkFlow"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "WorkFlow"
@@ -203,4 +222,6 @@ Partial Class Form_WorkFlow
     Friend WithEvents Panel1 As Panel
     Friend WithEvents Panel2 As Panel
     Friend WithEvents LabelStatus As Label
+    Friend WithEvents BT_Step As ToolStripButton
+    Friend WithEvents BT_Skip As ToolStripButton
 End Class

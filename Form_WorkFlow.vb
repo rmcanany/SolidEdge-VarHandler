@@ -10,6 +10,13 @@ Public Class Form_WorkFlow
     Public LengthUnits As SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants
     Public Export As Boolean = False
 
+    Public StartEvent As Integer = 1
+    Public CurrentEvent As Integer = 1
+    Public IsSingleStep As Boolean = False
+    Public ReverseStep As Boolean = False
+    Public Abort As Boolean = False
+
+
     Private Sub Add_Event_Click(sender As Object, e As EventArgs) Handles Add_Event.Click
 
         Dim tmpStep = NewEvent()
@@ -145,6 +152,9 @@ Public Class Form_WorkFlow
 
     Private Sub BT_Play_Click(sender As Object, e As EventArgs) Handles BT_Play.Click
 
+        BT_Skip.Text = "Stop"
+        BT_Skip.Image = My.Resources._Stop
+
         Dim InterferenceMessage As String = ""
         Dim ExportList As List(Of String) = Nothing
         If Export Then ExportList = New List(Of String)
@@ -153,17 +163,55 @@ Public Class Form_WorkFlow
 
             For Each StepEvent As UC_WorkFlowEvent In FLP_Events.Controls
 
+                System.Windows.Forms.Application.DoEvents()
+
+                If Abort Then
+                    BT_Skip.Text = "Skip"
+                    BT_Skip.Image = My.Resources.skip
+                    Abort = False
+                    Exit Sub
+                End If
+
+                Dim StepNumber As Integer = CInt(StepEvent.LB_SEQ.Text)
+
+                If IsSingleStep Then
+                    If StepNumber < CurrentEvent Then
+                        Continue For
+                    End If
+                    If StepNumber > CurrentEvent Then
+                        Exit For
+                    End If
+                Else
+                    If StepNumber < StartEvent Then
+                        Continue For
+                    End If
+                End If
+
                 StepEvent.LB_SEQ.ForeColor = Color.DarkGreen
 
                 SetSteps(StepEvent)
 
                 'For i = 1 To 20
-                For i = 1 To StepEvent.steps
+                For j = 1 To StepEvent.steps
+
+                    Dim i As Integer = j
+
+                    If ReverseStep Then
+                        i = StepEvent.steps + 1 - j
+                    End If
 
                     LabelStatus.Text = String.Format("Event {0}, Step {1}", StepEvent.LB_SEQ.Text, i)
 
+                    Dim IsFirstStep As Boolean
+
+                    If Not ReverseStep Then
+                        IsFirstStep = (StepEvent.LB_SEQ.Text = "1") And (i = 1)
+                    Else
+                        IsFirstStep = (StepEvent.LB_SEQ.Text = CStr(StepEvent.steps)) And (i = StepEvent.steps)
+                    End If
+
                     ' Process first step before incrementing variables
-                    If (StepEvent.LB_SEQ.Text = "1") And (i = 1) Then
+                    If IsFirstStep Then
                         If UpdateDoc Then UC_Slider.DoUpdateDoc(Form_VarHandler.objDoc)
 
                         Form_VarHandler.objDoc.Parent.DoIdle()
@@ -239,6 +287,9 @@ Public Class Form_WorkFlow
             End If
 
         End If
+
+        BT_Skip.Text = "Skip"
+        BT_Skip.Image = My.Resources.skip
 
     End Sub
 
@@ -540,6 +591,71 @@ Public Class Form_WorkFlow
         SetupAnchors()
 
         FLP_Events.ResumeLayout()
+
+    End Sub
+
+    Private Sub BT_Skip_Click(sender As Object, e As EventArgs) Handles BT_Skip.Click
+
+        If Not Abort Then  ' Ignore multiple clicks
+            If BT_Skip.Text = "Skip" Then
+                Dim Result = InputBox("Enter start event number",, StartEvent)
+                If Not Result = "" Then StartEvent = CInt(Result)
+                CurrentEvent = StartEvent
+            Else
+                BT_Skip.Text = "Skip"
+                BT_Skip.Image = My.Resources.skip
+                Abort = True
+            End If
+        End If
+    End Sub
+
+    Private Sub BT_Step_Click(sender As Object, e As EventArgs) Handles BT_Step.Click
+
+        Dim WasPreviousStepReverse As Boolean = ReverseStep
+
+        If ModifierKeys = Keys.Control Then
+            ReverseStep = True
+            If Not WasPreviousStepReverse Then
+                CurrentEvent -= 2
+                If CurrentEvent = 0 Then
+                    CurrentEvent = FLP_Events.Controls.Count
+                ElseIf CurrentEvent = -1 Then
+                    CurrentEvent = FLP_Events.Controls.Count - 1
+                End If
+            End If
+        Else
+            ReverseStep = False
+            If WasPreviousStepReverse Then
+                CurrentEvent += 2
+                If CurrentEvent = FLP_Events.Controls.Count + 1 Then
+                    CurrentEvent = 1
+                ElseIf CurrentEvent = FLP_Events.Controls.Count + 2 Then
+                    CurrentEvent = 2
+                End If
+            End If
+        End If
+
+        IsSingleStep = True
+
+        BT_Play.PerformClick()
+
+        If Not ReverseStep Then
+            If CurrentEvent = FLP_Events.Controls.Count Then
+                CurrentEvent = 1
+            Else
+                CurrentEvent += 1
+            End If
+        Else
+            If CurrentEvent = 1 Then
+                CurrentEvent = FLP_Events.Controls.Count
+            Else
+                CurrentEvent -= 1
+            End If
+        End If
+
+        IsSingleStep = False
+        'ReverseStep = False
+
 
     End Sub
 

@@ -71,13 +71,15 @@ The workflow controls are detailed below.
 - ![Open](./Resources/icons8_opened_folder_16.png) *Open*.  Loads a saved workflow. See below for more information on `*.csv` files.
 - ![Save](./Resources/icons8_save_16.png) *Save*.  Saves the current workflow to disk.
 - ![Close](./Resources/icons8_close_window_16.png) *Close*.  Closes the current workflow.
-- ![Add Event](./Resources/icons8_add_16.png) *Add Event*.  Adds an event to the current workflow.
-- ![Play](./Resources/icons8_circled_play_16.png) *Play*.  Runs the events from beginning to end.
+- ![Add](./Resources/icons8_add_16.png) *Add*.  Adds an event to the current workflow.
+- ![Play](./Resources/icons8_circled_play_16.png) *Play*.  Runs the events from beginning to end.  While playing, the Skip button turns into a Stop button.  Click that to stop play.  Note the current event will proceed to completion.
+- ![Skip](./Resources/icons8-skip-16.png) *Skip*.  Sets the event number where play starts.
+- ![Step](./Resources/icons8-step-16.png) *Step*.  Plays the next event and stops.  CTRL-Click plays the previous event.
 - ![Settings](./Resources/icons8_settings_16.png)  *Settings*.  Set the number of steps for the event.
 
 Format for `*.csv` files
 
-The rows in the file contain variables, the columns are events.  Here is an example.
+The rows in the file contain variables, the columns represent events.  Here is an example.
 ```
 [REF]Notes   Whatever  Whatever  Whatever
 [REF]Event   1         2         3
@@ -86,7 +88,7 @@ robot_x      33
 robot_y      11.75     20
 ...
 ```
-Only changes to the variable need to be entered.  The parser will fill in blanks with previous values.  Any line starting with [REF] are ignored.  The `Steps` variable is required.
+Only changes to the variable need to be entered.  The parser will fill in blanks with previous values.  Any line starting with [REF] is ignored.  The `Steps` variable is required.
 
 Example video of a Workflow in action [<ins>here</ins>](https://youtu.be/JcF9NA-WjCA).
 
