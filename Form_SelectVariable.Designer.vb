@@ -44,7 +44,7 @@ Partial Class Form_SelectVariable
         Me.ListBox_Variables.Margin = New System.Windows.Forms.Padding(0)
         Me.ListBox_Variables.Name = "ListBox_Variables"
         Me.ListBox_Variables.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple
-        Me.ListBox_Variables.Size = New System.Drawing.Size(184, 161)
+        Me.ListBox_Variables.Size = New System.Drawing.Size(264, 161)
         Me.ListBox_Variables.Sorted = True
         Me.ListBox_Variables.TabIndex = 0
         '
@@ -54,10 +54,10 @@ Partial Class Form_SelectVariable
         Me.BT_Cancel.FlatAppearance.BorderSize = 0
         Me.BT_Cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BT_Cancel.Image = Global.SolidEdge_VarHandler.My.Resources.Resources.Cancel
-        Me.BT_Cancel.Location = New System.Drawing.Point(92, 211)
+        Me.BT_Cancel.Location = New System.Drawing.Point(132, 211)
         Me.BT_Cancel.Margin = New System.Windows.Forms.Padding(0)
         Me.BT_Cancel.Name = "BT_Cancel"
-        Me.BT_Cancel.Size = New System.Drawing.Size(92, 30)
+        Me.BT_Cancel.Size = New System.Drawing.Size(132, 30)
         Me.BT_Cancel.TabIndex = 1
         Me.BT_Cancel.UseVisualStyleBackColor = True
         '
@@ -70,7 +70,7 @@ Partial Class Form_SelectVariable
         Me.BT_OK.Location = New System.Drawing.Point(0, 211)
         Me.BT_OK.Margin = New System.Windows.Forms.Padding(0)
         Me.BT_OK.Name = "BT_OK"
-        Me.BT_OK.Size = New System.Drawing.Size(92, 30)
+        Me.BT_OK.Size = New System.Drawing.Size(132, 30)
         Me.BT_OK.TabIndex = 1
         Me.BT_OK.UseVisualStyleBackColor = True
         '
@@ -95,7 +95,7 @@ Partial Class Form_SelectVariable
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(184, 241)
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(264, 241)
         Me.TableLayoutPanel1.TabIndex = 2
         '
         'CB_Variables
@@ -106,7 +106,7 @@ Partial Class Form_SelectVariable
         Me.CB_Variables.Dock = System.Windows.Forms.DockStyle.Fill
         Me.CB_Variables.Location = New System.Drawing.Point(3, 3)
         Me.CB_Variables.Name = "CB_Variables"
-        Me.CB_Variables.Size = New System.Drawing.Size(86, 19)
+        Me.CB_Variables.Size = New System.Drawing.Size(126, 19)
         Me.CB_Variables.TabIndex = 2
         Me.CB_Variables.Text = "Variables"
         Me.CB_Variables.UseVisualStyleBackColor = True
@@ -117,7 +117,7 @@ Partial Class Form_SelectVariable
         Me.CB_Dimensions.Dock = System.Windows.Forms.DockStyle.Fill
         Me.CB_Dimensions.Location = New System.Drawing.Point(3, 28)
         Me.CB_Dimensions.Name = "CB_Dimensions"
-        Me.CB_Dimensions.Size = New System.Drawing.Size(86, 19)
+        Me.CB_Dimensions.Size = New System.Drawing.Size(126, 19)
         Me.CB_Dimensions.TabIndex = 2
         Me.CB_Dimensions.Text = "Dimensions"
         Me.CB_Dimensions.UseVisualStyleBackColor = True
@@ -128,9 +128,9 @@ Partial Class Form_SelectVariable
         Me.CB_Users.Checked = True
         Me.CB_Users.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CB_Users.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CB_Users.Location = New System.Drawing.Point(95, 3)
+        Me.CB_Users.Location = New System.Drawing.Point(135, 3)
         Me.CB_Users.Name = "CB_Users"
-        Me.CB_Users.Size = New System.Drawing.Size(86, 19)
+        Me.CB_Users.Size = New System.Drawing.Size(126, 19)
         Me.CB_Users.TabIndex = 2
         Me.CB_Users.Text = "User"
         Me.CB_Users.UseVisualStyleBackColor = True
@@ -139,9 +139,9 @@ Partial Class Form_SelectVariable
         '
         Me.CB_System.AutoSize = True
         Me.CB_System.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CB_System.Location = New System.Drawing.Point(95, 28)
+        Me.CB_System.Location = New System.Drawing.Point(135, 28)
         Me.CB_System.Name = "CB_System"
-        Me.CB_System.Size = New System.Drawing.Size(86, 19)
+        Me.CB_System.Size = New System.Drawing.Size(126, 19)
         Me.CB_System.TabIndex = 2
         Me.CB_System.Text = "System"
         Me.CB_System.UseVisualStyleBackColor = True
@@ -150,13 +150,13 @@ Partial Class Form_SelectVariable
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(184, 241)
+        Me.ClientSize = New System.Drawing.Size(264, 241)
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
+        Me.MinimumSize = New System.Drawing.Size(200, 280)
         Me.Name = "Form_SelectVariable"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Variables"
