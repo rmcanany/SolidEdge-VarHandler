@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Form_WorkFlow
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class Form_WorkFlow
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form_WorkFlow))
         Me.FLP_Events = New System.Windows.Forms.FlowLayoutPanel()
@@ -34,8 +34,8 @@ Partial Class Form_WorkFlow
         Me.Add_Event = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
         Me.BT_Play = New System.Windows.Forms.ToolStripButton()
-        Me.BT_Step = New System.Windows.Forms.ToolStripButton()
         Me.BT_Skip = New System.Windows.Forms.ToolStripButton()
+        Me.BT_Step = New System.Windows.Forms.ToolStripButton()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.LabelStatus = New System.Windows.Forms.Label()
@@ -138,14 +138,6 @@ Partial Class Form_WorkFlow
         Me.BT_Play.Size = New System.Drawing.Size(49, 22)
         Me.BT_Play.Text = "Play"
         '
-        'BT_Step
-        '
-        Me.BT_Step.Image = Global.SolidEdge_VarHandler.My.Resources.Resources._step
-        Me.BT_Step.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.BT_Step.Name = "BT_Step"
-        Me.BT_Step.Size = New System.Drawing.Size(50, 22)
-        Me.BT_Step.Text = "Step"
-        '
         'BT_Skip
         '
         Me.BT_Skip.Image = Global.SolidEdge_VarHandler.My.Resources.Resources.skip
@@ -154,6 +146,14 @@ Partial Class Form_WorkFlow
         Me.BT_Skip.Size = New System.Drawing.Size(49, 22)
         Me.BT_Skip.Text = "Skip"
         Me.BT_Skip.ToolTipText = "Skip"
+        '
+        'BT_Step
+        '
+        Me.BT_Step.Image = Global.SolidEdge_VarHandler.My.Resources.Resources._step
+        Me.BT_Step.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.BT_Step.Name = "BT_Step"
+        Me.BT_Step.Size = New System.Drawing.Size(50, 22)
+        Me.BT_Step.Text = "Step"
         '
         'Panel1
         '

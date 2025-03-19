@@ -163,6 +163,21 @@ Public Class Form_WorkFlow
 
             For Each StepEvent As UC_WorkFlowEvent In FLP_Events.Controls
 
+
+                '################# COMMENT THIS TWO LINES TO EXCLUDE THE UC_WORKFLOW BACKGROUND WORKER
+                StepEvent.PlayEvent(UpdateDoc, SaveImages, CheckInterference, LengthUnits, Export, Form_VarHandler.objDoc)
+                GoTo NextStep
+                '#################
+
+                System.Windows.Forms.Application.DoEvents()
+
+                If Abort Then
+                    BT_Skip.Text = "Skip"
+                    BT_Skip.Image = My.Resources.skip
+                    Abort = False
+                    Exit Sub
+                End If
+
                 Dim StepNumber As Integer = CInt(StepEvent.LB_SEQ.Text)
 
                 If IsSingleStep Then
@@ -182,22 +197,13 @@ Public Class Form_WorkFlow
 
                 SetSteps(StepEvent)
 
+                'For i = 1 To 20
                 For j = 1 To StepEvent.steps
 
                     Dim i As Integer = j
 
                     If ReverseStep Then
                         i = StepEvent.steps + 1 - j
-                    End If
-
-                    System.Windows.Forms.Application.DoEvents()
-                    If Abort Then
-                        BT_Skip.Text = "Skip"
-                        BT_Skip.Image = My.Resources.skip
-                        StepEvent.LB_SEQ.ForeColor = Color.DarkGray
-                        LabelStatus.Text = String.Format("Aborted at Event {0}, Step {1}", StepEvent.LB_SEQ.Text, i)
-                        Abort = False
-                        Exit Sub
                     End If
 
                     LabelStatus.Text = String.Format("Event {0}, Step {1}", StepEvent.LB_SEQ.Text, i)
@@ -245,6 +251,8 @@ Public Class Form_WorkFlow
 
                     Form_VarHandler.objDoc.Parent.DelayCompute = False
 
+                    'If Form_VarHandler.objDoc.Type = SolidEdgeConstants.DocumentTypeConstants.igAssemblyDocument And UpdateDoc Then Form_VarHandler.objDoc.UpdateDocument
+
                     If UpdateDoc Then UC_Slider.DoUpdateDoc(Form_VarHandler.objDoc)
 
                     Form_VarHandler.objDoc.Parent.DoIdle()
@@ -264,7 +272,7 @@ Public Class Form_WorkFlow
                 Next
 
                 StepEvent.LB_SEQ.ForeColor = Color.DarkGray
-
+NextStep:
             Next
 
             If Export Then
