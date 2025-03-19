@@ -68,23 +68,10 @@ Public Class UC_Slider
         maxV = CadToValue(maxV, UnitType, LengthUnits)
         minV = CadToValue(minV, UnitType, LengthUnits)
 
-        'Try
-        '    If CInt(maxV) <> 0 Or CInt(minV) <> 0 Then
-        '        max = CInt(maxV)
-        '        min = CInt(minV)
-        '    End If
-        'Catch ex As Exception
-        '    max = 0
-        '    min = 0
-        'End Try
-
         max = maxV
         min = minV
 
-
         If min = 0 And max = 0 Then
-            'min = CInt(CadToValue(objVar.Value, UnitType, LengthUnits)) - 10
-            'max = CInt(CadToValue(objVar.Value, UnitType, LengthUnits)) + 10
             min = CadToValue(objVar.Value, UnitType, LengthUnits) - 10
             max = CadToValue(objVar.Value, UnitType, LengthUnits) + 10
         End If
@@ -279,23 +266,6 @@ Public Class UC_Slider
         LengthUnits As SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants
         ) As Double
 
-        ' ParseUnit
-        'Accepts a valid unit string as input and returns the corresponding value in database units.
-        'https://community.sw.siemens.com/s/question/0D54O000061x030SAA/units-of-measuresproblem-solved-but-this-is-not-the-solution
-        'E.g. the call of 
-        'ParseUnit(igUnitDistance, "128 mm") would return the value 0.128 m and 
-        'ParseUnit(igUnitDistance, "128 in") wourd return the value 3.2512 m.
-        'https://community.sw.siemens.com/s/question/0D54O000061xomTSAQ/units-of-variables-in-variable-table
-        'https://community.sw.siemens.com/s/question/0D54O000078zhhZSAQ/how-to-change-the-input-units
-        'UnitsOfMeasure in the API help, especially ParseUnit and FormatUnit 
-        'https://community.sw.siemens.com/s/question/0D54O00006q9zGCSAY/how-to-edit-a-variable-of-a-fop-member
-        'Dim UOM As SolidEdgeFramework.UnitsOfMeasure = Nothing
-        'UOM = oPart.UnitsOfMeasure
-        'UOM.ParseUnit(SolidEdgeConstants.UnitTypeConstants.igUnitDistance, "10")
-        'https://community.sw.siemens.com/s/question/0D54O000061x00fSAA/how-can-i-create-the-protrusion-in-a-circular-profile
-        'https://community.sw.siemens.com/s/question/0D54O000061x1XGSAY/xpressroutetubing-automation-problem-help
-        'Set UOM = ObjApp.ActiveDocument.UnitsOfMeasure
-
         'FormatUnit
         'Accepts a value in database units as input and returns a string in the user-specified unit and precision.
         'https://community.sw.siemens.com/s/question/0D54O000061xseOSAQ/computephysicalproperties-gets-wrong-answer
@@ -365,6 +335,23 @@ Public Class UC_Slider
         UnitType As SolidEdgeFramework.UnitTypeConstants,
         LengthUnits As SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants
         ) As Double
+
+        ' ParseUnit
+        'Accepts a valid unit string as input and returns the corresponding value in database units.
+        'https://community.sw.siemens.com/s/question/0D54O000061x030SAA/units-of-measuresproblem-solved-but-this-is-not-the-solution
+        'E.g. the call of 
+        'ParseUnit(igUnitDistance, "128 mm") would return the value 0.128 m and 
+        'ParseUnit(igUnitDistance, "128 in") wourd return the value 3.2512 m.
+        'https://community.sw.siemens.com/s/question/0D54O000061xomTSAQ/units-of-variables-in-variable-table
+        'https://community.sw.siemens.com/s/question/0D54O000078zhhZSAQ/how-to-change-the-input-units
+        'UnitsOfMeasure in the API help, especially ParseUnit and FormatUnit 
+        'https://community.sw.siemens.com/s/question/0D54O00006q9zGCSAY/how-to-edit-a-variable-of-a-fop-member
+        'Dim UOM As SolidEdgeFramework.UnitsOfMeasure = Nothing
+        'UOM = oPart.UnitsOfMeasure
+        'UOM.ParseUnit(SolidEdgeConstants.UnitTypeConstants.igUnitDistance, "10")
+        'https://community.sw.siemens.com/s/question/0D54O000061x00fSAA/how-can-i-create-the-protrusion-in-a-circular-profile
+        'https://community.sw.siemens.com/s/question/0D54O000061x1XGSAY/xpressroutetubing-automation-problem-help
+        'Set UOM = ObjApp.ActiveDocument.UnitsOfMeasure
 
         If UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitDistance Then
 

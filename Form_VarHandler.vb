@@ -314,6 +314,11 @@ Public Class Form_VarHandler
 
         Dim UnitsOfMeasure = objDoc.UnitsOfMeasure
 
+        'Dim UU As New UtilsUnits
+
+        'UU.ListUOMs()
+        'UU.ChangeUnit(objDoc)
+
         For Each UnitOfMeasure As SolidEdgeFramework.UnitOfMeasure In UnitsOfMeasure
             If UnitOfMeasure.Type = SolidEdgeConstants.UnitTypeConstants.igUnitDistance Then
                 tmpLengthUnits = UnitOfMeasure.Units
@@ -323,6 +328,8 @@ Public Class Form_VarHandler
 
         Return tmpLengthUnits
     End Function
+
+
 
 End Class
 
