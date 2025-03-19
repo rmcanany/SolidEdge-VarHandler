@@ -22,7 +22,7 @@ Partial Class UC_WorkFlowEvent
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.TLP = New System.Windows.Forms.TableLayoutPanel()
         Me.DG_Variables = New System.Windows.Forms.DataGridView()
         Me.Check = New System.Windows.Forms.DataGridViewCheckBoxColumn()
@@ -32,6 +32,7 @@ Partial Class UC_WorkFlowEvent
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.LB_SEQ = New System.Windows.Forms.Label()
         Me.BT_Steps = New System.Windows.Forms.Button()
+        Me.BW_PlayEvent = New System.ComponentModel.BackgroundWorker()
         Me.TLP.SuspendLayout()
         CType(Me.DG_Variables, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -65,14 +66,14 @@ Partial Class UC_WorkFlowEvent
         Me.DG_Variables.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
         Me.DG_Variables.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DG_Variables.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Check, Me.VarName, Me.VarValue})
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.ControlLight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.DG_Variables.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ControlLight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DG_Variables.DefaultCellStyle = DataGridViewCellStyle1
         Me.DG_Variables.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DG_Variables.GridColor = System.Drawing.SystemColors.Control
         Me.DG_Variables.Location = New System.Drawing.Point(30, 0)
@@ -187,4 +188,5 @@ Partial Class UC_WorkFlowEvent
     Friend WithEvents BT_Close As Button
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
     Friend WithEvents BT_Steps As Button
+    Friend WithEvents BW_PlayEvent As System.ComponentModel.BackgroundWorker
 End Class
