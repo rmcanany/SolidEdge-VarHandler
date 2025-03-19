@@ -163,6 +163,12 @@ Public Class Form_WorkFlow
 
             For Each StepEvent As UC_WorkFlowEvent In FLP_Events.Controls
 
+
+                '################# COMMENT THIS TWO LINES TO EXCLUDE THE UC_WORKFLOW BACKGROUND WORKER
+                StepEvent.PlayEvent(UpdateDoc, SaveImages, CheckInterference, LengthUnits, Export, Form_VarHandler.objDoc)
+                GoTo NextStep
+                '#################
+
                 System.Windows.Forms.Application.DoEvents()
 
                 If Abort Then
@@ -266,7 +272,7 @@ Public Class Form_WorkFlow
                 Next
 
                 StepEvent.LB_SEQ.ForeColor = Color.DarkGray
-
+NextStep:
             Next
 
             If Export Then
