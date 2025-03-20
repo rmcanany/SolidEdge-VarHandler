@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class UC_WorkFlowEvent
     Inherits System.Windows.Forms.UserControl
 
     'UserControl overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class UC_WorkFlowEvent
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.TLP = New System.Windows.Forms.TableLayoutPanel()
@@ -32,7 +32,6 @@ Partial Class UC_WorkFlowEvent
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.LB_SEQ = New System.Windows.Forms.Label()
         Me.BT_Steps = New System.Windows.Forms.Button()
-        Me.BW_PlayEvent = New System.ComponentModel.BackgroundWorker()
         Me.TLP.SuspendLayout()
         CType(Me.DG_Variables, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -188,5 +187,4 @@ Partial Class UC_WorkFlowEvent
     Friend WithEvents BT_Close As Button
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
     Friend WithEvents BT_Steps As Button
-    Friend WithEvents BW_PlayEvent As System.ComponentModel.BackgroundWorker
 End Class
