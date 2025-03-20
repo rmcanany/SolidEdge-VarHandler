@@ -8,11 +8,11 @@ Public Class Form_SelectVariable
 
     Private Sub Form_SelectVariable_Load(sender As Object, e As EventArgs) Handles Me.Load
 
-        refreshList()
+        RefreshList()
 
     End Sub
 
-    Private Sub refreshList()
+    Private Sub RefreshList()
 
         ListBox_Variables.Items.Clear()
 
@@ -96,7 +96,7 @@ Public Class VarListItem
     Public Property VarName As String
     Public Property Value As String
     Public Property Formula As String
-    Public Property objVariable As Object 'SolidEdgeFramework.variable
+    Public Property ObjVariable As Object 'SolidEdgeFramework.variable
     'Public Property objDimension As SolidEdgeFrameworkSupport.Dimension
     Public Property ExName As String
     Public Property LengthUnits As SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants

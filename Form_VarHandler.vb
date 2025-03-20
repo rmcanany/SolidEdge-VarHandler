@@ -5,7 +5,7 @@ Imports SolidEdgeFramework
 Public Class Form_VarHandler
 
     Dim objApp As SolidEdgeFramework.Application
-    Public objDoc As SolidEdgeFramework.SolidEdgeDocument
+    Public Shared objDoc As SolidEdgeFramework.SolidEdgeDocument
     Public LengthUnits As SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants
 
     Public Tracker_3D As SolidEdgePart.CoordinateSystem
@@ -14,10 +14,10 @@ Public Class Form_VarHandler
     Public Trace As Boolean = False
 
     Private Sub BT_Aggiungi_Click(sender As Object, e As EventArgs) Handles BT_Aggiungi.Click
-
-        Dim tmpForm As New Form_SelectVariable
-        tmpForm.objDoc = objDoc
-        tmpForm.LengthUnits = LengthUnits
+        Dim tmpForm As New Form_SelectVariable With {
+            .objDoc = objDoc,
+            .LengthUnits = LengthUnits
+        }
         tmpForm.ShowDialog(Me)
 
         If tmpForm.Valid Then
@@ -154,13 +154,13 @@ Public Class Form_VarHandler
 
             For Each item In tmpList
 
-                Dim tmpSlider As New UC_Slider(item, LengthUnits)
-
-                tmpSlider.objDoc = objDoc
                 'tmpSlider.LengthUnits = LengthUnits
-                tmpSlider.UpdateDoc = BT_Update.Checked
-                tmpSlider.SaveImages = BT_SaveImages.Checked
-                tmpSlider.CheckInterference = BT_CheckInterference.Checked
+                Dim tmpSlider As New UC_Slider(item, LengthUnits) With {
+                    .objDoc = objDoc,
+                    .UpdateDoc = BT_Update.Checked,
+                    .SaveImages = BT_SaveImages.Checked,
+                    .CheckInterference = BT_CheckInterference.Checked
+                }
 
                 AddHandler tmpSlider.LB_value.TextChanged, AddressOf Slider_Click
 
@@ -260,13 +260,14 @@ Public Class Form_VarHandler
 
         Next
 
-        Dim tmpWorkFlow As New Form_WorkFlow
-        tmpWorkFlow.Variables = tmpVariables
-        tmpWorkFlow.UpdateDoc = BT_Update.Checked
-        tmpWorkFlow.SaveImages = BT_SaveImages.Checked
-        tmpWorkFlow.CheckInterference = BT_CheckInterference.Checked
-        tmpWorkFlow.LengthUnits = LengthUnits
-        tmpWorkFlow.Export = BT_Export.Checked
+        Dim tmpWorkFlow As New Form_WorkFlow With {
+            .Variables = tmpVariables,
+            .UpdateDoc = BT_Update.Checked,
+            .SaveImages = BT_SaveImages.Checked,
+            .CheckInterference = BT_CheckInterference.Checked,
+            .LengthUnits = LengthUnits,
+            .Export = BT_Export.Checked
+        }
 
         tmpWorkFlow.ShowDialog(Me)
 
