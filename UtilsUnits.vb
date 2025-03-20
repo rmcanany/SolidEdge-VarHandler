@@ -2,30 +2,41 @@
 
 Public Class UtilsUnits
 
-    'Public Sub ChangeUnit(SEDoc As SolidEdgeFramework.SolidEdgeDocument)
+    Public objDoc As SolidEdgeFramework.SolidEdgeDocument
 
-    '    Dim UnitsOfMeasure As SolidEdgeFramework.UnitsOfMeasure = SEDoc.UnitsOfMeasure
-    '    For Each UnitOfMeasure As SolidEdgeFramework.UnitOfMeasure In UnitsOfMeasure
-    '        If UnitOfMeasure.Type = SolidEdgeFramework.UnitTypeConstants.igUnitArea Then
-    '            UnitOfMeasure.Units = SolidEdgeConstants.UnitOfMeasureAreaReadoutConstants.seAreaMeterSquared
-    '            UnitOfMeasure.Units = SolidEdgeConstants.UnitOfMeasureAreaReadoutConstants.seAreaMillimeterSquared
-    '        End If
-    '    Next
-    'End Sub
+    Public Sub New(_objDoc As SolidEdgeFramework.SolidEdgeDocument)
 
-    'Private Property UnitTypeLUT As Dictionary(Of SolidEdgeFramework.UnitTypeConstants, Type)
-
-    Public Sub New()
-        'UnitTypeLUT = New Dictionary(Of SolidEdgeFramework.UnitTypeConstants, Type)
-        'PopulateUnitTypeLUT()
+        objDoc = _objDoc
 
     End Sub
 
-    'Private Sub PopulateUnitTypeLUT()
-    '    UnitTypeLUT(SolidEdgeFramework.UnitTypeConstants.igUnitDistance) = GetType(SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants)
-    '    UnitTypeLUT(SolidEdgeFramework.UnitTypeConstants.igUnitArea) = GetType(SolidEdgeConstants.UnitOfMeasureAreaReadoutConstants)
+    Public Function GetUnitString(objVar As Object) As String
+        Dim UnitString As String = ""
+        Dim UnitType As SolidEdgeFramework.UnitTypeConstants
 
-    'End Sub
+        Select Case objVar.GetType
+            Case GetType(SolidEdgeFramework.variable)
+                Dim tmpVar = CType(objVar, SolidEdgeFramework.variable)
+                UnitType = CType(tmpVar.UnitsType, SolidEdgeFramework.UnitTypeConstants)
+            Case GetType(SolidEdgeFrameworkSupport.Dimension)
+                Dim tmpDim = CType(objVar, SolidEdgeFrameworkSupport.Dimension)
+                UnitType = CType(tmpDim.UnitsType, SolidEdgeFramework.UnitTypeConstants)
+            Case Else
+                MsgBox(String.Format("Unrecognized variable type '{0}'", objVar.GetType.ToString))
+        End Select
+
+        UnitString = GetUnitString(UnitType)
+
+        Return UnitString
+    End Function
+
+    Private Function GetUnitString(UnitType As SolidEdgeFramework.UnitTypeConstants) As String
+        Dim UnitString As String = ""
+
+
+
+        Return UnitString
+    End Function
 
     Public Sub ListUOMs()
         ' Stress in SEOptions, not Constants.UnitsOfMeasure or Document.UOM
