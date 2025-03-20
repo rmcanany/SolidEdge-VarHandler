@@ -37,12 +37,13 @@ Public Class Form_WorkFlow
         For Each tmpVar In Variables
 
             If Not (tmpVar.IsReadOnly Or tmpVar.Formula <> "") Then
-                Dim tmpVariable As New EventVariable
-                tmpVariable.Check = True
-                tmpVariable.Name = tmpVar.DisplayName
                 'tmpVariable.Value = Math.Round(UC_Slider.CadToValue(tmpVar.value, tmpVar.UnitsType, LengthUnits), 2)
-                tmpVariable.Value = Math.Round(UC_Slider.CadToValue(tmpVar.value, tmpVar.UnitsType, LengthUnits), 3)
-                tmpVariable.objVar = tmpVar
+                Dim tmpVariable As New EventVariable With {
+                    .Check = True,
+                    .Name = tmpVar.DisplayName,
+                    .Value = Math.Round(UC_Slider.CadToValue(tmpVar.value, tmpVar.UnitsType, LengthUnits), 3),
+                    .objVar = tmpVar
+                }
 
                 list.Add(tmpVariable)
             End If
@@ -163,12 +164,6 @@ Public Class Form_WorkFlow
 
             For Each StepEvent As UC_WorkFlowEvent In FLP_Events.Controls
 
-
-                '################# COMMENT THIS TWO LINES TO EXCLUDE THE UC_WORKFLOW BACKGROUND WORKER
-                StepEvent.PlayEvent(UpdateDoc, SaveImages, CheckInterference, LengthUnits, Export, Form_VarHandler.objDoc)
-                GoTo NextStep
-                '#################
-
                 System.Windows.Forms.Application.DoEvents()
 
                 If Abort Then
@@ -272,7 +267,7 @@ Public Class Form_WorkFlow
                 Next
 
                 StepEvent.LB_SEQ.ForeColor = Color.DarkGray
-NextStep:
+
             Next
 
             If Export Then
@@ -343,9 +338,10 @@ NextStep:
 
             tmpRighe = tmpRighe.TrimEnd
 
-            Dim tmpFileDialog As New SaveFileDialog
-            tmpFileDialog.Filter = "Text File|*.txt"
-            tmpFileDialog.Title = "Save a Text File"
+            Dim tmpFileDialog As New SaveFileDialog With {
+                .Filter = "Text File|*.txt",
+                .Title = "Save a Text File"
+            }
             tmpFileDialog.ShowDialog()
 
             If tmpFileDialog.FileName <> "" Then
@@ -365,12 +361,11 @@ NextStep:
         'alpha:90|theta:0.001|Steps:20
         'alpha:130|theta:0.001|Steps:5
 
-        Dim tmpFileDialog As New OpenFileDialog
-
         'tmpFileDialog.Filter = "Text File|*.txt"
-        tmpFileDialog.Filter = "Text files|*.txt|CSV files|*.csv"
-
-        tmpFileDialog.Title = "Open a Text File"
+        Dim tmpFileDialog As New OpenFileDialog With {
+            .Filter = "Text files|*.txt|CSV files|*.csv",
+            .Title = "Open a Text File"
+        }
         tmpFileDialog.ShowDialog()
 
         Me.Cursor = Cursors.WaitCursor
@@ -672,6 +667,6 @@ Public Class EventVariable
     Public Property Check As Boolean = True
     Public Property Name As String = ""
     Public Property Value As Double = 0
-    Public Property objVar As Object
+    Public Property ObjVar As Object
 
 End Class
