@@ -2,7 +2,7 @@
 
 Francesco Arfilli 2025
 
-Solid Edge VarHandler helps you do engineering analysis on moving parts and assemblies.  You can create scripted animations, trace out keypoint paths in 2D or 3D, check interference through a range of motion, and more.
+Solid Edge VarHandler helps you do engineering analysis on parts and assemblies in motion.  You can create scripted animations, trace out keypoint paths in 2D or 3D, check interference through a range of motion, and more.
 
 It works by stepping through values you define on variables you select.  The variables can be processed sequentially or in parallel, or a combination of both.
 

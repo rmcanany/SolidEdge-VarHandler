@@ -184,18 +184,14 @@ Public Class Form_WorkFlow
 
         Dim UU As New UtilsUnits(Form_VarHandler.ObjDoc)
 
+        Dim EventsCount As Integer = FLP_Events.Controls.Count
+
+        Dim StartTime As DateTime = Now
+        Dim ElapsedTime As Double
+
         If FLP_Events.Controls.Count > 0 Then
 
             For Each StepEvent As UC_WorkFlowEvent In FLP_Events.Controls
-
-                System.Windows.Forms.Application.DoEvents()
-
-                If Abort Then
-                    BT_Skip.Text = "Skip"
-                    BT_Skip.Image = My.Resources.skip
-                    Abort = False
-                    Exit Sub
-                End If
 
                 Dim StepNumber As Integer = CInt(StepEvent.LB_SEQ.Text)
 
@@ -216,8 +212,18 @@ Public Class Form_WorkFlow
 
                 SetSteps(StepEvent)
 
-                'For i = 1 To 20
                 For j = 1 To StepEvent.steps
+
+                    System.Windows.Forms.Application.DoEvents()
+                    If Abort Then
+                        BT_Skip.Text = "Skip"
+                        BT_Skip.Image = My.Resources.skip
+                        Abort = False
+                        LabelStatus.Text = "Processing aborted by user"
+                        Exit Sub
+                    End If
+
+                    Dim StepsCount As Integer = StepEvent.steps
 
                     Dim i As Integer = j
 
@@ -225,7 +231,10 @@ Public Class Form_WorkFlow
                         i = StepEvent.steps + 1 - j
                     End If
 
-                    LabelStatus.Text = String.Format("Event {0}, Step {1}", StepEvent.LB_SEQ.Text, i)
+                    ElapsedTime = Now.Subtract(StartTime).TotalMinutes
+
+                    LabelStatus.Text = String.Format("Event {0}/{1}, Step {2}/{3}, Elapsed {4} min",
+                                           StepEvent.LB_SEQ.Text, EventsCount, i, StepsCount, ElapsedTime.ToString("0.0"))
 
                     Dim IsFirstStep As Boolean
 
@@ -309,7 +318,7 @@ Public Class Form_WorkFlow
                 End Try
 
             End If
-            LabelStatus.Text = "Processing complete"
+            LabelStatus.Text = String.Format("Processing complete in {0} min", ElapsedTime.ToString("0.0"))
 
             If Not InterferenceMessage = "" Then
                 MsgBox(InterferenceMessage, vbOKOnly)

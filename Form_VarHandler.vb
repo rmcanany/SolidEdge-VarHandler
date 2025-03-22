@@ -1,5 +1,5 @@
 ﻿Imports System.ComponentModel
-Imports System.Net.WebRequestMethods
+'Imports System.Net.WebRequestMethods
 Imports SolidEdgeFramework
 
 Public Class Form_VarHandler

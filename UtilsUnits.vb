@@ -69,8 +69,8 @@ Public Class UtilsUnits
         Dim ValueString As String
 
         Try
-            ValueString = CStr(UOM.FormatUnit(UnitType, CadValue))
-            ValueString = ValueString.Split(CChar(" "))(0).Trim
+            ValueString = CStr(UOM.FormatUnit(UnitType, CadValue))  ' Contains unit readout, eg '1.25 in'
+            ValueString = ValueString.Split(CChar(" "))(0).Trim  ' '1.25 in' -> '1.25'
             UserValue = CDbl(ValueString)
         Catch ex As Exception
             UserValue = CadValue
@@ -124,6 +124,13 @@ Public Class UtilsUnits
     End Function
 
     Private Function GetUnitReadout(_UnitTypeConstant As SolidEdgeFramework.UnitTypeConstants) As String
+
+        ' The unit readout is the text that represents the units of the variable.
+        ' Eg, 'mm', 'lbm/in^3', etc.
+
+        ' The only populated UnitOfMeasure.Units are those that are default in IPS and MMKS unit systems.
+        ' All known UnitOfMeasure.Units are listed.  More unit readouts can be populated as needed.
+
         Dim UnitReadout As String = ""
 
         Dim UnitsOfMeasure As SolidEdgeFramework.UnitsOfMeasure = ObjDoc.UnitsOfMeasure
@@ -685,6 +692,10 @@ Public Class UtilsUnits
     End Function
 
     Public Sub ListUOMs()
+
+        ' This is a utility that was used to find all UnitTypeConstants and associated UnitOfMeasure_XXX_ReadoutConstants
+        ' It is not normally used, but can be run as needed to find if more of either constants are added.
+
         ' Stress in SEOptions, not Constants.UnitsOfMeasure or Document.UOM
         Dim OutList As New List(Of String)
 
