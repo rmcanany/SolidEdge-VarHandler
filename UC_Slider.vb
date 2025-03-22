@@ -217,9 +217,10 @@ Public Class UC_Slider
         If NewWay Then
             Dim tmpValue As Double
             objVar.GetValueEx(tmpValue, SolidEdgeFramework.seUnitsTypeConstants.seUnitsType_Document)
+
             LB_value.Text = tmpValue.ToString
 
-            LB_name.Text = objVar.Name & " = " & LB_value.Text
+            LB_name.Text = objVar.Name & " = " & tmpValue.ToString
 
             Dim UU As New UtilsUnits(ObjDoc)
             Dim UnitReadout As String = UU.GetUnitReadout(objVar)
@@ -227,9 +228,11 @@ Public Class UC_Slider
             If Not UnitReadout = "" Then LB_name.Text = String.Format("{0} {1}", LB_name.Text, UnitReadout)
 
         Else
-            LB_value.Text = CadToValue(objVar.Value, UnitType, LengthUnits).ToString
+            Dim tmpValue = CadToValue(objVar.Value, UnitType, LengthUnits).ToString
 
-            LB_name.Text = objVar.Name & " = " & LB_value.Text
+            LB_value.Text = tmpValue.ToString
+
+            LB_name.Text = objVar.Name & " = " & tmpValue.ToString
 
             If UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitDistance Then
                 If LengthUnits = SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants.seLengthInch Then
@@ -965,21 +968,19 @@ Public Class UC_Slider
 
     Private Sub BG_Play_ProgressChanged(sender As Object, e As ProgressChangedEventArgs) Handles BG_Play.ProgressChanged
 
-        'TrackBar.Value = CInt(e.UserState)
         Dim tmpValue = Math.Round(CDbl(e.UserState), 6)
 
         Dim Percentile As Double = (tmpValue - min) / (max - min)
 
-        'TrackBar.Value = Math.Round((TrackBar.Maximum - TrackBar.Minimum) * Percentile - TrackBar.Minimum)
         TrackBar.Value = Math.Round((TrackBar.Maximum - TrackBar.Minimum) * Percentile + TrackBar.Minimum)
 
         'LB_value.Text = "" <--- questo causa l'evento nel form principale che scatena l'aggiornamento di tutti gli Slider e rende l'interfaccia non responsiva.
 
+        Dim UU As New UtilsUnits(ObjDoc)
         Try
             LB_name.Text = objVar.Name & " = " & e.UserState
 
             If NewWay Then
-                Dim UU As New UtilsUnits(ObjDoc)
                 Dim UnitReadout As String = UU.GetUnitReadout(objVar)
                 If Not UnitReadout = "" Then LB_name.Text = String.Format("{0} {1}", LB_name.Text, UnitReadout)
             Else
@@ -997,6 +998,24 @@ Public Class UC_Slider
         Catch ex As Exception
 
         End Try
+
+        ' ###### Probably the same problem as above with LB_value.Text ######
+        '
+        '' Update other sliders that have formulas
+        'For Each item As Object In Me.Parent.Controls
+        '    If TypeOf (item) Is UC_Slider Then
+        '        Dim tmpItem As UC_Slider = CType(item, UC_Slider)
+        '        If tmpItem IsNot Me Then
+        '            If TypeOf (tmpItem.objVar) Is SolidEdgeFramework.variable Then
+        '                Dim tmpVar = CType(tmpItem.objVar, SolidEdgeFramework.variable)
+        '                If Not tmpVar.Formula = "" Then
+        '                    tmpItem.UpdateLabel()
+        '                    System.Windows.Forms.Application.DoEvents()
+        '                End If
+        '            End If
+        '        End If
+        '    End If
+        'Next
 
     End Sub
 
