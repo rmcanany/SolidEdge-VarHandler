@@ -15,6 +15,7 @@ Public Class UtilsUnits
 
         ' Checks the length unit setting in the document for 'mm' or 'in' and sets the Unit System accordingly.
         ' The two systems are MMKS (mm, kg, s) or IPS (in, lbm, s)
+        ' The corresponding flags are IsMMKS and IsIPS
 
         Dim UnitsOfMeasure As SolidEdgeFramework.UnitsOfMeasure = ObjDoc.UnitsOfMeasure
 
@@ -27,6 +28,37 @@ Public Class UtilsUnits
                 End If
             End If
         Next
+
+    End Sub
+
+    Public Function GetVarValue(objVar As Object) As Double
+
+        ' Gets the value of a variable or dimension in units used in the UI, rather than the units used internally in SE.
+
+        Dim UserValue As Double
+
+        If TypeOf (objVar) Is SolidEdgeFramework.variable Then
+            Dim tmpVar = CType(objVar, SolidEdgeFramework.variable)
+            tmpVar.GetValueEx(UserValue, SolidEdgeFramework.seUnitsTypeConstants.seUnitsType_Document)
+        ElseIf TypeOf (objVar) Is SolidEdgeFrameworkSupport.Dimension Then
+            Dim tmpDim = CType(objVar, SolidEdgeFrameworkSupport.Dimension)
+            tmpDim.GetValueEx(UserValue, SolidEdgeFramework.seUnitsTypeConstants.seUnitsType_Document)
+        End If
+
+        Return UserValue
+    End Function
+
+    Public Sub SetVarValue(objVar As Object, UserValue As Double)
+
+        ' Sets the value of a variable or dimension in units used in the UI, rather than the units used internally in SE.
+
+        If TypeOf (objVar) Is SolidEdgeFramework.variable Then
+            Dim tmpVar = CType(objVar, SolidEdgeFramework.variable)
+            tmpVar.SetValueEx(UserValue, SolidEdgeFramework.seUnitsTypeConstants.seUnitsType_Document)
+        ElseIf TypeOf (objVar) Is SolidEdgeFrameworkSupport.Dimension Then
+            Dim tmpDim = CType(objVar, SolidEdgeFrameworkSupport.Dimension)
+            tmpDim.SetValueEx(UserValue, SolidEdgeFramework.seUnitsTypeConstants.seUnitsType_Document)
+        End If
 
     End Sub
 
@@ -61,7 +93,7 @@ Public Class UtilsUnits
         ) As Double
 
         ' Converts the units Solid Edge uses internally into the units of the variable displayed in the user interface
-        ' Eg, UserValue 'm' -> 'in', UserValue 'kg/m^3' -> 'kg/mm^3'
+        ' Eg, CadValue 'm' -> 'in', CadValue 'kg/m^3' -> 'kg/mm^3'
 
         Dim UserValue As Double
 

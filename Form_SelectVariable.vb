@@ -133,8 +133,7 @@ Public Class VarListItem
         Dim UU As New UtilsUnits(ObjDoc)
 
         If NewWay Then
-            Dim tmpValue As Double
-            objVar.GetValueEx(tmpValue, SolidEdgeFramework.seUnitsTypeConstants.seUnitsType_Document)
+            Dim tmpValue As Double = UU.GetVarValue(objVar)
 
             Value = CStr(tmpValue)
 

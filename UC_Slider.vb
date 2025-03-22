@@ -11,8 +11,6 @@ Public Class UC_Slider
 
     Dim VarName As String = ""
 
-    'Dim min As Integer = 0
-    'Dim max As Integer = 0
     Dim min As Double = 0
     Dim max As Double = 0
     Dim StepWidth As Double
@@ -154,10 +152,8 @@ Public Class UC_Slider
 
 
         If NewWay Then
-            objVar.GetValueEx(tmpValue, SolidEdgeFramework.seUnitsTypeConstants.seUnitsType_Document)
-            'Dim UU As New UtilsUnits(ObjDoc)
-            'Dim tmptmpValue = UU.ValueToCadEx(tmpValue, UnitType)
-            'Dim i = 0
+            Dim UU As New UtilsUnits(ObjDoc)
+            tmpValue = UU.GetVarValue(objVar)
         Else
             tmpValue = CadToValue(objVar.Value, UnitType, LengthUnits)
         End If
@@ -197,7 +193,8 @@ Public Class UC_Slider
             Dim VarValue As Double = (max - min) * Percentile + min
 
             If NewWay Then
-                objVar.SetValueEx(VarValue, UnitType)
+                Dim UU As New UtilsUnits(ObjDoc)
+                UU.SetVarValue(objVar, VarValue)
             Else
                 objVar.Value = ValueToCad((max - min) * Percentile + min, UnitType, LengthUnits)
             End If
@@ -215,14 +212,13 @@ Public Class UC_Slider
     Public Sub UpdateLabel()
 
         If NewWay Then
-            Dim tmpValue As Double
-            objVar.GetValueEx(tmpValue, SolidEdgeFramework.seUnitsTypeConstants.seUnitsType_Document)
+            Dim UU As New UtilsUnits(ObjDoc)
+            Dim tmpValue As Double = UU.GetVarValue(objVar)
 
             LB_value.Text = tmpValue.ToString
 
             LB_name.Text = objVar.Name & " = " & tmpValue.ToString
 
-            Dim UU As New UtilsUnits(ObjDoc)
             Dim UnitReadout As String = UU.GetUnitReadout(objVar)
 
             If Not UnitReadout = "" Then LB_name.Text = String.Format("{0} {1}", LB_name.Text, UnitReadout)
@@ -469,8 +465,8 @@ Public Class UC_Slider
             'BG_Play.RunWorkerAsync(TrackBar.Value)
 
             If NewWay Then
-                Dim tmpValue As Double
-                objVar.GetValueEx(tmpValue, SolidEdgeFramework.seUnitsTypeConstants.seUnitsType_Document)
+                Dim UU As New UtilsUnits(ObjDoc)
+                Dim tmpValue As Double = UU.GetVarValue(objVar)
                 BG_Play.RunWorkerAsync(tmpValue)
             Else
                 BG_Play.RunWorkerAsync(CadToValue(objVar.Value, UnitType, LengthUnits))
@@ -591,7 +587,8 @@ Public Class UC_Slider
             End If
 
             If NewWay Then
-                objVar.SetValueEx(ProgressValue, SolidEdgeFramework.seUnitsTypeConstants.seUnitsType_Document)
+                Dim UU As New UtilsUnits(ObjDoc)
+                UU.SetVarValue(objVar, ProgressValue)
             Else
                 objVar.Value = ValueToCad(ProgressValue, UnitType, LengthUnits)
             End If
@@ -1065,7 +1062,8 @@ Public Class UC_Slider
             Dim tmpValue As Double = CDbl(InputBox("Set current value",, LB_value.Text))
 
             If NewWay Then
-                objVar.SetValueEx(tmpValue, SolidEdgeFramework.seUnitsTypeConstants.seUnitsType_Document)
+                Dim UU As New UtilsUnits(ObjDoc)
+                UU.SetVarValue(objVar, tmpValue)
             Else
                 objVar.Value = ValueToCad(tmpValue, UnitType, LengthUnits)
             End If

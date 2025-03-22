@@ -42,8 +42,8 @@ Public Class Form_WorkFlow
             If Not (tmpVar.IsReadOnly Or tmpVar.Formula <> "") Then
                 'tmpVariable.Value = Math.Round(UC_Slider.CadToValue(tmpVar.value, tmpVar.UnitsType, LengthUnits), 2)
                 If NewWay Then
-                    Dim tmpValue As Double
-                    tmpVar.GetValueEx(tmpValue, SolidEdgeFramework.seUnitsTypeConstants.seUnitsType_Document)
+                    Dim UU As New UtilsUnits(Form_VarHandler.ObjDoc)
+                    Dim tmpValue As Double = UU.GetVarValue(tmpVar)
 
                     tmpVariable = New EventVariable With {
                     .Check = True,
@@ -161,8 +161,8 @@ Public Class Form_WorkFlow
             Dim tmpVariable As Object = tmpRow.Cells("objVar").Value
 
             If NewWay Then
-                Dim tmpValue As Double
-                tmpVariable.GetValueEx(tmpValue, SolidEdgeFramework.seUnitsTypeConstants.seUnitsType_Document)
+                Dim UU As New UtilsUnits(Form_VarHandler.ObjDoc)
+                Dim tmpValue As Double = UU.GetVarValue(tmpVariable)
                 RowString = String.Format("{0},{1}", RowString, CStr(tmpValue))
             Else
                 RowString = String.Format("{0},{1}", RowString, CStr(UC_Slider.CadToValue(tmpVariable.Value, tmpVariable.UnitsType, LengthUnits)))
@@ -342,7 +342,8 @@ Public Class Form_WorkFlow
             Dim tmpValue As Double
 
             If NewWay Then
-                tmpVariable.GetValueEx(tmpValue, SolidEdgeFramework.seUnitsTypeConstants.seUnitsType_Document)
+                Dim UU As New UtilsUnits(Form_VarHandler.ObjDoc)
+                tmpValue = UU.GetVarValue(tmpVariable)
                 stepValue = (CDbl(tmpRow.Cells("Value").Value) - tmpValue) / tmpSteps
             Else
                 tmpValue = UC_Slider.CadToValue(tmpVariable.Value, tmpVariable.UnitsType, LengthUnits)
