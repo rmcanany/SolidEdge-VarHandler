@@ -32,15 +32,15 @@ To get started, open the file in Solid Edge.  Then, prepare your analysis using 
 
   - *Expose name*.  Change the variable's expose name by double-clicking the name at the top of the panel.
 
-  - *Current value*.  Change the variable's current value by dragging the task bar indicator, or editing the value in the displayed formula.
+  - *Current value*.  Change the variable's current value by dragging the track bar indicator, or editing the value in the displayed formula.
 
 - ![Excel](./Resources/icons8_data_sheet_16_extended.png)  *Export*.  Saves the results to excel for plotting or further analysis.
 
-- ![Tracker](./Resources/icons8_center_of_gravity_16_edited.png)  *Track*.  Enables key point tracing.  For model files, key points are defined with a Coordinate System.  For drawings, they are defined with a Block.  In either case, the item must be named "Tracker".
-
 ![Tracker](./Media/UC_Tracker.png)
 
-  - ![Trace](./Resources/icons8_plot_16.png)  *Trace*.  Records the keypoint motion path with a spline curve.
+- ![Tracker](./Resources/icons8_center_of_gravity_16_edited.png)  *Track*.  Enables key point tracing.  For model files, key points are defined with a Coordinate System.  For drawings, they are defined with a Block.  In either case, the item must be named "Tracker".
+
+  - ![Trace](./Resources/icons8_plot_16.png)  *Trace*.  Records the keypoint motion path with a spline curve.  Click to enable.  (It looks like this ![Trace](./Resources/TraceSelected_16.png) when enabled.)
 
   - *Closed curve*.  Enable this option to create a closed trace curve.
 
@@ -114,7 +114,7 @@ All released versions [<ins>here</ins>](https://github.com/farfilli/SolidEdge-Va
   
 **Known limits**
 - ~~Only user variables supported~~
-- Supported units are `mm`, `in`, `degree`, `second`, and `scalar`.  Other units will result in a warning.
+- ~~Supported units are `mm`, `in`, `degree`, `second`, and `scalar`.  Other units will result in a warning.~~
 
 **Example videos**
 - Video in action [<ins>here</ins>](https://www.youtube.com/watch?v=krcpQPdgGos&t=3s&ab_channel=FrancescoArfilli).

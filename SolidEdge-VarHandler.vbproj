@@ -110,6 +110,8 @@
     <Compile Include="Form_WorkFlow.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="HCComObject.vb" />
+    <Compile Include="IDispatch.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
