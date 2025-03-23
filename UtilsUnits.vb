@@ -33,6 +33,8 @@ Public Class UtilsUnits
 
     Public Sub SetValueRangeValues(objVar As Object, min As Double, max As Double)
 
+        ' Convenience function to set variable ranges in user units, rather than SE internal units.
+
         If TypeOf (objVar) Is SolidEdgeFramework.variable Then
             Dim tmpVar = CType(objVar, SolidEdgeFramework.variable)
             Dim UnitType As SolidEdgeFramework.UnitTypeConstants = CType(tmpVar.UnitsType, SolidEdgeFramework.UnitTypeConstants)
@@ -46,6 +48,9 @@ Public Class UtilsUnits
     End Sub
 
     Public Function GetValueRangeHighValue(objVar As Object) As Double
+
+        ' Convenience function to get variable range in user units, rather than SE internal units.
+
         Dim UserValue As Double
 
         If TypeOf (objVar) Is SolidEdgeFramework.variable Then
@@ -62,6 +67,9 @@ Public Class UtilsUnits
     End Function
 
     Public Function GetValueRangeLowValue(objVar As Object) As Double
+
+        ' Convenience function to get variable range in user units, rather than SE internal units.
+
         Dim UserValue As Double
 
         If TypeOf (objVar) Is SolidEdgeFramework.variable Then
