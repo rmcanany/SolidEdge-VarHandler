@@ -31,6 +31,52 @@ Public Class UtilsUnits
 
     End Sub
 
+    Public Sub SetValueRangeValues(objVar As Object, min As Double, max As Double)
+
+        If TypeOf (objVar) Is SolidEdgeFramework.variable Then
+            Dim tmpVar = CType(objVar, SolidEdgeFramework.variable)
+            Dim UnitType As SolidEdgeFramework.UnitTypeConstants = CType(tmpVar.UnitsType, SolidEdgeFramework.UnitTypeConstants)
+            tmpVar.SetValueRangeValues(ValueToCad(min, UnitType), 15, ValueToCad(max, UnitType))
+        ElseIf TypeOf (objVar) Is SolidEdgeFrameworkSupport.Dimension Then
+            Dim tmpDim = CType(objVar, SolidEdgeFrameworkSupport.Dimension)
+            Dim UnitType As SolidEdgeFramework.UnitTypeConstants = CType(tmpDim.UnitsType, SolidEdgeFramework.UnitTypeConstants)
+            tmpDim.SetValueRangeValues(ValueToCad(min, UnitType), 15, ValueToCad(max, UnitType))
+        End If
+
+    End Sub
+
+    Public Function GetValueRangeHighValue(objVar As Object) As Double
+        Dim UserValue As Double
+
+        If TypeOf (objVar) Is SolidEdgeFramework.variable Then
+            Dim tmpVar = CType(objVar, SolidEdgeFramework.variable)
+            tmpVar.GetValueRangeHighValue(UserValue)
+            UserValue = CadToValue(UserValue, CType(tmpVar.UnitsType, SolidEdgeFramework.UnitTypeConstants))
+        ElseIf TypeOf (objVar) Is SolidEdgeFrameworkSupport.Dimension Then
+            Dim tmpDim = CType(objVar, SolidEdgeFrameworkSupport.Dimension)
+            tmpDim.GetValueRangeHighValue(UserValue)
+            UserValue = CadToValue(UserValue, CType(tmpDim.UnitsType, SolidEdgeFramework.UnitTypeConstants))
+        End If
+
+        Return UserValue
+    End Function
+
+    Public Function GetValueRangeLowValue(objVar As Object) As Double
+        Dim UserValue As Double
+
+        If TypeOf (objVar) Is SolidEdgeFramework.variable Then
+            Dim tmpVar = CType(objVar, SolidEdgeFramework.variable)
+            tmpVar.GetValueRangeLowValue(UserValue)
+            UserValue = CadToValue(UserValue, CType(tmpVar.UnitsType, SolidEdgeFramework.UnitTypeConstants))
+        ElseIf TypeOf (objVar) Is SolidEdgeFrameworkSupport.Dimension Then
+            Dim tmpDim = CType(objVar, SolidEdgeFrameworkSupport.Dimension)
+            tmpDim.GetValueRangeLowValue(UserValue)
+            UserValue = CadToValue(UserValue, CType(tmpDim.UnitsType, SolidEdgeFramework.UnitTypeConstants))
+        End If
+
+        Return UserValue
+    End Function
+
     Public Function GetVarValue(objVar As Object) As Double
 
         ' Gets the value of a variable or dimension in units used in the UI, rather than the units used internally in SE.

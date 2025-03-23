@@ -70,18 +70,12 @@ Public Class UC_Slider
 
 
         If NewWay Then
-            objVar.GetValueRangeHighValue(maxV)
-            objVar.GetValueRangeLowValue(minV)
-
-            maxV = UU.CadToValue(maxV, UnitType)
-            minV = UU.CadToValue(minV, UnitType)
-
-            max = maxV
-            min = minV
+            min = UU.GetValueRangeLowValue(objVar)
+            max = UU.GetValueRangeHighValue(objVar)
 
             If min = 0 And max = 0 Then
-                min = UU.CadToValue(objVar.Value, UnitType) - 10
-                max = UU.CadToValue(objVar.Value, UnitType) + 10
+                min = UU.GetVarValue(objVar) - 10
+                max = UU.GetVarValue(objVar) + 10
             End If
 
         Else
@@ -255,7 +249,8 @@ Public Class UC_Slider
         '15 for conditions is (=> ; <=)
         If NewWay Then
             Dim UU As New UtilsUnits(ObjDoc)
-            objVar.SetValueRangeValues(UU.ValueToCad(min, objVar.UnitsType), 15, UU.ValueToCad(max, objVar.UnitsType))
+            'objVar.SetValueRangeValues(UU.ValueToCad(min, objVar.UnitsType), 15, UU.ValueToCad(max, objVar.UnitsType))
+            UU.SetValueRangeValues(objVar, min, max)
         Else
             objVar.SetValueRangeValues(ValueToCad(min, objVar.UnitsType, LengthUnits), 15, ValueToCad(max, objVar.UnitsType, LengthUnits))
         End If
@@ -276,7 +271,8 @@ Public Class UC_Slider
         '15 for conditions is (=> ; <=)
         If NewWay Then
             Dim UU As New UtilsUnits(ObjDoc)
-            objVar.SetValueRangeValues(UU.ValueToCad(min, objVar.UnitsType), 15, UU.ValueToCad(max, objVar.UnitsType))
+            'objVar.SetValueRangeValues(UU.ValueToCad(min, objVar.UnitsType), 15, UU.ValueToCad(max, objVar.UnitsType))
+            UU.SetValueRangeValues(objVar, min, max)
         Else
             objVar.SetValueRangeValues(ValueToCad(min, objVar.UnitsType, LengthUnits), 15, ValueToCad(max, objVar.UnitsType, LengthUnits))
         End If
@@ -674,7 +670,8 @@ Public Class UC_Slider
                 tmpValue.Nome = tmpItem.objVar.name.ToString
 
                 If NewWay Then
-                    tmpValue.Valore = UU.CadToValue(tmpItem.objVar.value, tmpItem.UnitType)
+                    'tmpValue.Valore = UU.CadToValue(tmpItem.objVar.value, tmpItem.UnitType)
+                    tmpValue.Valore = UU.GetVarValue(tmpItem.objVar)
                 Else
                     tmpValue.Valore = CadToValue(tmpItem.objVar.value, tmpItem.UnitType, LengthUnits)
                 End If

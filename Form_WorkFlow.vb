@@ -274,7 +274,9 @@ Public Class Form_WorkFlow
                         ' Need a min/max check somewhere.  Not sure this is the place to do it.
 
                         If NewWay Then
-                            tmpVariable.Value += UU.ValueToCad(tmpRow.Tag, tmpVariable.UnitsType)
+                            'tmpVariable.Value += UU.ValueToCad(tmpRow.Tag, tmpVariable.UnitsType)
+                            Dim tmpValue = UU.GetVarValue(tmpVariable) + tmpRow.Tag
+                            UU.SetVarValue(tmpVariable, tmpValue)
                         Else
                             tmpVariable.Value += UC_Slider.ValueToCad(tmpRow.Tag, tmpVariable.UnitsType, LengthUnits)
                         End If
