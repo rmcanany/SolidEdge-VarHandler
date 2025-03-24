@@ -4,7 +4,14 @@
     Public NumberOfDecimals As Integer = 2
     Public ClosedCurve As Boolean = False
     Public LengthUnits As SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants
-    Public Sub New(Name As String, _LengthUnits As SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants)
+
+    Public NewWay As Boolean = True
+    Public ObjDoc As SolidEdgeFramework.SolidEdgeDocument
+
+    Public Sub New(
+         Name As String,
+         _LengthUnits As SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants,
+         _ObjDoc As SolidEdgeFramework.SolidEdgeDocument)
 
         ' This call is required by the designer.
         InitializeComponent()
@@ -16,50 +23,17 @@
         LB_Z.Text = "Z: "
 
         LengthUnits = _LengthUnits
+        ObjDoc = _ObjDoc
 
     End Sub
-
-    'Public Shared Function CadToValue(
-    '    Value As Double,
-    '    UnitType As SolidEdgeFramework.UnitTypeConstants,
-    '    LengthUnits As SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants
-    '    ) As Double 'Unificare con quello in UC_Slider
-
-    '    If UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitDistance Then
-
-    '        If LengthUnits = SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants.seLengthInch Then
-
-    '            CadToValue = Value * 1000 / 25.4
-
-    '        ElseIf LengthUnits = SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants.seLengthMillimeter Then
-
-    '            CadToValue = Value * 1000
-
-    '        Else
-
-    '            MsgBox(String.Format("Unrecognized length units '{0}'", LengthUnits.ToString), MsgBoxStyle.Critical)
-
-    '            CadToValue = Value
-
-    '        End If
-
-    '    ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitAngle Then
-
-    '        CadToValue = Value * 180 / Math.PI
-
-    '    Else
-
-    '        CadToValue = Value
-
-    '    End If
-
-    'End Function
 
     Public Sub UpdateLabel()
 
         If Not Tracker_3D Then LB_Z.Enabled = False
 
         Dim tmpForm = CType(Me.Parent.Parent, Form_VarHandler)
+
+        Dim UU As New UtilsUnits(ObjDoc)
 
         If Not IsNothing(tmpForm.Tracker_3D) Then
 
@@ -73,9 +47,15 @@
             Dim objZFirstRot As Double = Nothing
             tmpForm.Tracker_3D.GetOrientation(objXOffset, objYOffset, objZOffset, objXRotation, objYRotation, objZRotation, objRtP, objZFirstRot)
 
-            LB_X.Text = "X: " & Math.Round(UC_Slider.CadToValue(objXOffset, SolidEdgeFramework.UnitTypeConstants.igUnitDistance, LengthUnits), NumberOfDecimals).ToString
-            LB_Y.Text = "Y: " & Math.Round(UC_Slider.CadToValue(objYOffset, SolidEdgeFramework.UnitTypeConstants.igUnitDistance, LengthUnits), NumberOfDecimals).ToString
-            LB_Z.Text = "Z: " & Math.Round(UC_Slider.CadToValue(objZOffset, SolidEdgeFramework.UnitTypeConstants.igUnitDistance, LengthUnits), NumberOfDecimals).ToString
+            If NewWay Then
+                LB_X.Text = "X: " & Math.Round(UU.CadToValue(objXOffset, SolidEdgeFramework.UnitTypeConstants.igUnitDistance), NumberOfDecimals).ToString
+                LB_Y.Text = "Y: " & Math.Round(UU.CadToValue(objYOffset, SolidEdgeFramework.UnitTypeConstants.igUnitDistance), NumberOfDecimals).ToString
+                LB_Z.Text = "Z: " & Math.Round(UU.CadToValue(objZOffset, SolidEdgeFramework.UnitTypeConstants.igUnitDistance), NumberOfDecimals).ToString
+            Else
+                LB_X.Text = "X: " & Math.Round(UC_Slider.CadToValue(objXOffset, SolidEdgeFramework.UnitTypeConstants.igUnitDistance, LengthUnits), NumberOfDecimals).ToString
+                LB_Y.Text = "Y: " & Math.Round(UC_Slider.CadToValue(objYOffset, SolidEdgeFramework.UnitTypeConstants.igUnitDistance, LengthUnits), NumberOfDecimals).ToString
+                LB_Z.Text = "Z: " & Math.Round(UC_Slider.CadToValue(objZOffset, SolidEdgeFramework.UnitTypeConstants.igUnitDistance, LengthUnits), NumberOfDecimals).ToString
+            End If
 
         ElseIf Not IsNothing(tmpForm.Tracker_2D) Then
 
@@ -83,9 +63,15 @@
             Dim objY As Double = Nothing
             tmpForm.Tracker_2D.GetOrigin(objX, objY)
 
-            LB_X.Text = "X: " & Math.Round(UC_Slider.CadToValue(objX, SolidEdgeFramework.UnitTypeConstants.igUnitDistance, LengthUnits), NumberOfDecimals).ToString
-            LB_Y.Text = "Y: " & Math.Round(UC_Slider.CadToValue(objY, SolidEdgeFramework.UnitTypeConstants.igUnitDistance, LengthUnits), NumberOfDecimals).ToString
-            LB_Z.Text = "Z: -----"
+            If NewWay Then
+                LB_X.Text = "X: " & Math.Round(UU.CadToValue(objX, SolidEdgeFramework.UnitTypeConstants.igUnitDistance), NumberOfDecimals).ToString
+                LB_Y.Text = "Y: " & Math.Round(UU.CadToValue(objY, SolidEdgeFramework.UnitTypeConstants.igUnitDistance), NumberOfDecimals).ToString
+                LB_Z.Text = "Z: -----"
+            Else
+                LB_X.Text = "X: " & Math.Round(UC_Slider.CadToValue(objX, SolidEdgeFramework.UnitTypeConstants.igUnitDistance, LengthUnits), NumberOfDecimals).ToString
+                LB_Y.Text = "Y: " & Math.Round(UC_Slider.CadToValue(objY, SolidEdgeFramework.UnitTypeConstants.igUnitDistance, LengthUnits), NumberOfDecimals).ToString
+                LB_Z.Text = "Z: -----"
+            End If
 
         End If
 

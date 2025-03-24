@@ -16,6 +16,8 @@ Public Class Form_WorkFlow
     Public ReverseStep As Boolean = False
     Public Abort As Boolean = False
 
+    Public NewWay As Boolean = True
+
 
     Private Sub Add_Event_Click(sender As Object, e As EventArgs) Handles Add_Event.Click
 
@@ -36,14 +38,27 @@ Public Class Form_WorkFlow
         Dim list = New List(Of EventVariable)
         For Each tmpVar In Variables
 
+            Dim tmpVariable As EventVariable = Nothing
             If Not (tmpVar.IsReadOnly Or tmpVar.Formula <> "") Then
                 'tmpVariable.Value = Math.Round(UC_Slider.CadToValue(tmpVar.value, tmpVar.UnitsType, LengthUnits), 2)
-                Dim tmpVariable As New EventVariable With {
+                If NewWay Then
+                    Dim UU As New UtilsUnits(Form_VarHandler.ObjDoc)
+                    Dim tmpValue As Double = UU.GetVarValue(tmpVar)
+
+                    tmpVariable = New EventVariable With {
+                    .Check = True,
+                    .Name = tmpVar.DisplayName,
+                    .Value = Math.Round(tmpValue, 3),
+                    .ObjVar = tmpVar
+                }
+                Else
+                    tmpVariable = New EventVariable With {
                     .Check = True,
                     .Name = tmpVar.DisplayName,
                     .Value = Math.Round(UC_Slider.CadToValue(tmpVar.value, tmpVar.UnitsType, LengthUnits), 3),
-                    .objVar = tmpVar
+                    .ObjVar = tmpVar
                 }
+                End If
 
                 list.Add(tmpVariable)
             End If
@@ -144,7 +159,14 @@ Public Class Form_WorkFlow
         RowString = EventNumber
         For Each tmpRow As DataGridViewRow In StepEvent.DG_Variables.Rows
             Dim tmpVariable As Object = tmpRow.Cells("objVar").Value
-            RowString = String.Format("{0},{1}", RowString, CStr(UC_Slider.CadToValue(tmpVariable.Value, tmpVariable.UnitsType, LengthUnits)))
+
+            If NewWay Then
+                Dim UU As New UtilsUnits(Form_VarHandler.ObjDoc)
+                Dim tmpValue As Double = UU.GetVarValue(tmpVariable)
+                RowString = String.Format("{0},{1}", RowString, CStr(tmpValue))
+            Else
+                RowString = String.Format("{0},{1}", RowString, CStr(UC_Slider.CadToValue(tmpVariable.Value, tmpVariable.UnitsType, LengthUnits)))
+            End If
             ExportList.Add(RowString)
         Next
 
@@ -160,18 +182,16 @@ Public Class Form_WorkFlow
         Dim ExportList As List(Of String) = Nothing
         If Export Then ExportList = New List(Of String)
 
+        Dim UU As New UtilsUnits(Form_VarHandler.ObjDoc)
+
+        Dim EventsCount As Integer = FLP_Events.Controls.Count
+
+        Dim StartTime As DateTime = Now
+        Dim ElapsedTime As Double
+
         If FLP_Events.Controls.Count > 0 Then
 
             For Each StepEvent As UC_WorkFlowEvent In FLP_Events.Controls
-
-                System.Windows.Forms.Application.DoEvents()
-
-                If Abort Then
-                    BT_Skip.Text = "Skip"
-                    BT_Skip.Image = My.Resources.skip
-                    Abort = False
-                    Exit Sub
-                End If
 
                 Dim StepNumber As Integer = CInt(StepEvent.LB_SEQ.Text)
 
@@ -192,8 +212,18 @@ Public Class Form_WorkFlow
 
                 SetSteps(StepEvent)
 
-                'For i = 1 To 20
                 For j = 1 To StepEvent.steps
+
+                    System.Windows.Forms.Application.DoEvents()
+                    If Abort Then
+                        BT_Skip.Text = "Skip"
+                        BT_Skip.Image = My.Resources.skip
+                        Abort = False
+                        LabelStatus.Text = "Processing aborted by user"
+                        Exit Sub
+                    End If
+
+                    Dim StepsCount As Integer = StepEvent.steps
 
                     Dim i As Integer = j
 
@@ -201,7 +231,10 @@ Public Class Form_WorkFlow
                         i = StepEvent.steps + 1 - j
                     End If
 
-                    LabelStatus.Text = String.Format("Event {0}, Step {1}", StepEvent.LB_SEQ.Text, i)
+                    ElapsedTime = Now.Subtract(StartTime).TotalMinutes
+
+                    LabelStatus.Text = String.Format("Event {0}/{1}, Step {2}/{3}, Elapsed {4} min",
+                                           StepEvent.LB_SEQ.Text, EventsCount, i, StepsCount, ElapsedTime.ToString("0.0"))
 
                     Dim IsFirstStep As Boolean
 
@@ -213,14 +246,14 @@ Public Class Form_WorkFlow
 
                     ' Process first step before incrementing variables
                     If IsFirstStep Then
-                        If UpdateDoc Then UC_Slider.DoUpdateDoc(Form_VarHandler.objDoc)
+                        If UpdateDoc Then UC_Slider.DoUpdateDoc(Form_VarHandler.ObjDoc)
 
-                        Form_VarHandler.objDoc.Parent.DoIdle()
+                        Form_VarHandler.ObjDoc.Parent.DoIdle()
 
-                        If SaveImages Then UC_Slider.DoSaveImage(Form_VarHandler.objDoc)
+                        If SaveImages Then UC_Slider.DoSaveImage(Form_VarHandler.ObjDoc)
 
                         If CheckInterference Then
-                            If Not UC_Slider.DoCheckInterference(Form_VarHandler.objDoc) Then
+                            If Not UC_Slider.DoCheckInterference(Form_VarHandler.ObjDoc) Then
                                 If InterferenceMessage = "" Then
                                     InterferenceMessage = String.Format("Interference first detected in Event {0}, Step {1}", StepEvent.LB_SEQ.Text, i)
                                 End If
@@ -231,7 +264,7 @@ Public Class Form_WorkFlow
 
                     End If
 
-                    Form_VarHandler.objDoc.Parent.DelayCompute = True
+                    Form_VarHandler.ObjDoc.Parent.DelayCompute = True
 
                     For Each tmpRow As DataGridViewRow In StepEvent.DG_Variables.Rows
 
@@ -240,22 +273,28 @@ Public Class Form_WorkFlow
                         ' ###### TODO The variable is sometimes getting out of range in SE. ######
                         ' Need a min/max check somewhere.  Not sure this is the place to do it.
 
-                        tmpVariable.Value += UC_Slider.ValueToCad(tmpRow.Tag, tmpVariable.UnitsType, LengthUnits)
+                        If NewWay Then
+                            'tmpVariable.Value += UU.ValueToCad(tmpRow.Tag, tmpVariable.UnitsType)
+                            Dim tmpValue = UU.GetVarValue(tmpVariable) + tmpRow.Tag
+                            UU.SetVarValue(tmpVariable, tmpValue)
+                        Else
+                            tmpVariable.Value += UC_Slider.ValueToCad(tmpRow.Tag, tmpVariable.UnitsType, LengthUnits)
+                        End If
 
                     Next
 
-                    Form_VarHandler.objDoc.Parent.DelayCompute = False
+                    Form_VarHandler.ObjDoc.Parent.DelayCompute = False
 
                     'If Form_VarHandler.objDoc.Type = SolidEdgeConstants.DocumentTypeConstants.igAssemblyDocument And UpdateDoc Then Form_VarHandler.objDoc.UpdateDocument
 
-                    If UpdateDoc Then UC_Slider.DoUpdateDoc(Form_VarHandler.objDoc)
+                    If UpdateDoc Then UC_Slider.DoUpdateDoc(Form_VarHandler.ObjDoc)
 
-                    Form_VarHandler.objDoc.Parent.DoIdle()
+                    Form_VarHandler.ObjDoc.Parent.DoIdle()
 
-                    If SaveImages Then UC_Slider.DoSaveImage(Form_VarHandler.objDoc)
+                    If SaveImages Then UC_Slider.DoSaveImage(Form_VarHandler.ObjDoc)
 
                     If CheckInterference Then
-                        If Not UC_Slider.DoCheckInterference(Form_VarHandler.objDoc) Then
+                        If Not UC_Slider.DoCheckInterference(Form_VarHandler.ObjDoc) Then
                             If InterferenceMessage = "" Then
                                 InterferenceMessage = String.Format("Interference first detected in Event {0}, Step {1}", StepEvent.LB_SEQ.Text, i)
                             End If
@@ -271,7 +310,7 @@ Public Class Form_WorkFlow
             Next
 
             If Export Then
-                Dim Dirname = System.IO.Path.GetDirectoryName(Form_VarHandler.objDoc.FullName)
+                Dim Dirname = System.IO.Path.GetDirectoryName(Form_VarHandler.ObjDoc.FullName)
                 Dim Filename As String = String.Format("{0}\results.csv", Dirname)
 
                 Try
@@ -281,7 +320,7 @@ Public Class Form_WorkFlow
                 End Try
 
             End If
-            LabelStatus.Text = "Processing complete"
+            LabelStatus.Text = String.Format("Processing complete in {0} min", ElapsedTime.ToString("0.0"))
 
             If Not InterferenceMessage = "" Then
                 MsgBox(InterferenceMessage, vbOKOnly)
@@ -301,8 +340,17 @@ Public Class Form_WorkFlow
         For Each tmpRow As DataGridViewRow In stepEvent.DG_Variables.Rows
 
             Dim tmpVariable As Object = tmpRow.Cells("objVar").Value
-            'Dim stepValue As Double = (CDbl(tmpRow.Cells("Value").Value) - UC_Slider.CadToValue(tmpVariable.Value, tmpVariable.UnitsType, LengthUnits)) / 20
-            Dim stepValue As Double = (CDbl(tmpRow.Cells("Value").Value) - UC_Slider.CadToValue(tmpVariable.Value, tmpVariable.UnitsType, LengthUnits)) / tmpSteps
+            Dim stepValue As Double
+            Dim tmpValue As Double
+
+            If NewWay Then
+                Dim UU As New UtilsUnits(Form_VarHandler.ObjDoc)
+                tmpValue = UU.GetVarValue(tmpVariable)
+                stepValue = (CDbl(tmpRow.Cells("Value").Value) - tmpValue) / tmpSteps
+            Else
+                tmpValue = UC_Slider.CadToValue(tmpVariable.Value, tmpVariable.UnitsType, LengthUnits)
+                stepValue = (CDbl(tmpRow.Cells("Value").Value) - tmpValue) / tmpSteps
+            End If
 
             tmpRow.Tag = stepValue
 

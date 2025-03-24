@@ -1,11 +1,11 @@
 ﻿Imports System.ComponentModel
-Imports System.Net.WebRequestMethods
+'Imports System.Net.WebRequestMethods
 Imports SolidEdgeFramework
 
 Public Class Form_VarHandler
 
     Dim objApp As SolidEdgeFramework.Application
-    Public Shared objDoc As SolidEdgeFramework.SolidEdgeDocument
+    Public Shared ObjDoc As SolidEdgeFramework.SolidEdgeDocument
     Public LengthUnits As SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants
 
     Public Tracker_3D As SolidEdgePart.CoordinateSystem
@@ -15,7 +15,7 @@ Public Class Form_VarHandler
 
     Private Sub BT_Aggiungi_Click(sender As Object, e As EventArgs) Handles BT_Aggiungi.Click
         Dim tmpForm As New Form_SelectVariable With {
-            .objDoc = objDoc,
+            .ObjDoc = ObjDoc,
             .LengthUnits = LengthUnits
         }
         tmpForm.ShowDialog(Me)
@@ -24,15 +24,26 @@ Public Class Form_VarHandler
 
             For Each item In tmpForm.ListBox_Variables.SelectedItems
 
-                Dim tmpSlider2 As New UC_Slider(item.objVariable, LengthUnits)
+                'Dim tmpSlider2 As New UC_Slider(item.objVariable, LengthUnits)
+                'Dim tmpSlider2 As New UC_Slider(item, LengthUnits, ObjDoc) With {
+                '    .UpdateDoc = BT_Update.Checked,
+                '    .SaveImages = BT_SaveImages.Checked,
+                '    .CheckInterference = BT_CheckInterference.Checked
+                '}
+                Dim tmpSlider2 As New UC_Slider(item.objVariable, LengthUnits, ObjDoc) With {
+                    .UpdateDoc = BT_Update.Checked,
+                    .SaveImages = BT_SaveImages.Checked,
+                    .CheckInterference = BT_CheckInterference.Checked
+                }
 
                 If tmpSlider2.Valid Then
 
-                    tmpSlider2.objDoc = objDoc
-                    'tmpSlider2.LengthUnits = LengthUnits
-                    tmpSlider2.UpdateDoc = BT_Update.Checked
-                    tmpSlider2.SaveImages = BT_SaveImages.Checked
-                    tmpSlider2.CheckInterference = BT_CheckInterference.Checked
+                    'tmpSlider2.objDoc = objDoc
+                    ''tmpSlider2.LengthUnits = LengthUnits
+                    'tmpSlider2.UpdateDoc = BT_Update.Checked
+                    'tmpSlider2.SaveImages = BT_SaveImages.Checked
+                    'tmpSlider2.CheckInterference = BT_CheckInterference.Checked
+
                     AddHandler tmpSlider2.LB_value.TextChanged, AddressOf Slider_Click
 
                     FLP_Vars.Controls.Add(tmpSlider2)
@@ -56,7 +67,7 @@ Public Class Form_VarHandler
 
         Next
 
-        If objDoc.Type = DocumentTypeConstants.igAssemblyDocument And BT_Update.Checked Then objDoc.UpdateDocument 'objDoc.Parent.StartCommand(11292)
+        If ObjDoc.Type = DocumentTypeConstants.igAssemblyDocument And BT_Update.Checked Then ObjDoc.UpdateDocument 'objDoc.Parent.StartCommand(11292)
 
     End Sub
 
@@ -107,8 +118,8 @@ Public Class Form_VarHandler
         End Try
 
         Try
-            objDoc = objApp.ActiveDocument
-            LengthUnits = GetLengthUnits(objDoc)
+            ObjDoc = objApp.ActiveDocument
+            LengthUnits = GetLengthUnits(ObjDoc)
         Catch ex As Exception
             MsgBox("A Solid Edge Document must be open", MsgBoxStyle.Critical)
             End
@@ -120,11 +131,11 @@ Public Class Form_VarHandler
 
     Private Sub Autotune()
 
-        Dim tmpVars As SolidEdgeFramework.Variables = objDoc.Variables
+        Dim tmpVars As SolidEdgeFramework.Variables = ObjDoc.Variables
 
         Dim tmpVar = tmpVars.Query("*",, 2)
 
-        Dim variables As SolidEdgeFramework.Variables = CType(objDoc.Variables, SolidEdgeFramework.Variables)
+        Dim variables As SolidEdgeFramework.Variables = CType(ObjDoc.Variables, SolidEdgeFramework.Variables)
 
 
         Dim pFindCriterium As String = "*"
@@ -155,8 +166,13 @@ Public Class Form_VarHandler
             For Each item In tmpList
 
                 'tmpSlider.LengthUnits = LengthUnits
-                Dim tmpSlider As New UC_Slider(item, LengthUnits) With {
-                    .objDoc = objDoc,
+                'Dim tmpSlider As New UC_Slider(item, LengthUnits) With {
+                '    .objDoc = objDoc,
+                '    .UpdateDoc = BT_Update.Checked,
+                '    .SaveImages = BT_SaveImages.Checked,
+                '    .CheckInterference = BT_CheckInterference.Checked
+                '}
+                Dim tmpSlider As New UC_Slider(item, LengthUnits, ObjDoc) With {
                     .UpdateDoc = BT_Update.Checked,
                     .SaveImages = BT_SaveImages.Checked,
                     .CheckInterference = BT_CheckInterference.Checked
@@ -193,9 +209,9 @@ Public Class Form_VarHandler
 
         If BT_Tracker.Checked Then
 
-            Select Case objDoc.Type
+            Select Case ObjDoc.Type
                 Case = DocumentTypeConstants.igDraftDocument
-                    For Each item In objDoc.ActiveSheet.BlockOccurrences
+                    For Each item In ObjDoc.ActiveSheet.BlockOccurrences
                         If item.Block.Name = "Tracker" Then
                             Tracker_2D = item
                         End If
@@ -206,7 +222,7 @@ Public Class Form_VarHandler
                         Exit Sub
                     End If
                 Case Else
-                    For Each item In objDoc.CoordinateSystems
+                    For Each item In ObjDoc.CoordinateSystems
                         If item.name = "Tracker" Then
                             Tracker_3D = item
                         End If
@@ -238,8 +254,8 @@ Public Class Form_VarHandler
 
     Private Sub SetupTracker()
 
-        Dim tmpTracker As New UC_Tracker("Tracker", LengthUnits)
-        If objDoc.Type = DocumentTypeConstants.igDraftDocument Then tmpTracker.Tracker_3D = False
+        Dim tmpTracker As New UC_Tracker("Tracker", LengthUnits, ObjDoc)
+        If ObjDoc.Type = DocumentTypeConstants.igDraftDocument Then tmpTracker.Tracker_3D = False
 
         FLP_Vars.Controls.Add(tmpTracker)
         tmpTracker.UpdateLabel()
@@ -324,6 +340,8 @@ Public Class Form_VarHandler
 
         Return tmpLengthUnits
     End Function
+
+
 
 End Class
 

@@ -2,7 +2,7 @@
 
 Public Class Form_SelectVariable
 
-    Public objDoc As SolidEdgeFramework.SolidEdgeDocument
+    Public ObjDoc As SolidEdgeFramework.SolidEdgeDocument
     Public Valid As Boolean = False
     Public LengthUnits As SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants
 
@@ -22,9 +22,13 @@ Public Class Form_SelectVariable
 
             ListBox_Variables.DisplayMember = "Name"
 
+            Dim UU As New UtilsUnits(ObjDoc)
+
             For Each item In _FindVars
 
-                Dim tmpVar As New VarListItem(item, LengthUnits)
+                Dim UnitString = UU.GetUnitReadout(item)
+
+                Dim tmpVar As New VarListItem(item, LengthUnits, ObjDoc)
 
                 'tmpVar.LengthUnits = LengthUnits   '<---- This has to be set before the VarListItem is created
                 ListBox_Variables.Items.Add(tmpVar)
@@ -38,7 +42,6 @@ Public Class Form_SelectVariable
     Private Function FindVars() As Object
 
         Dim NameBy As Object = Nothing
-        'If CB_Users.Checked And Not CB_System.Checked Then NameBy = 2  ' <---- I think this is a typo
         If CB_Users.Checked And CB_System.Checked Then NameBy = 2
         If Not CB_Users.Checked And CB_System.Checked Then NameBy = 1
         If CB_Users.Checked And Not CB_System.Checked Then NameBy = 0
@@ -50,9 +53,9 @@ Public Class Form_SelectVariable
         If Not CB_Variables.Checked And CB_Dimensions.Checked Then _VarType = 1
         If Not CB_Variables.Checked And Not CB_Dimensions.Checked Then Return Nothing
 
-        If Not IsNothing(objDoc) Then
+        If Not IsNothing(ObjDoc) Then
 
-            Dim objVars As SolidEdgeFramework.Variables = objDoc.Variables
+            Dim objVars As SolidEdgeFramework.Variables = ObjDoc.Variables
             Dim _FindVars = objVars.Query("*", NameBy, _VarType)
 
             Return _FindVars
@@ -102,15 +105,22 @@ Public Class VarListItem
     Public Property ExName As String
     Public Property LengthUnits As SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants
 
-    Public Sub New(objVar As Object, _LengthUnits As SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants) 'SolidEdgeFramework.variable)
+    Public Property NewWay As Boolean = True
+    Public Property ObjDoc As SolidEdgeFramework.SolidEdgeDocument
 
-        LengthUnits = _LengthUnits
+    Public Sub New(
+        objVar As Object,
+        _LengthUnits As SolidEdgeConstants.UnitOfMeasureLengthReadoutConstants,
+        _ObjDoc As SolidEdgeFramework.SolidEdgeDocument) 'SolidEdgeFramework.variable)
 
         'If TypeOf (objVar) Is SolidEdgeFramework.variable Then
-        objVariable = objVar
+        ObjVariable = objVar
         'Else
         '    objDimension = objVar
         'End If
+
+        LengthUnits = _LengthUnits
+        ObjDoc = _ObjDoc
 
         VarName = objVar.Name
         Formula = objVar.Formula
@@ -120,16 +130,29 @@ Public Class VarListItem
 
         Dim UnitType = objVar.UnitsType
 
-        Value = UC_Slider.CadToValue(objVar.Value, UnitType, LengthUnits).ToString
+        Dim UU As New UtilsUnits(ObjDoc)
 
-        If UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitDistance Then
-            If LengthUnits = UnitOfMeasureLengthReadoutConstants.seLengthInch Then
-                Value = Value & " in"
-            ElseIf LengthUnits = UnitOfMeasureLengthReadoutConstants.seLengthMillimeter Then
-                Value = Value & " mm"
+        If NewWay Then
+            Dim tmpValue As Double = UU.GetVarValue(objVar)
+
+            Value = CStr(tmpValue)
+
+            Dim UnitReadout As String = UU.GetUnitReadout(objVar)
+
+            If Not UnitReadout = "" Then Value = String.Format("{0} {1}", Value, UnitReadout)
+
+        Else
+            Value = UC_Slider.CadToValue(objVar.Value, UnitType, LengthUnits).ToString
+
+            If UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitDistance Then
+                If LengthUnits = UnitOfMeasureLengthReadoutConstants.seLengthInch Then
+                    Value = Value & " in"
+                ElseIf LengthUnits = UnitOfMeasureLengthReadoutConstants.seLengthMillimeter Then
+                    Value = Value & " mm"
+                End If
+            ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitAngle Then
+                Value = Value & " °"
             End If
-        ElseIf UnitType = SolidEdgeFramework.UnitTypeConstants.igUnitAngle Then
-            Value = Value & " °"
         End If
 
         If Formula = "" Then
