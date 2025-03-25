@@ -31,6 +31,20 @@ Public Class UtilsUnits
 
     End Sub
 
+    Public Function HasVariableLimit(objVar As Object) As Boolean
+        Dim VariableLimit As Boolean = False
+        Dim LimitValue As SolidEdgeFramework.VariableLimitValueConstant
+
+        If TypeOf (objVar) Is SolidEdgeFramework.variable Then
+            Dim tmpVar = CType(objVar, SolidEdgeFramework.variable)
+            tmpVar.HasVariableLimit(VariableLimit, LimitValue)
+        ElseIf TypeOf (objVar) Is SolidEdgeFrameworkSupport.Dimension Then
+            'Dim tmpDim = CType(objVar, SolidEdgeFrameworkSupport.Dimension)
+        End If
+
+        Return LimitValue = SolidEdgeFramework.VariableLimitValueConstant.igMinMaxLimit
+    End Function
+
     Public Sub SetValueRangeValues(objVar As Object, min As Double, max As Double)
 
         ' Convenience function to set variable ranges in user units, rather than SE internal units.
