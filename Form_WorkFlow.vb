@@ -172,8 +172,57 @@ Public Class Form_WorkFlow
 
     End Sub
 
+    Private Function CheckVarLimits() As Boolean
+        Dim Success As Boolean = True
+
+        Dim UU As New UtilsUnits(Form_VarHandler.ObjDoc)
+        Dim ErrorList As New List(Of String)
+        Dim StepCount As Integer = 1
+        Dim s As String
+
+        If FLP_Events.Controls.Count > 0 Then
+            For Each StepEvent As UC_WorkFlowEvent In FLP_Events.Controls
+
+                For Each tmpRow As DataGridViewRow In StepEvent.DG_Variables.Rows
+
+                    Dim tmpVariable As Object = tmpRow.Cells("objVar").Value
+
+                    If UU.HasVariableLimit(tmpVariable) Then
+                        Dim tmpName As String = tmpRow.Cells("Name").Value
+                        Dim tmpValue As Double = tmpRow.Cells("Value").Value
+                        Dim tmpMin As Double = UU.GetValueRangeLowValue(tmpVariable)
+                        Dim tmpMax As Double = UU.GetValueRangeHighValue(tmpVariable)
+                        If tmpValue < tmpMin Then
+                            Success = False
+                            s = String.Format("Event {0}: {1}: Value {2} < minimum limit {3}", StepCount, tmpName, tmpValue, tmpMin)
+                            ErrorList.Add(s)
+                        ElseIf tmpValue > tmpMax Then
+                            Success = False
+                            s = String.Format("Event {0}: {1} Value {2} > maximum limit {3}", StepCount, tmpName, tmpValue, tmpMax)
+                            ErrorList.Add(s)
+                        End If
+
+                    End If
+                Next
+
+                StepCount += 1
+            Next
+        End If
+
+        If ErrorList.Count > 0 Then
+            s = String.Format("Variables outside of limits{0}", vbCrLf)
+            For Each line As String In ErrorList
+                s = String.Format("{0}{1}{2}", s, line, vbCrLf)
+            Next
+            MsgBox(s, vbOKOnly)
+        End If
+
+        Return Success
+    End Function
 
     Private Sub BT_Play_Click(sender As Object, e As EventArgs) Handles BT_Play.Click
+
+        If Not CheckVarLimits() Then Exit Sub
 
         BT_Skip.Text = "Stop"
         BT_Skip.Image = My.Resources._Stop

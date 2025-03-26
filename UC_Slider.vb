@@ -70,10 +70,10 @@ Public Class UC_Slider
 
 
         If NewWay Then
-            min = UU.GetValueRangeLowValue(objVar)
-            max = UU.GetValueRangeHighValue(objVar)
-
-            If min = 0 And max = 0 Then
+            If UU.HasVariableLimit(objVar) Then
+                min = UU.GetValueRangeLowValue(objVar)
+                max = UU.GetValueRangeHighValue(objVar)
+            Else
                 min = UU.GetVarValue(objVar) - 10
                 max = UU.GetVarValue(objVar) + 10
             End If
