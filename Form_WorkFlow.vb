@@ -257,6 +257,9 @@ Public Class Form_WorkFlow
                     End If
                 End If
 
+
+                FLP_Events.ScrollControlIntoView(StepEvent)
+
                 StepEvent.LB_SEQ.ForeColor = Color.DarkGreen
 
                 SetSteps(StepEvent)

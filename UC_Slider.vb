@@ -6,6 +6,10 @@ Imports SolidEdgeConstants
 Imports SolidEdgeFramework
 Imports SolidEdgeFrameworkSupport
 Imports SolidEdgePart
+Imports Splicer.Renderer
+Imports Splicer.Timeline
+Imports Splicer.WindowsMedia
+
 
 Public Class UC_Slider
 
@@ -790,10 +794,63 @@ Public Class UC_Slider
 
         If Export Then ExportResult()
 
+        If SaveImages Then
+            Dim Dirname = System.IO.Path.GetDirectoryName(ObjDoc.FullName)
+            Dirname = String.Format("{0}\images", Dirname)
+
+            Dim images = Directory.GetFiles(Dirname, "*.jpg")
+
+            Dim newList As List(Of Bitmap) = New List(Of Bitmap)
+            For Each item In images
+                Dim tmpBitmap As Bitmap = New Bitmap(item)
+                newList.Add(tmpBitmap)
+            Next
+
+            '######### To be enhanceed
+            'CreateVideo(newList, Dirname & "\Example.mp4", 2)
+
+        End If
+
         Dim tmpForm = CType(Me.Parent.Parent, Form_VarHandler)
         If tmpForm.Trace Then Trace(Not IsNothing(tmpForm.Tracker_2D), ClosedCurve)
 
     End Sub
+
+
+
+    Public Function CreateVideo(ByVal bitmaps As List(Of Bitmap), ByVal outputFile As String, ByVal fps As Double) As Boolean
+        Dim width As Integer = 640
+        Dim height As Integer = 480
+        If bitmaps Is Nothing OrElse bitmaps.Count = 0 Then Return False
+
+        Try
+
+            Using timeline As ITimeline = New DefaultTimeline(fps)
+                Dim group As IGroup = timeline.AddVideoGroup(32, width, height)
+                Dim videoTrack As ITrack = group.AddTrack()
+                Dim i As Integer = 0
+                Dim miniDuration As Double = 1.0 / fps
+
+                For Each bmp In bitmaps
+                    Dim clip As IClip = videoTrack.AddImage(bmp, 0, i * miniDuration, (i + 1) * miniDuration)
+                    System.Diagnostics.Debug.WriteLine(System.Threading.Interlocked.Increment(i))
+                Next
+
+                timeline.AddAudioGroup()
+                Dim renderer As IRenderer = New WindowsMediaRenderer(timeline, outputFile, WindowsMediaProfiles.HighQualityVideo)
+                renderer.Render()
+            End Using
+
+        Catch
+            Return False
+        End Try
+
+        Return True
+    End Function
+
+
+
+
 
     Private Sub Trace(Trace2D As Boolean, ClosedCurve As Boolean)
 
@@ -960,7 +1017,7 @@ Public Class UC_Slider
 
     End Sub
 
-    Private Sub BG_Play_ProgressChanged(sender As Object, e As ProgressChangedEventArgs) Handles BG_Play.ProgressChanged
+    Private Sub BG_Play_ProgressChanged(sender As Object, e As System.ComponentModel.ProgressChangedEventArgs) Handles BG_Play.ProgressChanged
 
         Dim tmpValue = Math.Round(CDbl(e.UserState), 6)
 
@@ -1133,10 +1190,10 @@ Public Class UC_Slider
 
     Public Shared Sub DoSaveImage(_objDoc As SolidEdgeFramework.SolidEdgeDocument)
 
-        If _objDoc.Type = SolidEdgeConstants.DocumentTypeConstants.igDraftDocument Then
-            ' Nothing to do here
-            Return
-        End If
+        'If _objDoc.Type = SolidEdgeConstants.DocumentTypeConstants.igDraftDocument Then
+        '    ' Nothing to do here
+        '    Return
+        'End If
 
         Dim Dirname = System.IO.Path.GetDirectoryName(_objDoc.FullName)
         Dirname = String.Format("{0}\images", Dirname)
@@ -1163,13 +1220,17 @@ Public Class UC_Slider
 
         Dim Filename As String = String.Format("{0}\{1:D5}.jpg", Dirname, Idx)
 
-        Dim Window As SolidEdgeFramework.Window
-        Dim View As SolidEdgeFramework.View
+        If _objDoc.Type = SolidEdgeConstants.DocumentTypeConstants.igDraftDocument Then
+            Dim SheetWindow As SolidEdgeDraft.SheetWindow = CType(_objDoc.Application.ActiveWindow, SolidEdgeDraft.SheetWindow)
 
-        Window = CType(_objDoc.Application.ActiveWindow, SolidEdgeFramework.Window)
-        View = Window.View
+            SheetWindow.SaveAsImage(Filename)
+        Else
+            Dim Window As SolidEdgeFramework.Window = CType(_objDoc.Application.ActiveWindow, SolidEdgeFramework.Window)
+            Dim View As SolidEdgeFramework.View = Window.View
 
-        View.SaveAsImage(Filename)
+            View.SaveAsImage(Filename)
+        End If
+
 
     End Sub
 

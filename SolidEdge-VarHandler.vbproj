@@ -66,10 +66,17 @@
     <ApplicationIcon>slider.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DirectShowLib-2005, Version=2.0.0.0, Culture=neutral, PublicKeyToken=67e7b740cdfc2d3f, processorArchitecture=MSIL">
+      <HintPath>packages\Splicer.1.1\lib\net45\DirectShowLib-2005.dll</HintPath>
+    </Reference>
+    <Reference Include="Splicer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a66524ed949429f4, processorArchitecture=MSIL">
+      <HintPath>packages\Splicer.1.1\lib\net45\Splicer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -279,6 +286,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Resources\icons8_checked_checkbox_16.png" />
   </ItemGroup>
   <ItemGroup>
@@ -314,7 +322,9 @@
     <None Include="Resources\Interference_16.png" />
     <None Include="Resources\icons8-step-16.png" />
     <None Include="Resources\icons8-skip-16.png" />
+    <Content Include="ASL - Apache Software Foundation License.txt" />
     <Content Include="slider.ico" />
+    <Content Include="Utilities\Audio\Formats.txt" />
     <Content Include="VarHandler.ico" />
     <Content Include="MainForm.png" />
     <None Include="Resources\icons8_cancel_16.png" />
