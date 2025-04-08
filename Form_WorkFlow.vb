@@ -189,6 +189,9 @@ Public Class Form_WorkFlow
 
                     If UU.HasVariableLimit(tmpVariable) Then
                         Dim tmpName As String = tmpRow.Cells("Name").Value
+
+                        LabelStatus.Text = String.Format("Checking variable '{0}'", tmpName)
+
                         Dim tmpValue As Double = tmpRow.Cells("Value").Value
                         Dim tmpMin As Double = UU.GetValueRangeLowValue(tmpVariable)
                         Dim tmpMax As Double = UU.GetValueRangeHighValue(tmpVariable)
@@ -216,6 +219,8 @@ Public Class Form_WorkFlow
             Next
             MsgBox(s, vbOKOnly)
         End If
+
+        LabelStatus.Text = ""
 
         Return Success
     End Function
